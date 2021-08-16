@@ -8,14 +8,6 @@ namespace MarsRover
     {
         public static Map ParseMap(string input)
         {
-            // split string on '\n'
-            // loop through strings
-            // split string into chars
-            // loop through chars
-            // if char == 'N' SquareContent.None
-            // if char == 'O' SquareContent.Obstacle
-            // add square to Map
-            // return Map
             var mapContents = SplitInput(input, "\n"); 
             var squares = new List<Square>();
             for (var y = 0; y < mapContents.Length; y++)

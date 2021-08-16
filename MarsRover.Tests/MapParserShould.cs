@@ -15,7 +15,7 @@ namespace MarsRover.Tests
 
             Assert.Equal(12, result.Squares.Count());
             Assert.IsType<Map>(result);
-            Assert.Equal(1, result.Squares.Where(x => x.Content == SquareContent.Obstacle).Count());
+            // TODO: how to count squares with Obstacles without violating the Law of Demeter??
         }
     }
 }

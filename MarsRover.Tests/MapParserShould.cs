@@ -24,9 +24,9 @@ namespace MarsRover.Tests
                 new Square(SquareContent.None, 1, 3),
                 new Square(SquareContent.None, 2, 3)
             };
-            var expected = new Map(3, 4, squares);
+            var expected = new Map(squares);
 
-            var result = MapParser.ParseMap("3,4\nONNN\nNNNN\nNNNN");
+            var result = MapParser.ParseMap("ONNN\nNNNN\nNNNN");
 
             Assert.Equal(expected, result);
         }

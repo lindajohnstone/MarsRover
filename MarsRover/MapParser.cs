@@ -8,32 +8,27 @@ namespace MarsRover
     {
         public static Map ParseMap(string input)
         {
-            // split string on \n
-            // array index 0 = dimensions of map
-            // split on','
-            // index 0 = width
-            // index 1 = height
-            // array index 1 = map contents
-            var lines = SplitInput(input, "\n"); 
-            var dimensions = SplitInput(lines[0], ",");
-            var width = Int32.Parse(dimensions[0]);
-            var height = Int32.Parse(dimensions[1]);
+            // split string on '\n'
+            // loop through strings
+            // split string into chars
+            // loop through chars
+            // if char == 'N' SquareContent.None
+            // if char == 'O' SquareContent.Obstacle
+            // add square to Map
+            // return Map
+            var mapContents = SplitInput(input, "\n"); 
             var squares = new List<Square>();
-            var mapContents = lines.Skip(1).ToArray();
-            for (var y = 0; y < height; y++)
+            for (var y = 0; y < mapContents.Length; y++)
             {
-                for (var x = 0; x < width; y++)
+                var chars = mapContents[y].ToCharArray();
+                for (var x = 0; x < chars.Length; x++)
                 {
                     var squareContent = SquareContent.None;
-                    var chars = mapContents[x].ToCharArray();
-                    foreach (var ch in chars)
-                    {
-                        if (ch == 'O') squareContent = SquareContent.Obstacle;
-                    }
+                    if (chars[x] == 'O') squareContent = SquareContent.Obstacle;
                     squares.Add(new Square(squareContent, x, y));
                 }
             }
-            return new Map(width, height, squares);
+            return new Map(squares);
         }
 
         private static string[] SplitInput(string input, string delimiter)

@@ -6,7 +6,7 @@ namespace MarsRover
 {
     public static class Validator
     {
-        public static bool IsValidMap(string input)
+        public static bool IsValidMap(string input) // TODO: refactor
         {
             var mapElements = SplitInput(input, "\n");
             // if has less than 2 elements, return false
@@ -18,18 +18,19 @@ namespace MarsRover
             var numberOfElements = mapElements.Length;
             if (numberOfElements == 1) return false;
             var elementList = new List<int>();
+            var mapCharsCount = 0;
             var count = 0;
             foreach (var element in mapElements)
             {
                 var mapChars = element.ToCharArray();
-                var mapCharsCount = mapChars.Length;
+                mapCharsCount = mapChars.Length;
                 elementList.Add(mapCharsCount);
                 foreach (var mapChar in mapChars)
                 {
                     if (mapChar == 'O' || mapChar == 'N') count++;
                 }
             }
-            if (count > 0) return true;
+            if (count == mapCharsCount) return true;
             if (elementList.Distinct().Count() != 1) return false;
             return true;
         }

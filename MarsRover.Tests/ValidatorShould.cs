@@ -18,8 +18,9 @@ namespace MarsRover.Tests
         }
 
         [Theory]
-        //[InlineData("ONNN")]
+        [InlineData("ONNN")]
         [InlineData("ONNN\nNNN")]
+        [InlineData("PNNN\nNNN")]
         public void ReturnFalse_GivenInvalidMapString(string mapString)
         {
             var result = Validator.IsValidMap(mapString);

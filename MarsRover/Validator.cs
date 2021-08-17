@@ -9,12 +9,6 @@ namespace MarsRover
         public static bool IsValidMap(string input) // TODO: refactor
         {
             var mapElements = SplitInput(input, "\n");
-            // if has less than 2 elements, return false
-            // count the length of each line, if all !=, return false
-            // loop through each element 
-            // split into char array
-            // if doesn't contain only 'N' or 'O' return false
-            // return true
             var numberOfElements = mapElements.Length;
             if (numberOfElements == 1) return false;
             var elementList = new List<int>();

@@ -6,7 +6,7 @@ namespace MarsRover
 {
     public static class MapParser
     {
-        public static Map ParseMap(string input)
+        public static Map ParseMap(string input) 
         {
             var mapContents = SplitInput(input, "\n"); 
             var squares = new List<Square>();

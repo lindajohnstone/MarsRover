@@ -17,7 +17,7 @@ namespace MarsRover.Tests
             return true;
         }
 
-        public static bool ListsOfSquaresAreEqual(List<Square> squares1, List<Square> squares2)
+        private static bool ListsOfSquaresAreEqual(List<Square> squares1, List<Square> squares2)
         {
             if (squares1.Count != squares2.Count)
             {

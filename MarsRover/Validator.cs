@@ -6,7 +6,7 @@ namespace MarsRover
 {
     public static class Validator
     {
-        public static bool IsValidMap(string input) // TODO: refactor
+        public static bool IsValidMap(string input)
         {
             var mapElements = SplitInput(input, "\n");
             var numberOfElements = mapElements.Length;

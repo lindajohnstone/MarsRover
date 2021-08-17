@@ -27,18 +27,19 @@ namespace MarsRover.Tests
                 new Square(SquareContent.None, 3, 2)
             };
             var expected = new Map(4, 3, squares);
-            var expectedCount = 0;
+            var expectedCount = 1;
+            var actualCount = 0;
 
             var result = MapParser.ParseMap("ONNN\nNNNN\nNNNN");
             foreach(var square in result.Squares)
             {
-                if (square.HasObstacle()) expectedCount++;
+                if (square.HasObstacle()) actualCount++;
             }
 
             Assert.Equal(12, result.Squares.Count());
             Assert.IsType<Map>(result);
             Assert.True(MarsRoverHelper.MapsAreEqual(expected, result));
-            Assert.Equal(1, expectedCount);
+            Assert.Equal(expectedCount, actualCount);
         }
     }
 }

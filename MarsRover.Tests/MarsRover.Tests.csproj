@@ -23,5 +23,8 @@
   <ItemGroup>
     <ProjectReference Include="..\MarsRover\MarsRover.csproj" />
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <None Update="TestFiles/*.*"><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></None>
+  </ItemGroup>
 </Project>

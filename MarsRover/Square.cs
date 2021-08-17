@@ -10,5 +10,10 @@ namespace MarsRover
         public SquareContent Content { get; private set; }
 
         public Location Location { get; private set; }
+
+        public bool HasObstacle()
+        {
+            return Content == SquareContent.Obstacle;
+        }
     }
 }

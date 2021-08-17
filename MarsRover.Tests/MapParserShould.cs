@@ -16,15 +16,15 @@ namespace MarsRover.Tests
                 new Square(SquareContent.Obstacle, 0, 0),
                 new Square(SquareContent.None, 1, 0),
                 new Square(SquareContent.None, 2, 0),
+                new Square(SquareContent.None, 3, 0),
                 new Square(SquareContent.None, 0, 1),
                 new Square(SquareContent.None, 1, 1),
                 new Square(SquareContent.None, 2, 1),
+                new Square(SquareContent.None, 3, 1),
                 new Square(SquareContent.None, 0, 2),
                 new Square(SquareContent.None, 1, 2),
                 new Square(SquareContent.None, 2, 2),
-                new Square(SquareContent.None, 0, 3),
-                new Square(SquareContent.None, 1, 3),
-                new Square(SquareContent.None, 2, 3)
+                new Square(SquareContent.None, 3, 2)
             };
             var expected = new Map(squares);
 

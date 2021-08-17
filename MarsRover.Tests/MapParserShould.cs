@@ -27,13 +27,18 @@ namespace MarsRover.Tests
                 new Square(SquareContent.None, 3, 2)
             };
             var expected = new Map(4, 3, squares);
+            var expectedCount = 0;
 
             var result = MapParser.ParseMap("ONNN\nNNNN\nNNNN");
+            foreach(var square in result.Squares)
+            {
+                if (square.HasObstacle()) expectedCount++;
+            }
 
             Assert.Equal(12, result.Squares.Count());
             Assert.IsType<Map>(result);
             Assert.True(MarsRoverHelper.MapsAreEqual(expected, result));
-            // TODO: how to count squares with Obstacles without violating the Law of Demeter??
+            Assert.Equal(1, expectedCount);
         }
     }
 }

@@ -13,7 +13,5 @@ namespace MarsRover
         public int Width { get; private set; }
         public int Height { get; private set; }
         public List<Square> Squares { get; private set; }
-
-        
     }
 }

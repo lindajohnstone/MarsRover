@@ -21,8 +21,8 @@ namespace MarsRover
         {
             foreach (var line in lines)
             {
-                var linesAreEqual = lines.All(c => c.Length == line.Length);
-                if (!linesAreEqual) return false;
+                var linesAreEqualLength = lines.All(c => c.Length == line.Length);
+                if (!linesAreEqualLength) return false;
             }
             return true;
         }
@@ -31,8 +31,8 @@ namespace MarsRover
         {
             foreach (var line in lines)
             {
-                var charsInElementAreValid = line.All(c => c == 'O' || c == 'N');
-                if (!charsInElementAreValid) return false;
+                var charsInLineAreValid = line.All(c => c == 'O' || c == 'N');
+                if (!charsInLineAreValid) return false;
             }
             return true;
         }

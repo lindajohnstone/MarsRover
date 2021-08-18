@@ -25,11 +25,10 @@ namespace MarsRover.Tests
         public void ReturnFilePath_GivenValidFilePath(string path)
         {
             var input = new FileInput();
-            var expected = path;
 
             var result = input.FileExists(path);
 
-            Assert.Equal(expected, result);
+            Assert.True(result);
         }
 
         [Theory]
@@ -40,11 +39,10 @@ namespace MarsRover.Tests
         public void ReturnString_GivenInvalidFilePath(string path)
         {
             var input = new FileInput();
-            var expected = "File does not exist.";
 
             var result = input.FileExists(path);
 
-            Assert.Equal(expected, result);
+            Assert.False(result);
         }
     }
 }

@@ -6,18 +6,12 @@ namespace MarsRover
 {
     public static class MapParser
     {
-        public static Map ParseMap(string input)
+        public static Map ParseMap(string input) 
         {
             var mapContents = SplitInput(input, "\n");
             var height = mapContents.Length;
             var width = mapContents[0].Length;
             var squares = new List<Square>();
-            ParseMap(mapContents, height, width, squares);
-            return new Map(width, height, squares);
-        }
-
-        private static void ParseMap(string[] mapContents, int height, int width, List<Square> squares)
-        {
             for (var y = 0; y < height; y++)
             {
                 var chars = mapContents[y].ToCharArray();
@@ -26,6 +20,7 @@ namespace MarsRover
                     AddContent(squares, chars, x, y);
                 }
             }
+            return new Map(width, height, squares);
         }
 
         private static void AddContent(List<Square> squares, char[] chars, int x, int y)

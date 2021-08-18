@@ -6,37 +6,35 @@ namespace MarsRover
 {
     public static class Validator
     {
-        public static bool IsValidMap(string input)
+        public static bool IsValidMap(string input) 
         {
-            var mapElements = SplitInput(input, "\n");
-            var numberOfElements = mapElements.Length;
-            if (numberOfElements == 1) return false;
-            var elementList = new List<int>();
-            var mapCharsCount = 0;
-            var count = 0;
-            CountValidChars(mapElements, elementList, ref mapCharsCount, ref count);
-            if (count == mapCharsCount) return true;
-            if (elementList.Distinct().Count() != 1) return false;
+            var lines = SplitInput(input, "\n");
+            var numberOfLines = lines.Length;
+            if (numberOfLines == 1) return false;
+            var areAllLinesEqual = AreAllLinesEqual(lines);
+            var areAllCharsValid = AreAllCharsValid(lines);
+            if (!areAllLinesEqual || !areAllCharsValid) return false;
             return true;
         }
 
-        private static void CountValidChars(string[] mapElements, List<int> elementList, ref int mapCharsCount, ref int count)
+        private static bool AreAllLinesEqual(string[] lines)
         {
-            foreach (var element in mapElements)
+            foreach (var line in lines)
             {
-                var mapChars = element.ToCharArray();
-                mapCharsCount = mapChars.Length;
-                elementList.Add(mapCharsCount);
-                CountValidChars(count, mapChars);
+                var linesAreEqual = lines.All(c => c.Length == line.Length);
+                if (!linesAreEqual) return false;
             }
+            return true;
         }
 
-        private static void CountValidChars(int count, char[] mapChars)
+        private static bool AreAllCharsValid(string[] lines)
         {
-            foreach (var mapChar in mapChars)
+            foreach (var line in lines)
             {
-                if (mapChar == 'O' || mapChar == 'N') count++;
+                var charsInElementAreValid = line.All(c => c == 'O' || c == 'N');
+                if (!charsInElementAreValid) return false;
             }
+            return true;
         }
 
         private static string[] SplitInput(string input, string delimiter)

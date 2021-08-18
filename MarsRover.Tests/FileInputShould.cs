@@ -17,17 +17,19 @@ namespace MarsRover.Tests
             Assert.Equal(expected, result);
         }
 
-        [Fact]
-        public void ReturnFilePath_GivenValidFilePath()
+        [Theory]
+        [InlineData("TestFiles/testFile1.txt")]
+        [InlineData("TestFiles/testFile2.txt")]
+        [InlineData("TestFiles/testFile3.txt")]
+        [InlineData("TestFiles/testFile4.txt")]
+        public void ReturnFilePath_GivenValidFilePath(string path)
         {
             var input = new FileInput();
-            var path = "TestFiles/testFile1.txt";
             var expected = path;
 
             var result = input.FileExists(path);
 
             Assert.Equal(expected, result);
-
         }
     }
 }

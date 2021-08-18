@@ -8,29 +8,32 @@ namespace MarsRover
     {
         public static bool IsValidMap(string input) // TODO: refactor
         {
-            var mapElements = SplitInput(input, "\n");
-            var numberOfElements = mapElements.Length;
-            if (numberOfElements == 1) return false;
-            // check if each string has the same length as the next string
-            for (var i = 0; i < numberOfElements - 1; i++)
+            var lines = SplitInput(input, "\n");
+            var numberOfLines = lines.Length;
+            if (numberOfLines == 1) return false;
+            var areAllLinesEqual = AreAllLinesEqual(lines);
+            var areAllCharsValid = AreAllCharsValid(lines);
+            if (!areAllLinesEqual || !areAllCharsValid) return false;
+            return true;
+        }
+
+        private static bool AreAllLinesEqual(string[] lines)
+        {
+            foreach (var line in lines)
             {
-                if (mapElements[i].Length != mapElements[i + 1].Length) return false;
+                var linesAreEqual = lines.All(c => c.Length == line.Length);
+                if (!linesAreEqual) return false;
             }
-            var mapCharsCount = 0;
-            var countValidChars = 0;
-            // check each string is valid
-            foreach (var element in mapElements)
+            return true;
+        }
+
+        private static bool AreAllCharsValid(string[] lines)
+        {
+            foreach (var line in lines)
             {
-                var mapChars = element.ToCharArray();
-                mapCharsCount = mapChars.Length;
-                // check if all chars in string are valid
-                foreach (var mapChar in mapChars)
-                {
-                    if (mapChar == 'O' || mapChar == 'N') countValidChars++;
-                }
+                var charsInElementAreValid = line.All(c => c == 'O' || c == 'N');
+                if (!charsInElementAreValid) return false;
             }
-            var areAllCharsValid = (countValidChars == mapCharsCount);
-            if (areAllCharsValid) return true;
             return true;
         }
 

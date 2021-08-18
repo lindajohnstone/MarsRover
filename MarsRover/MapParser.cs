@@ -6,7 +6,7 @@ namespace MarsRover
 {
     public static class MapParser
     {
-        public static Map ParseMap(string input) // TODO: name??
+        public static Map ParseMap(string input) 
         {
             var mapContents = SplitInput(input, "\n");
             var height = mapContents.Length;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentAssertions;
 using Moq;
 using Xunit;
 
@@ -28,18 +29,14 @@ namespace MarsRover.Tests
             };
             var expected = new Map(4, 3, squares);
             var expectedObstacleCount = 1;
-            var actualObstacleCount = 0;
 
             var result = MapParser.ParseMap("ONNN\nNNNN\nNNNN");
-            foreach(var square in result.Squares)
-            {
-                if (square.HasObstacle()) actualObstacleCount++;
-            }
-
-            Assert.Equal(12, result.Squares.Count());
-            Assert.IsType<Map>(result);
-            Assert.True(MarsRoverHelper.MapsAreEqual(expected, result));
+            var actualObstacleCount = result.Squares.FindAll(c => c.Content == SquareContent.Obstacle).Count;
+            
+            result.Squares.Should().HaveCount(12);
+            result.Should().Equals(expected);
             Assert.Equal(expectedObstacleCount, actualObstacleCount);
+            Assert.IsType<Map>(result);
         }
     }
 }

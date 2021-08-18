@@ -31,5 +31,20 @@ namespace MarsRover.Tests
 
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData("TestFiles/testFile.txt")]
+        [InlineData("TestFile/testFile2.rtf")]
+        [InlineData("TestFiles/testFile3")]
+        [InlineData("TestFiles/Test/testFile4.txt")]
+        public void ReturnString_GivenInvalidFilePath(string path)
+        {
+            var input = new FileInput();
+            var expected = "File does not exist.";
+
+            var result = input.FileExists(path);
+
+            Assert.Equal(expected, result);
+        }
     }
 }

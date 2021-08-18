@@ -8,5 +8,11 @@ namespace MarsRover
         {
             return File.ReadAllText(input);
         }
+
+        public string FileExists(string filePath)
+        {
+            if (File.Exists(filePath)) return filePath;
+            return "File does not exist.";
+        }
     }
 }

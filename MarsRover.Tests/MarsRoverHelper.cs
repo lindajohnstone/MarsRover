@@ -9,10 +9,7 @@ namespace MarsRover.Tests
         {
             if (map1 == null || map2 == null ) return false;
             var isSizeSame = (map1.Width == map2.Width) && (map1.Height == map2.Height);
-            if (!isSizeSame)
-            {
-                return false;
-            }
+            if (!isSizeSame) return false;
             if (!ListsOfSquaresAreEqual(map1.Squares, map2.Squares)) return false;
             return true;
         }

@@ -17,14 +17,7 @@ namespace MarsRover.Tests
             var result = MapParser.ParseMap(mapString);
             var actualObstacleCount = result.Squares.FindAll(c => c.Content == SquareContent.Obstacle).Count;
 
-            // TODO: ??
-            result.Squares.Should().Equal(expected.Squares); // fails on valid data
-            result.Squares.Should().HaveCount(expectedSquareCount);
-            result.Squares.Should().OnlyHaveUniqueItems();
-            result.Equals(expected); // passes on invalid data
-            result.Should().Equals(expected); // passes on invalid data
-            Assert.Equal(expectedObstacleCount, actualObstacleCount);
-            Assert.IsType<Map>(result);
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

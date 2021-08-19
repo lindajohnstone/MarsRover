@@ -5,14 +5,22 @@ namespace MarsRover
 {
     public static class InputParser
     {
-        public static Direction ParseDirection(string input) 
-        // TODO: ignore case?? // does ReadLine(n) recognise a char or is it still a string?
+        public static Direction ParseDirection(string input)
         {
-            if (input == "N" || input == "n") return Direction.North;
-            if (input == "S" || input == "n") return Direction.South;
-            if (input == "E") return Direction.East;
-            if (input == "W") return Direction.West;
-            return Direction.None;
+            var upperInput = input.ToUpper();
+            return upperInput switch {
+                "N" => Direction.North,
+                "S" => Direction.South,
+                "E" => Direction.East,
+                "W" => Direction.West,
+                _ => Direction.None
+            };
+
+            // if (input.Equals("N", StringComparison.InvariantCultureIgnoreCase)) return Direction.North;
+            // if (input == "S" || input == "s") return Direction.South;
+            // if (input == "E") return Direction.East;
+            // if (input == "W") return Direction.West;
+            // return Direction.None;
         }
     }
 }

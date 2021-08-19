@@ -14,7 +14,6 @@ namespace MarsRover.Tests
                     {
                         new Square(SquareContent.Obstacle, 0, 0),
                         new Square(SquareContent.None, 1, 0),
-                        // new Square(SquareContent.Obstacle, 1, 0),
                         new Square(SquareContent.None, 2, 0),
                         new Square(SquareContent.None, 3, 0),
                         new Square(SquareContent.None, 0, 1),

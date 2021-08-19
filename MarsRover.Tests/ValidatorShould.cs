@@ -67,5 +67,24 @@ namespace MarsRover.Tests
 
             Assert.True(result);
         }
+
+        [Theory]
+        [InlineData("10", 15, 10)]
+        [InlineData("15,8", 15, 10)]
+        [InlineData("4 4", 4, 3)]
+        [InlineData(",,", 3, 3)]
+        [InlineData("3,3,", 4, 3)]
+        [InlineData("3,3,3", 4, 3)]
+        [InlineData("a,b", 3, 3)]
+        [InlineData("-1,4", 3, 3)]
+        [InlineData("4,-1", 3, 3)]
+        [InlineData("0,0", -10, 3)]
+        [InlineData("0,0", 3, -10)]
+        public void ReturnFalse_GivenInvalidLocationString(string input, int width, int height)
+        {
+            var result = Validator.IsValidLocation(input, width, height);
+
+            Assert.False(result);
+        }
     }
 }

@@ -57,7 +57,9 @@ namespace MarsRover
             var coordinates = SplitInput(input, ",");
             var hasTwoCoordinates = coordinates.Length == 2;
             if (!hasTwoCoordinates) return false;
-            return true;
+            var xIsValid = Int32.TryParse(coordinates[0], out var x) && x >= 0 && x < width;
+            var yIsValid = Int32.TryParse(coordinates[1], out var y) && y >= 0 && y < height;
+            return xIsValid && yIsValid;
         }
 
         private static string[] SplitInput(string input, string delimiter)

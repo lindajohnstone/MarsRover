@@ -9,10 +9,10 @@ namespace MarsRover
             return File.ReadAllText(input);
         }
 
-        public string FileExists(string filePath)
+        public bool FileExists(string filePath)
         {
-            if (File.Exists(filePath)) return filePath;
-            return "File does not exist.";
+            if (File.Exists(filePath)) return true;
+            return false;
         }
     }
 }

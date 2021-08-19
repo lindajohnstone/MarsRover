@@ -21,8 +21,8 @@ namespace MarsRover
         {
             foreach (var line in lines)
             {
-                var linesAreEqual = lines.All(c => c.Length == line.Length);
-                if (!linesAreEqual) return false;
+                var linesAreEqualLength = lines.All(c => c.Length == line.Length);
+                if (!linesAreEqualLength) return false;
             }
             return true;
         }
@@ -31,15 +31,42 @@ namespace MarsRover
         {
             foreach (var line in lines)
             {
-                var charsInElementAreValid = line.All(c => c == 'O' || c == 'N');
-                if (!charsInElementAreValid) return false;
+                var charsInLineAreValid = line.All(c => c == 'O' || c == 'N');
+                if (!charsInLineAreValid) return false;
             }
             return true;
+        }
+
+        public static bool IsValidDirection(string input)
+        {
+            if (input.Equals("N", StringComparison.InvariantCultureIgnoreCase)) return true;
+            if (input.Equals("S", StringComparison.InvariantCultureIgnoreCase)) return true;
+            if (input.Equals("E", StringComparison.InvariantCultureIgnoreCase)) return true;
+            if (input.Equals("W", StringComparison.InvariantCultureIgnoreCase)) return true;
+            return false;
+        }
+
+        public static bool IsValidLocation(string input, int width, int height)
+        {
+            // split input on ','
+            // check if 2 elements
+            // try to parse first element
+            // check it is >= 0 & < width
+            // try to parse second element
+            // check it is >= 0 & < width
+            var coordinates = SplitInput(input, ",");
+            var hasTwoCoordinates = coordinates.Length == 2;
+            if (!hasTwoCoordinates) return false;
+            var xIsValid = Int32.TryParse(coordinates[0], out var x) && x >= 0 && x < width;
+            var yIsValid = Int32.TryParse(coordinates[1], out var y) && y >= 0 && y < height;
+            return xIsValid && yIsValid;
         }
 
         private static string[] SplitInput(string input, string delimiter)
         {
             return input.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
         }
+
+        
     }
 }

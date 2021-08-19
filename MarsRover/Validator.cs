@@ -46,9 +46,25 @@ namespace MarsRover
             return false;
         }
 
+        public static bool IsValidLocation(string input, int width, int height)
+        {
+            // split input on ','
+            // check if 2 elements
+            // try to parse first element
+            // check it is >= 0 & < width
+            // try to parse second element
+            // check it is >= 0 & < width
+            var coordinates = SplitInput(input, ",");
+            var hasTwoCoordinates = coordinates.Length == 2;
+            if (!hasTwoCoordinates) return false;
+            return true;
+        }
+
         private static string[] SplitInput(string input, string delimiter)
         {
             return input.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
         }
+
+        
     }
 }

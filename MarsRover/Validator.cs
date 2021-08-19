@@ -21,7 +21,7 @@ namespace MarsRover
         {
             foreach (var line in lines)
             {
-                var linesAreEqualLength = lines.All(c => c.Length == line.Length);
+                var linesAreEqualLength = lines.All(l => l.Length == line.Length);
                 if (!linesAreEqualLength) return false;
             }
             return true;
@@ -48,12 +48,6 @@ namespace MarsRover
 
         public static bool IsValidLocation(string input, int width, int height)
         {
-            // split input on ','
-            // check if 2 elements
-            // try to parse first element
-            // check it is >= 0 & < width
-            // try to parse second element
-            // check it is >= 0 & < width
             var coordinates = SplitInput(input, ",");
             var hasTwoCoordinates = coordinates.Length == 2;
             if (!hasTwoCoordinates) return false;

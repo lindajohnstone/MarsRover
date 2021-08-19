@@ -15,7 +15,7 @@ namespace MarsRover.Tests
         [InlineData("e", Direction.East)]
         [InlineData("W", Direction.West)]
         [InlineData("w", Direction.West)]
-        public void ReturnRoverInitialDirection_GivenValidString(string input, Direction expected)
+        public void ReturnDirection_GivenValidString(string input, Direction expected)
         {
             var result = InputParser.ParseDirection(input);
 
@@ -26,7 +26,7 @@ namespace MarsRover.Tests
         [InlineData("0,0", 0, 0)]
         [InlineData("100,8", 100, 8)]
         [InlineData("1,80", 1, 80)]
-        public void ReturnRoverInitialLocation_GivenValidString(string input, int x, int y)
+        public void ReturnLocation_GivenValidString(string input, int x, int y)
         {
             var expected = new Location(x, y);
 

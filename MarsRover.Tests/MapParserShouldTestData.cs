@@ -6,8 +6,8 @@ namespace MarsRover.Tests
 {
     public class MapParserShouldTestData
     {
-        public static TheoryData<List<Square>, int, int, int, int, string[]> MapParserTestData =
-            new TheoryData<List<Square>, int, int, int, int, string[]>
+        public static TheoryData<List<Square>, int, int, string[]> MapParserTestData =
+            new TheoryData<List<Square>, int, int, string[]>
             {
                 {
                     new List<Square>
@@ -27,8 +27,6 @@ namespace MarsRover.Tests
                     },
                     4,
                     3,
-                    1,
-                    12,
                     new string[]
                     {
                         "ONNN",
@@ -62,8 +60,6 @@ namespace MarsRover.Tests
                     },
                     5,
                     4,
-                    4,
-                    20,
                     new string[]
                     {
                         "ONNNN",

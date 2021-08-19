@@ -37,6 +37,15 @@ namespace MarsRover
             return true;
         }
 
+        public static bool IsValidDirection(string input)
+        {
+            if (input.Equals("N", StringComparison.InvariantCultureIgnoreCase)) return true;
+            if (input.Equals("S", StringComparison.InvariantCultureIgnoreCase)) return true;
+            if (input.Equals("E", StringComparison.InvariantCultureIgnoreCase)) return true;
+            if (input.Equals("W", StringComparison.InvariantCultureIgnoreCase)) return true;
+            return false;
+        }
+
         private static string[] SplitInput(string input, string delimiter)
         {
             return input.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);

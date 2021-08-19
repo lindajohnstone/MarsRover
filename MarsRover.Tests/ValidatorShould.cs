@@ -43,5 +43,17 @@ namespace MarsRover.Tests
 
             Assert.True(result);
         }
+
+        [Theory]
+        [InlineData("Enter")]
+        [InlineData("1")]
+        [InlineData("a")]
+        [InlineData(".")]
+        public void ReturnFalse_GivenInvalidDirectionString(string directionString)
+        {
+            var result = Validator.IsValidDirection(directionString);
+
+            Assert.False(result);
+        }
     }
 }

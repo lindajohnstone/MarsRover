@@ -15,7 +15,7 @@ namespace MarsRover.Tests
             var expected = new Map(width, height, squares);
 
             var result = MapParser.ParseMap(mapString);
-            
+
             result.Should().BeEquivalentTo(expected);
         }
     }

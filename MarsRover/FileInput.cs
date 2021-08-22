@@ -11,8 +11,7 @@ namespace MarsRover
 
         public bool FileExists(string filePath)
         {
-            if (File.Exists(filePath)) return true;
-            return false;
+            return File.Exists(filePath);
         }
     }
 }

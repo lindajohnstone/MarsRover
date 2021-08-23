@@ -5,14 +5,18 @@ namespace MarsRover.Tests
 {
     public class FileInputShould
     {
+        FileInput _fileInput;
+        public FileInputShould()
+        {
+            _fileInput = new FileInput();
+        }
         [Theory]
         [MemberData(nameof(FileInputShouldTestData.FileInputTestData), MemberType = typeof(FileInputShouldTestData))]
         public void Read_ReturnString_GivenFileInput(string path, params string[] inputs)
         {
             var expected = String.Join(Environment.NewLine, inputs);
-            var input = new FileInput();
 
-            var result = input.Read(path);
+            var result = _fileInput.Read(path);
 
             Assert.Equal(expected, result);
         }
@@ -24,9 +28,7 @@ namespace MarsRover.Tests
         [InlineData("TestFiles/testFile4.txt")]
         public void FileExists_ReturnTrue_GivenValidFilePath(string path)
         {
-            var input = new FileInput();
-
-            var result = input.FileExists(path);
+            var result = _fileInput.FileExists(path);
 
             Assert.True(result);
         }
@@ -38,9 +40,7 @@ namespace MarsRover.Tests
         [InlineData("TestFiles/Test/testFile4.txt")]
         public void FileExists_ReturnFalse_GivenInvalidFilePath(string path)
         {
-            var input = new FileInput();
-
-            var result = input.FileExists(path);
+            var result = _fileInput.FileExists(path);
 
             Assert.False(result);
         }

@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using Xunit;
 
 namespace MarsRover.Tests
@@ -33,6 +34,22 @@ namespace MarsRover.Tests
             var result = rover.Turn(command);
 
             Assert.Equal(expected, result);
+        }
+
+        [Theory]
+        [InlineData(Direction.North, 2, 1)]
+        [InlineData(Direction.South, 2, 3)]
+        [InlineData(Direction.West, 1, 2)]
+        [InlineData(Direction.East, 3, 2)]
+        public void Move_ReturnsLocation_GivenCommandForward(Direction direction, int x, int y)
+        {
+            var expected = new Location(x, y);
+            var command = Command.Forward;
+            var rover = new Rover(direction, 2, 2);
+
+            var result = rover.Move(command);
+
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

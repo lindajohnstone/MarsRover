@@ -9,7 +9,7 @@ namespace MarsRover.Tests
     {
         [Theory]
         [MemberData(nameof(MapParserShouldTestData.MapParserTestData), MemberType = typeof(MapParserShouldTestData))]
-        public void ReturnMap_GivenValidString(List<Square> squares, int width, int height, params string[] inputs)
+        public void ParseMap_ReturnsMap_GivenValidString(List<Square> squares, int width, int height, params string[] inputs)
         {
             var mapString = String.Join(Environment.NewLine, inputs);
             var expected = new Map(width, height, squares);

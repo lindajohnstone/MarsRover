@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MarsRover
 {
@@ -66,6 +67,10 @@ namespace MarsRover
             return input.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        
+        public static bool AreCommandsValid(string commands)
+        {
+            var validCommands = "flrbFLRB";
+            return commands.All(c => validCommands.Contains(c));
+        }
     }
 }

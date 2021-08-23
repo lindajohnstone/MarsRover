@@ -10,7 +10,7 @@ namespace MarsRover.Tests
             new TheoryData<List<Square>, int, int, Location, SquareContent>
             {
                 {
-                    new List<Square>
+                    new List<Square> 
                     {
                         new Square(SquareContent.Obstacle, 0, 0),
                         new Square(SquareContent.None, 1, 0),

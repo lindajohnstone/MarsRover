@@ -17,7 +17,7 @@ namespace MarsRover
 
         public Location Location { get; private set; }
 
-        public Direction TurnLeft(Command command) // TODO: talk at Mentor meeting about changing to switch expression
+        public Direction Turn(Command command) // TODO: talk at Mentor meeting about changing to switch expression
         {   
             if (Direction == Direction.North) return Direction.West;
             if (Direction == Direction.South) return Direction.East;

@@ -10,7 +10,7 @@ namespace MarsRover.Tests
         [InlineData("NNNN\nNNNO\nNNNN")]
         [InlineData("ONN\nNNN\nNNN")]
         [InlineData("ONNNNON\nNNNNNNN\nNNNNNNN")]
-        public void ReturnTrue_GivenValidMapString(string mapString)
+        public void IsValidMap_ReturnTrue_GivenValidMapString(string mapString)
         {
             var result = Validator.IsValidMap(mapString);
 
@@ -21,7 +21,7 @@ namespace MarsRover.Tests
         [InlineData("ONNN")]
         [InlineData("ONNN\nNNN")]
         [InlineData("PNNN\nNNN")]
-        public void ReturnFalse_GivenInvalidMapString(string mapString)
+        public void IsValidMap_ReturnFalse_GivenInvalidMapString(string mapString)
         {
             var result = Validator.IsValidMap(mapString);
 
@@ -37,7 +37,7 @@ namespace MarsRover.Tests
         [InlineData("e")]
         [InlineData("W")]
         [InlineData("w")]
-        public void ReturnTrue_GivenValidDirectionString(string directionString)
+        public void IsValidDirection_ReturnTrue_GivenValidDirectionString(string directionString)
         {
             var result = Validator.IsValidDirection(directionString);
 
@@ -49,7 +49,7 @@ namespace MarsRover.Tests
         [InlineData("1")]
         [InlineData("a")]
         [InlineData(".")]
-        public void ReturnFalse_GivenInvalidDirectionString(string directionString)
+        public void IsValidDirection_ReturnFalse_GivenInvalidDirectionString(string directionString)
         {
             var result = Validator.IsValidDirection(directionString);
 
@@ -61,7 +61,7 @@ namespace MarsRover.Tests
         [InlineData("24,5", 25, 10)]
         [InlineData("99,0", 100, 3)]
         [InlineData("0,10", 20, 20)]
-        public void ReturnTrue_GivenValidLocationString(string input, int width, int height)
+        public void IsValidLocation_ReturnTrue_GivenValidLocationString(string input, int width, int height)
         {
             var result = Validator.IsValidLocation(input, width, height);
 
@@ -80,9 +80,29 @@ namespace MarsRover.Tests
         [InlineData("4,-1", 3, 3)]
         [InlineData("0,0", -10, 3)]
         [InlineData("0,0", 3, -10)]
-        public void ReturnFalse_GivenInvalidLocationString(string input, int width, int height)
+        public void IsValidLocation_ReturnFalse_GivenInvalidLocationString(string input, int width, int height)
         {
             var result = Validator.IsValidLocation(input, width, height);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void AreCommandsValid_ReturnsTrue_GivenValidCommandString() 
+        {
+            var input = "flfr";
+
+            var result = Validator.AreCommandsValid(input);
+
+            Assert.True(result);
+        }
+
+        [Fact]
+        public void AreCommandsValid_ReturnFalse_GivenInvalidCommandString()
+        {
+            var input = "flkr";
+
+            var result = Validator.AreCommandsValid(input);
 
             Assert.False(result);
         }

@@ -19,5 +19,20 @@ namespace MarsRover.Tests
 
             Assert.Equal(expected, result);
         }
+
+        [Theory]
+        [InlineData(Direction.North, Direction.East)]
+        [InlineData(Direction.South, Direction.West)]
+        [InlineData(Direction.West, Direction.North)]
+        [InlineData(Direction.East, Direction.South)]
+        public void Turn_ReturnsDirection_GivenCommandTurnRight(Direction direction, Direction expected)
+        {
+            var command = Command.TurnRight;
+            var rover = new Rover(direction, 2, 2);
+
+            var result = rover.Turn(command);
+
+            Assert.Equal(expected, result);
+        }
     }
 }

@@ -38,7 +38,7 @@ namespace MarsRover.Tests
 
         [Theory]
         [MemberData(nameof(InputParserShouldTestData.ParseCommandsTestData), MemberType = typeof(InputParserShouldTestData))]
-        public void ParseCommands_ReturnsCommands_GivenValidString(string input, List<Commands> expected)
+        public void ParseCommands_ReturnsCommands_GivenValidString(string input, List<Command> expected)
         {
             var result = InputParser.ParseCommands(input);
 

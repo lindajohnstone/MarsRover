@@ -1,6 +1,6 @@
 namespace MarsRover
 {
-    public enum Commands
+    public enum Command // Rover follows SINGULAR command at one time, not multiple
     {
         Forward,
         Backward,

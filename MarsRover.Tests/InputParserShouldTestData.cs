@@ -5,37 +5,37 @@ namespace MarsRover.Tests
 {
     public class InputParserShouldTestData
     {
-        public static TheoryData<string, List<Commands>> ParseCommandsTestData =
-            new TheoryData<string, List<Commands>>
+        public static TheoryData<string, List<Command>> ParseCommandsTestData =
+            new TheoryData<string, List<Command>>
             {
                 {
                     "flfr",
-                    new List<Commands>
+                    new List<Command>
                     {
-                        Commands.Forward,
-                        Commands.TurnLeft,
-                        Commands.Forward,
-                        Commands.TurnRight
+                        Command.Forward,
+                        Command.TurnLeft,
+                        Command.Forward,
+                        Command.TurnRight
                     }
                 },
                 {
                     "blbr",
-                    new List<Commands>
+                    new List<Command>
                     {
-                        Commands.Backward,
-                        Commands.TurnLeft,
-                        Commands.Backward,
-                        Commands.TurnRight
+                        Command.Backward,
+                        Command.TurnLeft,
+                        Command.Backward,
+                        Command.TurnRight
                     }
                 },
                 {
                     "FRBR",
-                    new List<Commands>
+                    new List<Command>
                     {
-                        Commands.Forward,
-                        Commands.TurnRight,
-                        Commands.Backward,
-                        Commands.TurnRight
+                        Command.Forward,
+                        Command.TurnRight,
+                        Command.Backward,
+                        Command.TurnRight
                     }
                 }
             };

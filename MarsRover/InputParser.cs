@@ -28,10 +28,10 @@ namespace MarsRover
             return input.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        public static List<Commands> ParseCommands(string commands)
+        public static List<Command> ParseCommands(string commands)
         {
             var upperCommands = commands.ToUpper();
-            var commandsList = new List<Commands>();
+            var commandsList = new List<Command>();
             foreach (var command in upperCommands)
             {
                 AddCommand(commandsList, command);
@@ -39,21 +39,21 @@ namespace MarsRover
             return commandsList;
         }
 
-        private static void AddCommand(List<Commands> commandsList, char command)
+        private static void AddCommand(List<Command> commandsList, char command)
         {
             switch (command)
             {
                 case 'F':
-                    commandsList.Add(Commands.Forward);
+                    commandsList.Add(Command.Forward);
                     break;
                 case 'B':
-                    commandsList.Add(Commands.Backward);
+                    commandsList.Add(Command.Backward);
                     break;
                 case 'L':
-                    commandsList.Add(Commands.TurnLeft);
+                    commandsList.Add(Command.TurnLeft);
                     break;
                 case 'R':
-                    commandsList.Add(Commands.TurnRight);
+                    commandsList.Add(Command.TurnRight);
                     break;
 
             }

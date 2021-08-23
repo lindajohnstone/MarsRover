@@ -25,7 +25,6 @@ namespace MarsRover
             if (command == Command.TurnLeft && Direction == Direction.East) return Direction.North;
             if (command == Command.TurnRight && Direction == Direction.North) return Direction.East;
             if (command == Command.TurnRight && Direction == Direction.South) return Direction.West;
-            if (command == Command.TurnRight && Direction == Direction.South) return Direction.West;
             if (command == Command.TurnRight && Direction == Direction.West) return Direction.North;
             if (command == Command.TurnRight && Direction == Direction.East) return Direction.South;
             return Direction.None;

@@ -87,21 +87,22 @@ namespace MarsRover.Tests
             Assert.False(result);
         }
 
-        [Fact]
-        public void AreCommandsValid_ReturnsTrue_GivenValidCommandString() 
+        [Theory]
+        [InlineData("flfr")]
+        [InlineData("blbr")]
+        public void AreCommandsValid_ReturnsTrue_GivenValidCommandString(string input) 
         {
-            var input = "flfr";
-
             var result = Validator.AreCommandsValid(input);
 
             Assert.True(result);
         }
 
-        [Fact]
-        public void AreCommandsValid_ReturnFalse_GivenInvalidCommandString()
+        [Theory]
+        [InlineData("flkr")]
+        [InlineData("1234")]
+        [InlineData("_flkr")]
+        public void AreCommandsValid_ReturnFalse_GivenInvalidCommandString(string input)
         {
-            var input = "flkr";
-
             var result = Validator.AreCommandsValid(input);
 
             Assert.False(result);

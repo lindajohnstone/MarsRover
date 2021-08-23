@@ -10,7 +10,7 @@ namespace MarsRover.Tests
         [InlineData("NNNN\nNNNO\nNNNN")]
         [InlineData("ONN\nNNN\nNNN")]
         [InlineData("ONNNNON\nNNNNNNN\nNNNNNNN")]
-        public void IsValidMap_ReturnTrue_GivenValidMapString(string mapString)
+        public void IsValidMap_ReturnsTrue_GivenValidMapString(string mapString)
         {
             var result = Validator.IsValidMap(mapString);
 
@@ -21,7 +21,7 @@ namespace MarsRover.Tests
         [InlineData("ONNN")]
         [InlineData("ONNN\nNNN")]
         [InlineData("PNNN\nNNN")]
-        public void IsValidMap_ReturnFalse_GivenInvalidMapString(string mapString)
+        public void IsValidMap_ReturnsFalse_GivenInvalidMapString(string mapString)
         {
             var result = Validator.IsValidMap(mapString);
 
@@ -37,7 +37,7 @@ namespace MarsRover.Tests
         [InlineData("e")]
         [InlineData("W")]
         [InlineData("w")]
-        public void IsValidDirection_ReturnTrue_GivenValidDirectionString(string directionString)
+        public void IsValidDirection_ReturnsTrue_GivenValidDirectionString(string directionString)
         {
             var result = Validator.IsValidDirection(directionString);
 
@@ -49,7 +49,7 @@ namespace MarsRover.Tests
         [InlineData("1")]
         [InlineData("a")]
         [InlineData(".")]
-        public void IsValidDirection_ReturnFalse_GivenInvalidDirectionString(string directionString)
+        public void IsValidDirection_ReturnsFalse_GivenInvalidDirectionString(string directionString)
         {
             var result = Validator.IsValidDirection(directionString);
 
@@ -61,7 +61,7 @@ namespace MarsRover.Tests
         [InlineData("24,5", 25, 10)]
         [InlineData("99,0", 100, 3)]
         [InlineData("0,10", 20, 20)]
-        public void IsValidLocation_ReturnTrue_GivenValidLocationString(string input, int width, int height)
+        public void IsValidLocation_ReturnsTrue_GivenValidLocationString(string input, int width, int height)
         {
             var result = Validator.IsValidLocation(input, width, height);
 
@@ -80,7 +80,7 @@ namespace MarsRover.Tests
         [InlineData("4,-1", 3, 3)]
         [InlineData("0,0", -10, 3)]
         [InlineData("0,0", 3, -10)]
-        public void IsValidLocation_ReturnFalse_GivenInvalidLocationString(string input, int width, int height)
+        public void IsValidLocation_ReturnsFalse_GivenInvalidLocationString(string input, int width, int height)
         {
             var result = Validator.IsValidLocation(input, width, height);
 
@@ -90,6 +90,7 @@ namespace MarsRover.Tests
         [Theory]
         [InlineData("flfr")]
         [InlineData("blbr")]
+        [InlineData("BLBR")]
         public void AreCommandsValid_ReturnsTrue_GivenValidCommandString(string input) 
         {
             var result = Validator.AreCommandsValid(input);
@@ -101,7 +102,7 @@ namespace MarsRover.Tests
         [InlineData("flkr")]
         [InlineData("1234")]
         [InlineData("_flkr")]
-        public void AreCommandsValid_ReturnFalse_GivenInvalidCommandString(string input)
+        public void AreCommandsValid_ReturnsFalse_GivenInvalidCommandString(string input)
         {
             var result = Validator.AreCommandsValid(input);
 

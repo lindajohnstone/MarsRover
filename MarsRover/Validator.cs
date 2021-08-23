@@ -69,7 +69,7 @@ namespace MarsRover
 
         public static bool AreCommandsValid(string commands)
         {
-            var validCommands = "flrb";
+            var validCommands = "flrbFLRB";
             return commands.All(c => validCommands.Contains(c));
         }
     }

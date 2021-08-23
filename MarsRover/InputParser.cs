@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace MarsRover
@@ -25,6 +26,37 @@ namespace MarsRover
         private static string[] SplitInput(string input, string delimiter)
         {
             return input.Split(delimiter, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        public static List<Commands> ParseCommands(string commands)
+        {
+            var upperCommands = commands.ToUpper();
+            var commandsList = new List<Commands>();
+            foreach (var command in upperCommands)
+            {
+                AddCommand(commandsList, command);
+            }
+            return commandsList;
+        }
+
+        private static void AddCommand(List<Commands> commandsList, char command)
+        {
+            switch (command)
+            {
+                case 'F':
+                    commandsList.Add(Commands.Forward);
+                    break;
+                case 'B':
+                    commandsList.Add(Commands.Backward);
+                    break;
+                case 'L':
+                    commandsList.Add(Commands.TurnLeft);
+                    break;
+                case 'R':
+                    commandsList.Add(Commands.TurnRight);
+                    break;
+
+            }
         }
     }
 }

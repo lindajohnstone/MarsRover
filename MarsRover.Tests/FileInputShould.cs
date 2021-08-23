@@ -12,7 +12,7 @@ namespace MarsRover.Tests
         }
         [Theory]
         [MemberData(nameof(FileInputShouldTestData.FileInputTestData), MemberType = typeof(FileInputShouldTestData))]
-        public void Read_ReturnString_GivenFileInput(string path, params string[] inputs)
+        public void Read_ReturnsString_GivenFileInput(string path, params string[] inputs)
         {
             var expected = String.Join(Environment.NewLine, inputs);
 
@@ -26,7 +26,7 @@ namespace MarsRover.Tests
         [InlineData("TestFiles/testFile2.txt")]
         [InlineData("TestFiles/testFile3.txt")]
         [InlineData("TestFiles/testFile4.txt")]
-        public void FileExists_ReturnTrue_GivenValidFilePath(string path)
+        public void FileExists_ReturnsTrue_GivenValidFilePath(string path)
         {
             var result = _fileInput.FileExists(path);
 
@@ -38,7 +38,7 @@ namespace MarsRover.Tests
         [InlineData("TestFile/testFile2.rtf")]
         [InlineData("TestFiles/testFile3")]
         [InlineData("TestFiles/Test/testFile4.txt")]
-        public void FileExists_ReturnFalse_GivenInvalidFilePath(string path)
+        public void FileExists_ReturnsFalse_GivenInvalidFilePath(string path)
         {
             var result = _fileInput.FileExists(path);
 

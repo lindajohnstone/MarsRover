@@ -57,15 +57,15 @@ namespace MarsRover.Tests
         [InlineData(Direction.South, 2, 1)]
         [InlineData(Direction.West, 3, 2)]
         [InlineData(Direction.East, 1, 2)]
-        public void Move_ReturnsLocation_GivenCommandBackward(Direction direction, int x, int y)
+        public void Move_ReturnEndLocation_GivenCommandBackward(Direction direction, int x, int y)
         {
-            var expected = new Location(x, y);
+            var expectedEndLocation = new Location(x, y);
             var command = Command.Backward;
             var rover = new Rover(direction, 2, 2);
 
             var result = rover.Move(command);
 
-            result.Should().BeEquivalentTo(expected);
+            result.Should().BeEquivalentTo(expectedEndLocation);
         }
     }
 }

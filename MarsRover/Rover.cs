@@ -43,7 +43,7 @@ namespace MarsRover
             return Direction.None;
         }
 
-        public Location Move(Command command)// TODO: does Rover need to know the Map dimensions?? // TODO: refactor
+        public Location Move(Command command) // TODO: refactor
         {
             if (command == Command.Forward && Direction == Direction.North) return new Location(Location.X, Location.Y - 1);
             if (command == Command.Forward && Direction == Direction.South) return new Location(Location.X, Location.Y + 1);

@@ -37,6 +37,16 @@ namespace MarsRover.Tests
                         Command.Backward,
                         Command.TurnRight
                     }
+                },
+                {
+                    "flBr",
+                    new List<Command>
+                    {
+                        Command.Forward,
+                        Command.TurnLeft,
+                        Command.Backward,
+                        Command.TurnRight
+                    }
                 }
             };
     }

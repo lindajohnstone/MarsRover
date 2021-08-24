@@ -20,5 +20,11 @@ namespace MarsRover
         {
             return Squares.FirstOrDefault(square => square.Location.X == location.X && square.Location.Y == location.Y);
         }
+
+        public bool HasObstacle(Location location)
+        {
+            var square = GetSquareAtLocation(location);
+            return square.HasObstacle();
+        }
     }
 }

@@ -6,7 +6,7 @@ namespace MarsRover.Tests
 {
     public class MapShouldTestData
     {
-        public static TheoryData<List<Square>, int, int, Location, SquareContent> MapTestData =
+        public static TheoryData<List<Square>, int, int, Location, SquareContent> GetSquareAtLocationTestData =
             new TheoryData<List<Square>, int, int, Location, SquareContent>
             {
                 {

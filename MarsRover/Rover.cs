@@ -43,7 +43,7 @@ namespace MarsRover
             return Direction.None;
         }
 
-        public Location Move(Command command) // TODO: refactor
+        public Location Move(Command command) // TODO: refactor - including rename??
         {
             if (command == Command.Forward && Direction == Direction.North) return new Location(Location.X, Location.Y - 1);
             if (command == Command.Forward && Direction == Direction.South) return new Location(Location.X, Location.Y + 1);

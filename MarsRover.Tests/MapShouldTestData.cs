@@ -60,5 +60,10 @@ namespace MarsRover.Tests
                     SquareContent.None
                 }
             };
+
+        internal static object HasObstacleTestData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

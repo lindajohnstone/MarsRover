@@ -47,7 +47,7 @@ namespace MarsRover.Tests
             var command = Command.Forward;
             var rover = new Rover(direction, 2, 2);
 
-            var result = rover.Move(command);
+            var result = rover.GetTargetLocation(command);
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -63,7 +63,7 @@ namespace MarsRover.Tests
             var command = Command.Backward;
             var rover = new Rover(direction, 2, 2);
 
-            var result = rover.Move(command);
+            var result = rover.GetTargetLocation(command);
 
             result.Should().BeEquivalentTo(expectedEndLocation);
         }

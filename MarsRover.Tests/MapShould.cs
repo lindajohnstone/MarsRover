@@ -20,7 +20,8 @@ namespace MarsRover.Tests
             result.Should().BeEquivalentTo(expected);
         }
 
-        [Fact]
+        [Theory]
+        [MemberData(nameof(MapShouldTestData.HasObstacleTestData), MemberType = typeof(MapShouldTestData))]
         public void HasObstacle_ReturnsTrue_GivenLocation()
         {
             var width = 5;

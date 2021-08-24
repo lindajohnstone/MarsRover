@@ -89,8 +89,14 @@ namespace MarsRover
             if ((turnRight && west) || (turnLeft && east)) return turnNorth;
 
             return Direction.None;
-            
         }
+
+        // Move logic:
+        // GetTargetLocation to determine where Rover should Move to
+        // use Map.GetSquareAtLocation in order to find SquareContents
+        // use Map.HasObstacle on the square to check if there is an obstacle
+        // if no obstacle, set Rover.Location to the location of that square
+        // if there is an obstacle, Rover.Location remains the same
 
         public Location GetTargetLocation(Command command) 
         {
@@ -102,7 +108,7 @@ namespace MarsRover
             // if (command == Command.Backward && Direction == Direction.South) return new Location(Location.X, Location.Y - 1);
             // if (command == Command.Backward && Direction == Direction.West) return new Location(Location.X + 1, Location.Y);
             // if (command == Command.Backward && Direction == Direction.East) return new Location(Location.X - 1, Location.Y);
-            if (command == Command.Forward)
+            if (command == Command.Forward) // TODO: variables for Location.X & Location.Y et al??
             {
                 return Direction switch
                 {

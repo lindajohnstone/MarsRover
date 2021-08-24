@@ -23,10 +23,10 @@ namespace MarsRover.Tests
         }
 
         [Theory]
-        [InlineData("TestFiles/valid-file-1.txt")]
-        [InlineData("TestFiles/valid-file-2.txt")]
-        [InlineData("TestFiles/valid-file-3.txt")]
-        [InlineData("TestFiles/valid-file-4.txt")]
+        [InlineData("TestFiles/validFile1.txt")]
+        [InlineData("TestFiles/validFile2.txt")]
+        [InlineData("TestFiles/validFile3.txt")]
+        [InlineData("TestFiles/validFile4.txt")]
         public void FileExists_ReturnsTrue_GivenValidFilePath(string path)
         {
             var result = _fileInput.FileExists(path);
@@ -35,10 +35,10 @@ namespace MarsRover.Tests
         }
 
         [Theory]
-        [InlineData("TestFiles/file-does-no-exist.txt")]
-        [InlineData("TestFile/bad-extension.rtf")]
-        [InlineData("TestFiles/no-extension")]
-        [InlineData("TestFiles/Test/bad-folder.txt")]
+        [InlineData("TestFiles/fileDoesNotExist.txt")]
+        [InlineData("TestFile/badExtension.rtf")]
+        [InlineData("TestFiles/noExtension")]
+        [InlineData("TestFiles/Test/badFolder.txt")]
         public void FileExists_ReturnsFalse_GivenInvalidFilePath(string path)
         {
             var result = _fileInput.FileExists(path);

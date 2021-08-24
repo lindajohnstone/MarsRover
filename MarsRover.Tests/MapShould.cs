@@ -22,36 +22,11 @@ namespace MarsRover.Tests
 
         [Theory]
         [MemberData(nameof(MapShouldTestData.HasObstacleTestData), MemberType = typeof(MapShouldTestData))]
-        public void HasObstacle_ReturnsTrue_GivenLocation()
+        public void HasObstacle_ReturnsTrue_GivenLocation(int x, int y)
         {
-            var width = 5;
-            var height = 4;
-            var squares = new List<Square>
-            {
-                new Square(SquareContent.Obstacle, 0, 0),
-                new Square(SquareContent.None, 1, 0),
-                new Square(SquareContent.None, 2, 0),
-                new Square(SquareContent.None, 3, 0),
-                new Square(SquareContent.None, 4, 0),
-                new Square(SquareContent.None, 0, 1),
-                new Square(SquareContent.None, 1, 1),
-                new Square(SquareContent.None, 2, 1),
-                new Square(SquareContent.None, 3, 1),
-                new Square(SquareContent.Obstacle, 4, 1),
-                new Square(SquareContent.None, 0, 2),
-                new Square(SquareContent.None, 1, 2),
-                new Square(SquareContent.Obstacle, 2, 2),
-                new Square(SquareContent.None, 3, 2),
-                new Square(SquareContent.None, 4, 2),
-                new Square(SquareContent.None, 0, 3),
-                new Square(SquareContent.None, 1, 3),
-                new Square(SquareContent.Obstacle, 2, 3),
-                new Square(SquareContent.None, 3, 3),
-                new Square(SquareContent.None, 4, 3)
-            };
-            var map = new Map(width, height, squares);
+            Map map = MapShouldTestData.SetMap();
 
-            var result = map.HasObstacle(new Location(0, 0));
+            var result = map.HasObstacle(new Location(x, y));
 
             Assert.True(result);
         }

@@ -8,7 +8,7 @@ namespace MarsRover.Tests
             new TheoryData<string, string[]>
             {
                 {
-                    "TestFiles/testFile1.txt",
+                    "TestFiles/validFile1.txt",
                     new string[]
                     {
                         "ONNN",
@@ -17,7 +17,7 @@ namespace MarsRover.Tests
                     }
                 },
                 {
-                    "TestFiles/testFile2.txt",
+                    "TestFiles/validFile2.txt",
                     new string[]
                     {
                         "ONNNNNNNNNNN", 
@@ -31,7 +31,7 @@ namespace MarsRover.Tests
                     }
                 },
                 {
-                    "TestFiles/testFile3.txt",
+                    "TestFiles/validFile3.txt",
                     new string[]
                     {
                         "ONNNNNNN", 
@@ -40,7 +40,7 @@ namespace MarsRover.Tests
                     }
                 },
                 {
-                    "TestFiles/testFile4.txt",
+                    "TestFiles/validFile4.txt",
                     new string[]
                     {
                         "ONNNNNNN", 

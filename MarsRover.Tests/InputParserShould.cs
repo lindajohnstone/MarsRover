@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Xunit;
@@ -20,7 +19,7 @@ namespace MarsRover.Tests
         {
             var result = InputParser.ParseDirection(input);
 
-            Assert.Equal(expected, result);
+            result.Should().Equals(expected);
         }
 
         [Theory]

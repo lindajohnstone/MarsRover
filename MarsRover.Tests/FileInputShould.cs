@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using Xunit;
 
 namespace MarsRover.Tests
@@ -18,31 +19,31 @@ namespace MarsRover.Tests
 
             var result = _fileInput.Read(path);
 
-            Assert.Equal(expected, result);
+            result.Should().BeEquivalentTo(expected);
         }
 
         [Theory]
-        [InlineData("TestFiles/testFile1.txt")]
-        [InlineData("TestFiles/testFile2.txt")]
-        [InlineData("TestFiles/testFile3.txt")]
-        [InlineData("TestFiles/testFile4.txt")]
+        [InlineData("TestFiles/validFile1.txt")]
+        [InlineData("TestFiles/validFile2.txt")]
+        [InlineData("TestFiles/validFile3.txt")]
+        [InlineData("TestFiles/validFile4.txt")]
         public void FileExists_ReturnsTrue_GivenValidFilePath(string path)
         {
             var result = _fileInput.FileExists(path);
 
-            Assert.True(result);
+            result.Should().BeTrue();
         }
 
         [Theory]
-        [InlineData("TestFiles/testFile.txt")]
-        [InlineData("TestFile/testFile2.rtf")]
-        [InlineData("TestFiles/testFile3")]
-        [InlineData("TestFiles/Test/testFile4.txt")]
+        [InlineData("TestFiles/fileDoesNotExist.txt")]
+        [InlineData("TestFile/badExtension.rtf")]
+        [InlineData("TestFiles/noExtension")]
+        [InlineData("TestFiles/Test/badFolder.txt")]
         public void FileExists_ReturnsFalse_GivenInvalidFilePath(string path)
         {
             var result = _fileInput.FileExists(path);
 
-            Assert.False(result);
+            result.Should().BeFalse();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace MarsRover
 
         public Location Location { get; private set; }
 
-        public bool HasObstacle() // TODO: to be tested through Rover or Controller
+        public bool HasObstacle() 
         {
             return Content == SquareContent.Obstacle;
         }

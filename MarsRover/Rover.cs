@@ -94,16 +94,38 @@ namespace MarsRover
             
         }
 
-        public Location GetTargetLocation(Command command) // TODO: refactor
+        public Location GetTargetLocation(Command command) 
         {
-            if (command == Command.Forward && Direction == Direction.North) return new Location(Location.X, Location.Y - 1);
-            if (command == Command.Forward && Direction == Direction.South) return new Location(Location.X, Location.Y + 1);
-            if (command == Command.Forward && Direction == Direction.West) return new Location(Location.X - 1, Location.Y);
-            if (command == Command.Forward && Direction == Direction.East) return new Location(Location.X + 1, Location.Y);
-            if (command == Command.Backward && Direction == Direction.North) return new Location(Location.X, Location.Y + 1);
-            if (command == Command.Backward && Direction == Direction.South) return new Location(Location.X, Location.Y - 1);
-            if (command == Command.Backward && Direction == Direction.West) return new Location(Location.X + 1, Location.Y);
-            if (command == Command.Backward && Direction == Direction.East) return new Location(Location.X - 1, Location.Y);
+            // if (command == Command.Forward && Direction == Direction.North) return new Location(Location.X, Location.Y - 1);
+            // if (command == Command.Forward && Direction == Direction.South) return new Location(Location.X, Location.Y + 1);
+            // if (command == Command.Forward && Direction == Direction.West) return new Location(Location.X - 1, Location.Y);
+            // if (command == Command.Forward && Direction == Direction.East) return new Location(Location.X + 1, Location.Y);
+            // if (command == Command.Backward && Direction == Direction.North) return new Location(Location.X, Location.Y + 1);
+            // if (command == Command.Backward && Direction == Direction.South) return new Location(Location.X, Location.Y - 1);
+            // if (command == Command.Backward && Direction == Direction.West) return new Location(Location.X + 1, Location.Y);
+            // if (command == Command.Backward && Direction == Direction.East) return new Location(Location.X - 1, Location.Y);
+            if (command == Command.Forward)
+            {
+                return Direction switch
+                {
+                    Direction.North => new Location(Location.X, Location.Y - 1),
+                    Direction.South => new Location(Location.X, Location.Y + 1),
+                    Direction.West => new Location(Location.X - 1, Location.Y),
+                    Direction.East => new Location(Location.X + 1, Location.Y),
+                    _ => new Location(Location.X, Location.Y)
+                };
+            }
+            else if (command == Command.Backward)
+            {
+                return Direction switch
+                {
+                    Direction.North => new Location(Location.X, Location.Y + 1),
+                    Direction.South => new Location(Location.X, Location.Y - 1),
+                    Direction.West => new Location(Location.X + 1, Location.Y),
+                    Direction.East => new Location(Location.X - 1, Location.Y),
+                    _ => new Location(Location.X, Location.Y)
+                };
+            }
             return Location;
         }
     }

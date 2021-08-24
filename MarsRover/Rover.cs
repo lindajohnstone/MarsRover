@@ -17,12 +17,15 @@ namespace MarsRover
 
         public Location Location { get; private set; }
 
-        public void DoThisCommand(Command command)
+        public void ExecuteCommand(Command command)
         {
             switch (command)
             {
                 case Command.TurnLeft:
                     TurnLeft();
+                    break;
+                case Command.TurnRight:
+                    TurnRight();
                     break;
                 default:
                     return;
@@ -40,8 +43,30 @@ namespace MarsRover
                 _ => Direction.None
             };
         }
-        public Direction Turn(Command command) 
+
+        private void TurnRight()
         {
+            Direction = Direction switch
+            {
+                Direction.North => Direction.East,
+                Direction.West => Direction.North,
+                Direction.South => Direction.West,
+                Direction.East => Direction.South,
+                _ => Direction.None
+            };
+        }
+
+        private Direction Turn(Command command) // TODO: delete
+        {
+            // if (command == Command.TurnLeft && Direction == Direction.North) return Direction.West;
+            // if (command == Command.TurnLeft && Direction == Direction.South) return Direction.East;
+            // if (command == Command.TurnLeft && Direction == Direction.West) return Direction.South;
+            // if (command == Command.TurnLeft && Direction == Direction.East) return Direction.North;
+            // if (command == Command.TurnRight && Direction == Direction.North) return Direction.East;
+            // if (command == Command.TurnRight && Direction == Direction.South) return Direction.West;
+            // if (command == Command.TurnRight && Direction == Direction.South) return Direction.West;
+            // if (command == Command.TurnRight && Direction == Direction.West) return Direction.North;
+            // if (command == Command.TurnRight && Direction == Direction.East) return Direction.South;
             var turnLeft = command == Command.TurnLeft;
             var turnRight = command == Command.TurnRight;
             
@@ -66,18 +91,10 @@ namespace MarsRover
             if ((turnRight && west) || (turnLeft && east)) return turnNorth;
 
             return Direction.None;
-            // if (command == Command.TurnLeft && Direction == Direction.North) return Direction.West;
-            // if (command == Command.TurnLeft && Direction == Direction.South) return Direction.East;
-            // if (command == Command.TurnLeft && Direction == Direction.West) return Direction.South;
-            // if (command == Command.TurnLeft && Direction == Direction.East) return Direction.North;
-            // if (command == Command.TurnRight && Direction == Direction.North) return Direction.East;
-            // if (command == Command.TurnRight && Direction == Direction.South) return Direction.West;
-            // if (command == Command.TurnRight && Direction == Direction.South) return Direction.West;
-            // if (command == Command.TurnRight && Direction == Direction.West) return Direction.North;
-            // if (command == Command.TurnRight && Direction == Direction.East) return Direction.South;
+            
         }
 
-        public Location GetTargetLocation(Command command) // TODO: refactor - including rename??
+        public Location GetTargetLocation(Command command) // TODO: refactor
         {
             if (command == Command.Forward && Direction == Direction.North) return new Location(Location.X, Location.Y - 1);
             if (command == Command.Forward && Direction == Direction.South) return new Location(Location.X, Location.Y + 1);

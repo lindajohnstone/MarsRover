@@ -11,14 +11,15 @@ namespace MarsRover.Tests
         [InlineData(Direction.South, Direction.East)]
         [InlineData(Direction.West, Direction.South)]
         [InlineData(Direction.East, Direction.North)]
-        public void Turn_ReturnsDirection_GivenCommandTurnLeft(Direction direction, Direction expected)
+        public void ExecuteCommand_ReturnsDirection_GivenCommandTurnLeft(Direction direction, Direction expected)
         {
             var command = Command.TurnLeft;
             var rover = new Rover(direction, 2, 2);
+            rover.Direction.Should().Equals(direction);
 
-            var result = rover.Turn(command);
+            rover.ExecuteCommand(command);
 
-            result.Should().Equals(expected);
+            rover.Direction.Should().Equals(expected);
         }
 
         [Theory]
@@ -26,14 +27,15 @@ namespace MarsRover.Tests
         [InlineData(Direction.South, Direction.West)]
         [InlineData(Direction.West, Direction.North)]
         [InlineData(Direction.East, Direction.South)]
-        public void Turn_ReturnsDirection_GivenCommandTurnRight(Direction direction, Direction expected)
+        public void ExecuteCommand_ReturnsDirection_GivenCommandTurnRight(Direction direction, Direction expected)
         {
             var command = Command.TurnRight;
             var rover = new Rover(direction, 2, 2);
+            rover.Direction.Should().Equals(direction);
 
-            var result = rover.Turn(command);
+            rover.ExecuteCommand(command);
 
-            result.Should().Equals(expected);
+            rover.Direction.Should().Equals(expected);
         }
 
         [Theory]

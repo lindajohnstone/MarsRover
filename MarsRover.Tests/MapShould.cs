@@ -21,14 +21,25 @@ namespace MarsRover.Tests
         }
 
         [Theory]
-        [MemberData(nameof(MapShouldTestData.HasObstacleTestData), MemberType = typeof(MapShouldTestData))]
+        [MemberData(nameof(MapShouldTestData.HasObstacleTrueTestData), MemberType = typeof(MapShouldTestData))]
         public void HasObstacle_ReturnsTrue_GivenLocation(int x, int y)
         {
             Map map = MapShouldTestData.SetMap();
 
             var result = map.HasObstacle(new Location(x, y));
 
-            Assert.True(result);
+            result.Should().BeTrue();
+        }
+
+        [Theory]
+        [MemberData(nameof(MapShouldTestData.HasObstacleFalseTestData), MemberType = typeof(MapShouldTestData))]
+        public void HasObstacle_ReturnsFalse_GivenLocation(int x, int y)
+        {
+            Map map = MapShouldTestData.SetMap();
+
+            var result = map.HasObstacle(new Location(x, y));
+
+            result.Should().BeFalse();
         }
     }
 }

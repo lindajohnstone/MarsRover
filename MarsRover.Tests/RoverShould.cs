@@ -18,7 +18,7 @@ namespace MarsRover.Tests
 
             var result = rover.Turn(command);
 
-            Assert.Equal(expected, result);
+            result.Should().Equals(expected);
         }
 
         [Theory]
@@ -33,7 +33,7 @@ namespace MarsRover.Tests
 
             var result = rover.Turn(command);
 
-            Assert.Equal(expected, result);
+            result.Should().Equals(expected);
         }
 
         [Theory]

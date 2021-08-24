@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using Xunit;
 
 namespace MarsRover.Tests
@@ -14,7 +15,7 @@ namespace MarsRover.Tests
         {
             var result = Validator.IsValidMap(mapString);
 
-            Assert.True(result);
+            result.Should().BeTrue();
         }
 
         [Theory]
@@ -25,7 +26,7 @@ namespace MarsRover.Tests
         {
             var result = Validator.IsValidMap(mapString);
 
-            Assert.False(result);
+            result.Should().BeFalse();
         }
 
         [Theory]
@@ -41,7 +42,7 @@ namespace MarsRover.Tests
         {
             var result = Validator.IsValidDirection(directionString);
 
-            Assert.True(result);
+            result.Should().BeTrue();
         }
 
         [Theory]
@@ -53,7 +54,7 @@ namespace MarsRover.Tests
         {
             var result = Validator.IsValidDirection(directionString);
 
-            Assert.False(result);
+            result.Should().BeFalse();
         }
 
         [Theory]
@@ -65,7 +66,7 @@ namespace MarsRover.Tests
         {
             var result = Validator.IsValidLocation(input, width, height);
 
-            Assert.True(result);
+            result.Should().BeTrue();
         }
 
         [Theory]
@@ -84,18 +85,19 @@ namespace MarsRover.Tests
         {
             var result = Validator.IsValidLocation(input, width, height);
 
-            Assert.False(result);
+            result.Should().BeFalse();
         }
 
         [Theory]
         [InlineData("flfr")]
         [InlineData("blbr")]
         [InlineData("BLBR")]
+        [InlineData("BlBr")]
         public void AreCommandsValid_ReturnsTrue_GivenValidCommandString(string input) 
         {
             var result = Validator.AreCommandsValid(input);
 
-            Assert.True(result);
+            result.Should().BeTrue();
         }
 
         [Theory]
@@ -106,7 +108,7 @@ namespace MarsRover.Tests
         {
             var result = Validator.AreCommandsValid(input);
 
-            Assert.False(result);
+            result.Should().BeFalse();
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using FluentAssertions;
 using Xunit;
 
 namespace MarsRover.Tests
@@ -18,7 +19,7 @@ namespace MarsRover.Tests
 
             var result = _fileInput.Read(path);
 
-            Assert.Equal(expected, result);
+            result.Should().BeEquivalentTo(expected);
         }
 
         [Theory]
@@ -30,7 +31,7 @@ namespace MarsRover.Tests
         {
             var result = _fileInput.FileExists(path);
 
-            Assert.True(result);
+            result.Should().BeTrue();
         }
 
         [Theory]
@@ -42,7 +43,7 @@ namespace MarsRover.Tests
         {
             var result = _fileInput.FileExists(path);
 
-            Assert.False(result);
+            result.Should().BeFalse();
         }
     }
 }

@@ -61,7 +61,7 @@ namespace MarsRover.Tests
                 }
             };
 
-        public static TheoryData<int, int> HasObstacleTestData =
+        public static TheoryData<int, int> HasObstacleTrueTestData =
             new TheoryData<int, int>
             {
                 {
@@ -79,6 +79,27 @@ namespace MarsRover.Tests
                 {
                     2,
                     2
+                }
+            };
+
+        public static TheoryData<int, int> HasObstacleFalseTestData =
+            new TheoryData<int, int>
+            {
+                {
+                    3,
+                    3
+                },
+                {
+                    4,
+                    0
+                },
+                {
+                    0,
+                    3
+                },
+                {
+                    2,
+                    1
                 }
             };
         public static Map SetMap()

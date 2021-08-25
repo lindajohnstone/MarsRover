@@ -15,11 +15,10 @@ namespace MarsRover.Tests
         {
             var command = Command.TurnLeft;
             var rover = new Rover(direction, 2, 2);
-            rover.Direction.Should().Equals(direction);
 
             rover.ExecuteCommand(command);
 
-            rover.Direction.Should().Equals(expected);
+            rover.Direction.Should().Be(expected);
         }
 
         [Theory]
@@ -31,11 +30,10 @@ namespace MarsRover.Tests
         {
             var command = Command.TurnRight;
             var rover = new Rover(direction, 2, 2);
-            rover.Direction.Should().Equals(direction);
 
             rover.ExecuteCommand(command);
 
-            rover.Direction.Should().Equals(expected);
+            rover.Direction.Should().Be(expected);
         }
 
         [Theory]
@@ -49,9 +47,9 @@ namespace MarsRover.Tests
             var command = Command.Forward;
             var rover = new Rover(direction, 2, 2);
 
-            var result = rover.GetTargetLocation(command);
+            rover.ExecuteCommand(command);
 
-            result.Should().BeEquivalentTo(expected);
+            rover.Location.Should().BeEquivalentTo(expected);
         }
 
         [Theory]
@@ -65,9 +63,9 @@ namespace MarsRover.Tests
             var command = Command.Backward;
             var rover = new Rover(direction, 2, 2);
 
-            var result = rover.GetTargetLocation(command);
+            rover.ExecuteCommand(command);
 
-            result.Should().BeEquivalentTo(expectedEndLocation);
+            rover.Location.Should().BeEquivalentTo(expectedEndLocation);
         }
     }
 }

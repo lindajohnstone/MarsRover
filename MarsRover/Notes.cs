@@ -8,6 +8,8 @@ namespace MarsRover
                     - FileNotFoundException or DirectoryNotFoundException
                     - ?? File.Exists ?? (https://docs.microsoft.com/en-us/dotnet/api/system.io.file.exists?view=net-5.0)
                     - what to do if file is empty (?? if file.length = 0)
+
+                    rock emoji = 🪨
         */
     }
 }

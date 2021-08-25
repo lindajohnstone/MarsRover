@@ -45,7 +45,7 @@ namespace MarsRover
             return false;
         }
 
-        public static bool IsValidLocation(string input, int width, int height)
+        public static bool IsValidLocation(string input, int width, int height) // TODO: does the location have an obstacle?
         {
             var coordinates = SplitInput(input, ",");
             var hasTwoCoordinates = coordinates.Length == 2;

@@ -15,9 +15,7 @@ namespace MarsRover
                     var location = new Location(x, y);
                     var square = map.GetSquareAtLocation(location);
                     if (square.HasObstacle())
-                    {
                         stringBuilder.Append("O");
-                    }
                     else stringBuilder.Append("N");
                 }
                 stringBuilder.Append(Environment.NewLine);
@@ -34,25 +32,20 @@ namespace MarsRover
                 {
                     var location = new Location(x, y);
                     var square = map.GetSquareAtLocation(location);
-                    if (square.HasObstacle())
-                    {
+                    var areLocationsEqual = LocationsAreEqual(square.Location, rover.Location);
+                    if (square.HasObstacle()) 
                         stringBuilder.Append("O");
-                    }
-                    if (!square.HasObstacle() && LocationsAreEqual(square.Location, rover.Location))
-                    {
+                    if (!square.HasObstacle() && areLocationsEqual) 
                         stringBuilder.Append("R");
-                    }
-                    if (!square.HasObstacle() && !LocationsAreEqual(square.Location, rover.Location)) 
-                    {
+                    if (!square.HasObstacle() && !areLocationsEqual) 
                         stringBuilder.Append("N");
-                    }
                 }
                 stringBuilder.Append(Environment.NewLine);
             }
             return stringBuilder.ToString().TrimEnd();
         }
 
-        public static bool LocationsAreEqual(Location location1, Location location2)
+        private static bool LocationsAreEqual(Location location1, Location location2)
         {
             if (location1.X == location2.X && location1.Y == location2.Y) return true;
             return false;

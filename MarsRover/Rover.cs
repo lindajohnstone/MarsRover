@@ -47,9 +47,9 @@ namespace MarsRover
             Direction = Direction switch
             {
                 Direction.North => Direction.East,
-                Direction.West => Direction.North,
-                Direction.South => Direction.West,
                 Direction.East => Direction.South,
+                Direction.South => Direction.West,
+                Direction.West => Direction.North,
                 _ => Direction.None
             };
         }
@@ -98,39 +98,43 @@ namespace MarsRover
         // if no obstacle, set Rover.Location to the location of that square
         // if there is an obstacle, Rover.Location remains the same
 
-        public Location GetTargetLocation(Command command) 
+        public void GetTargetLocation(Command command) 
         {
-            // if (command == Command.Forward && Direction == Direction.North) return new Location(Location.X, Location.Y - 1);
-            // if (command == Command.Forward && Direction == Direction.South) return new Location(Location.X, Location.Y + 1);
-            // if (command == Command.Forward && Direction == Direction.West) return new Location(Location.X - 1, Location.Y);
-            // if (command == Command.Forward && Direction == Direction.East) return new Location(Location.X + 1, Location.Y);
-            // if (command == Command.Backward && Direction == Direction.North) return new Location(Location.X, Location.Y + 1);
-            // if (command == Command.Backward && Direction == Direction.South) return new Location(Location.X, Location.Y - 1);
-            // if (command == Command.Backward && Direction == Direction.West) return new Location(Location.X + 1, Location.Y);
-            // if (command == Command.Backward && Direction == Direction.East) return new Location(Location.X - 1, Location.Y);
-            if (command == Command.Forward) // TODO: variables for Location.X & Location.Y et al??
+            switch (command)
             {
-                return Direction switch
-                {
-                    Direction.North => new Location(Location.X, Location.Y - 1),
-                    Direction.South => new Location(Location.X, Location.Y + 1),
-                    Direction.West => new Location(Location.X - 1, Location.Y),
-                    Direction.East => new Location(Location.X + 1, Location.Y),
-                    _ => new Location(Location.X, Location.Y)
-                };
+                case Command.Forward:
+                    MoveForward();
+                    break;
+                case Command.Backward:
+                    MoveBackward();
+                    break;
+                default:
+                    return;
             }
-            else if (command == Command.Backward)
+        }
+
+        private void MoveForward()
+        {
+            Location = Direction switch
             {
-                return Direction switch
-                {
-                    Direction.North => new Location(Location.X, Location.Y + 1),
-                    Direction.South => new Location(Location.X, Location.Y - 1),
-                    Direction.West => new Location(Location.X + 1, Location.Y),
-                    Direction.East => new Location(Location.X - 1, Location.Y),
-                    _ => new Location(Location.X, Location.Y)
-                };
-            }
-            return Location;
+                Direction.North => new Location(Location.X, Location.Y - 1),
+                Direction.South => new Location(Location.X, Location.Y + 1),
+                Direction.West => new Location(Location.X - 1, Location.Y),
+                Direction.East => new Location(Location.X + 1, Location.Y),
+                _ => new Location(Location.X, Location.Y)
+            };
+        }
+
+        private void MoveBackward()
+        {
+            Location = Direction switch
+            {
+                Direction.North => new Location(Location.X, Location.Y + 1),
+                Direction.South => new Location(Location.X, Location.Y - 1),
+                Direction.West => new Location(Location.X + 1, Location.Y),
+                Direction.East => new Location(Location.X - 1, Location.Y),
+                _ => new Location(Location.X, Location.Y)
+            };
         }
     }
 }

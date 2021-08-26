@@ -3,7 +3,6 @@ namespace MarsRover
     public class Controller
     {
         /*
-        // rover check max & min width/height
             Setup:
                 ask for fileinput
                 does file exist?

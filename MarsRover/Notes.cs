@@ -10,6 +10,10 @@ namespace MarsRover
                     - what to do if file is empty (?? if file.length = 0)
 
                     rock emoji = 🪨
+                    rover = 🎆
+                    🔴
+                    💥
+                    
         */
     }
 }

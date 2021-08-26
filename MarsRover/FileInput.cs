@@ -2,7 +2,7 @@ using System.IO;
 
 namespace MarsRover
 {
-    public class FileInput : IInput
+    public class FileInput 
     {
         public string Read(string input)
         {

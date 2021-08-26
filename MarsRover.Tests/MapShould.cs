@@ -11,11 +11,11 @@ namespace MarsRover.Tests
         public void GetSquareAtLocation_ReturnCorrectSquare_GivenLocation(List<Square> squares, int width, int height, Location location, SquareContent contents)
         {
             var map = new Map(width, height, squares);
-            var expected = new Square(contents, location.X, location.Y);
+            var expectedMap = new Square(contents, location.X, location.Y);
 
             var result = map.GetSquareAtLocation(location);
 
-            result.Should().BeEquivalentTo(expected);
+            result.Should().BeEquivalentTo(expectedMap);
         }
 
         [Theory]

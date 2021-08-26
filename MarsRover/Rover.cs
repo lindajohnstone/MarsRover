@@ -15,7 +15,7 @@ namespace MarsRover
 
         public Location Location { get; private set; }
 
-        public void ExecuteCommand(Command command)
+        public void ExecuteCommand(Command command, int maxWidth, int maxHeight)
         {
             switch (command)
             {
@@ -26,10 +26,10 @@ namespace MarsRover
                     TurnRight();
                     break;
                 case Command.Forward:
-                    MoveForward();
+                    MoveForward(maxWidth, maxHeight);
                     break;
                 case Command.Backward:
-                    MoveBackward();
+                    MoveBackward(maxWidth, maxHeight);
                     break;
                 default:
                     return;
@@ -60,27 +60,26 @@ namespace MarsRover
             };
         }
 
-        // Move logic:
-        // 1/ GetTargetLocation to determine where Rover should Move to
-        // 2a/ use Map.GetSquareAtLocation in order to find Square -  ?? HasObstacle - Controller
-        // 2b/ use Map.HasObstacle on the square to check if there is an obstacle - Controller
-        // 3/ if no obstacle, set Rover.Location to the location of that square - ?? Move
-        // if there is an obstacle, Rover.Location remains the same
-
-        
-        private void MoveForward()
+ 
+        private void MoveForward(int maxWidth, int maxHeight) // need to know what direction - get next location from Command
         {
+            var x = Location.X;
+            var y = Location.Y;
+            var xLeft = x == 0 ? maxWidth - 1 : x - 1;
+            var xRight = x == maxWidth - 1 ? 0 : x + 1;
+            var yTop = y == 0 ? maxHeight - 1 : y - 1;
+            var yBottom = y == maxHeight - 1 ? 0 : y + 1;
             Location = Direction switch
             {
-                Direction.North => new Location(Location.X, Location.Y - 1),
-                Direction.South => new Location(Location.X, Location.Y + 1),
-                Direction.West => new Location(Location.X - 1, Location.Y),
-                Direction.East => new Location(Location.X + 1, Location.Y),
-                _ => new Location(Location.X, Location.Y)
+                Direction.North => new Location(x, yTop),
+                Direction.South => new Location(x, yBottom),
+                Direction.West => new Location(xLeft, y),
+                Direction.East => new Location(xRight, y),
+                _ => new Location(x, y)
             };
         }
 
-        private void MoveBackward()
+        private void MoveBackward(int maxWidth, int maxHeight)
         {
             Location = Direction switch
             {

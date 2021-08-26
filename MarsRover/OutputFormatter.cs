@@ -5,7 +5,7 @@ namespace MarsRover
 {
     public static class OutputFormatter
     {
-        public static string FormatMap(Map map)
+        public static string DisplayMap(Map map)
         {
             StringBuilder stringBuilder = new StringBuilder();
             for (var y = 0; y < map.Height; y++)
@@ -23,7 +23,7 @@ namespace MarsRover
             return stringBuilder.ToString().TrimEnd();
         }
 
-        public static string FormatMap(Map map, Rover rover)
+        public static string DisplayMap(Map map, Rover rover)
         {
             StringBuilder stringBuilder = new StringBuilder();
             for (var y = 0; y < map.Height; y++)
@@ -32,12 +32,12 @@ namespace MarsRover
                 {
                     var location = new Location(x, y);
                     var square = map.GetSquareAtLocation(location);
-                    var areLocationsEqual = LocationsAreEqual(square.Location, rover.Location);
+                    var squareHasRover = LocationsAreEqual(square.Location, rover.Location);
                     if (square.HasObstacle()) 
                         stringBuilder.Append("O");
-                    if (!square.HasObstacle() && areLocationsEqual) 
+                    if (!square.HasObstacle() && squareHasRover) 
                         stringBuilder.Append("R");
-                    if (!square.HasObstacle() && !areLocationsEqual) 
+                    if (!square.HasObstacle() && !squareHasRover) 
                         stringBuilder.Append("N");
                 }
                 stringBuilder.Append(Environment.NewLine);

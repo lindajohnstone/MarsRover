@@ -12,11 +12,11 @@ namespace MarsRover.Tests
         public void ParseMap_ReturnsMap_GivenValidString(List<Square> squares, int width, int height, params string[] inputs)
         {
             var mapString = String.Join(Environment.NewLine, inputs);
-            var expected = new Map(width, height, squares);
+            var expectedMap = new Map(width, height, squares);
 
             var result = MapParser.ParseMap(mapString);
 
-            result.Should().BeEquivalentTo(expected);
+            result.Should().BeEquivalentTo(expectedMap);
         }
     }
 }

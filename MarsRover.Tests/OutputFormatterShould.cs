@@ -14,7 +14,7 @@ namespace MarsRover.Tests
             var map = new Map(width, height, squares);
             var expectedMap = String.Join(Environment.NewLine, inputs);
 
-            var result = OutputFormatter.FormatMap(map);
+            var result = OutputFormatter.DisplayMap(map);
 
             result.Should().BeEquivalentTo(expectedMap);
         }
@@ -27,7 +27,7 @@ namespace MarsRover.Tests
             var rover = new Rover(Direction.North, 2, 1);
             var expectedMap = String.Join(Environment.NewLine, inputs);
 
-            var result = OutputFormatter.FormatMap(map, rover);
+            var result = OutputFormatter.DisplayMap(map, rover);
 
             result.Should().BeEquivalentTo(expectedMap);
         }

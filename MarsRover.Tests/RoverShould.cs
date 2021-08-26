@@ -1,5 +1,6 @@
 using System;
 using FluentAssertions;
+using Moq;
 using Xunit;
 
 namespace MarsRover.Tests
@@ -11,14 +12,14 @@ namespace MarsRover.Tests
         [InlineData(Direction.South, Direction.East)]
         [InlineData(Direction.West, Direction.South)]
         [InlineData(Direction.East, Direction.North)]
-        public void ExecuteCommand_ReturnsDirection_GivenCommandTurnLeft(Direction direction, Direction expected)
+        public void ExecuteCommand_ReturnsDirection_GivenCommandTurnLeft(Direction direction, Direction expectedDirection)
         {
             var command = Command.TurnLeft;
             var rover = new Rover(direction, 2, 2);
 
-            rover.ExecuteCommand(command);
+            rover.ExecuteCommand(command, It.IsAny<int>(), It.IsAny<int>());
 
-            rover.Direction.Should().Be(expected);
+            rover.Direction.Should().Be(expectedDirection);
         }
 
         [Theory]
@@ -26,14 +27,14 @@ namespace MarsRover.Tests
         [InlineData(Direction.South, Direction.West)]
         [InlineData(Direction.West, Direction.North)]
         [InlineData(Direction.East, Direction.South)]
-        public void ExecuteCommand_ReturnsDirection_GivenCommandTurnRight(Direction direction, Direction expected)
+        public void ExecuteCommand_ReturnsDirection_GivenCommandTurnRight(Direction direction, Direction expectedDirection)
         {
             var command = Command.TurnRight;
             var rover = new Rover(direction, 2, 2);
 
-            rover.ExecuteCommand(command);
+            rover.ExecuteCommand(command, It.IsAny<int>(), It.IsAny<int>());
 
-            rover.Direction.Should().Be(expected);
+            rover.Direction.Should().Be(expectedDirection);
         }
 
         [Theory]
@@ -41,15 +42,15 @@ namespace MarsRover.Tests
         [InlineData(Direction.South, 2, 3)]
         [InlineData(Direction.West, 1, 2)]
         [InlineData(Direction.East, 3, 2)]
-        public void Move_ReturnsLocation_GivenCommandForward(Direction direction, int x, int y)
+        public void ExecuteCommand_ReturnsLocation_GivenCommandForwardAndNonBoundaryCoordinates(Direction direction, int x, int y)
         {
-            var expected = new Location(x, y);
+            var expectedEndLocation = new Location(x, y);
             var command = Command.Forward;
             var rover = new Rover(direction, 2, 2);
 
-            rover.ExecuteCommand(command);
+            rover.ExecuteCommand(command, It.IsAny<int>(), It.IsAny<int>());
 
-            rover.Location.Should().BeEquivalentTo(expected);
+            rover.Location.Should().BeEquivalentTo(expectedEndLocation);
         }
 
         [Theory]
@@ -57,13 +58,29 @@ namespace MarsRover.Tests
         [InlineData(Direction.South, 2, 1)]
         [InlineData(Direction.West, 3, 2)]
         [InlineData(Direction.East, 1, 2)]
-        public void Move_ReturnEndLocation_GivenCommandBackward(Direction direction, int x, int y)
+        public void ExecuteCommand_ReturnEndLocation_GivenCommandBackwardAndNonBoundaryCoordinates(Direction direction, int x, int y)
         {
             var expectedEndLocation = new Location(x, y);
             var command = Command.Backward;
             var rover = new Rover(direction, 2, 2);
 
-            rover.ExecuteCommand(command);
+            rover.ExecuteCommand(command, It.IsAny<int>(), It.IsAny<int>());
+
+            rover.Location.Should().BeEquivalentTo(expectedEndLocation);
+        }
+
+        [Theory]
+        [InlineData(Direction.West, 4, 3, 0, 3)]
+        [InlineData(Direction.East, 0, 1, 4, 1)]
+        [InlineData(Direction.North, 0, 3, 0, 0)]
+        [InlineData(Direction.South, 0, 0, 0, 3)]
+        public void ExecuteCommand_ReturnEndLocation_GivenCommandForwardAndBoundaryCoordinates(Direction direction, int x, int y, int x1, int y1)
+        {
+            var expectedEndLocation = new Location(x, y);
+            var command = Command.Forward;
+            var rover = new Rover(direction, x1, y1);
+
+            rover.ExecuteCommand(command, 5, 4);
 
             rover.Location.Should().BeEquivalentTo(expectedEndLocation);
         }

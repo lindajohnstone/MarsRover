@@ -15,11 +15,11 @@ namespace MarsRover.Tests
         [MemberData(nameof(FileInputShouldTestData.FileInputTestData), MemberType = typeof(FileInputShouldTestData))]
         public void Read_ReturnsString_GivenFileInput(string path, params string[] inputs)
         {
-            var expected = String.Join(Environment.NewLine, inputs);
+            var expectedString = String.Join(Environment.NewLine, inputs);
 
             var result = _fileInput.Read(path);
 
-            result.Should().BeEquivalentTo(expected);
+            result.Should().BeEquivalentTo(expectedString);
         }
 
         [Theory]

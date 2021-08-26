@@ -2,7 +2,7 @@ namespace MarsRover
 {
     public class Messages
     {
-        public const string Welcome = "Mars Rover";
+        public const string Title = "Mars Rover";
 
         public const string RequestMapInput = "Enter a valid file path.";
 

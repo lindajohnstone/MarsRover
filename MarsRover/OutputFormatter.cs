@@ -35,10 +35,13 @@ namespace MarsRover
                     var squareHasRover = LocationsAreEqual(square.Location, rover.Location);
                     if (square.HasObstacle()) 
                         stringBuilder.Append("O");
-                    if (!square.HasObstacle() && squareHasRover) 
-                        stringBuilder.Append("R");
-                    if (!square.HasObstacle() && !squareHasRover) 
-                        stringBuilder.Append("N");
+                    else
+                    {
+                        if (squareHasRover)
+                            stringBuilder.Append("R");
+                        else
+                            stringBuilder.Append("N");
+                    }
                 }
                 stringBuilder.Append(Environment.NewLine);
             }

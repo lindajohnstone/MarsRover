@@ -66,7 +66,7 @@ namespace MarsRover
         {
             _output.WriteLine(Messages.RequestMapInput);
             var filePath = _input.Read(); 
-            var fileExists = _mapInput.FileExists(filePath);
+            var fileExists = _mapInput.FileExists(filePath); // TODO: file doesn't exist
             while(!fileExists)
             {
                 _output.WriteLine(Messages.InvalidInput);

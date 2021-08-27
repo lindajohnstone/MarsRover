@@ -20,7 +20,7 @@ namespace MarsRover.Tests
         {
             var mockInput = new Mock<IInput>();
             mockInput.SetupSequence(_ => _.Read())
-                .Returns("TestFiles/validfile1.txt")
+                .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("2,0");
             var output = new StubOutput();
@@ -29,7 +29,9 @@ namespace MarsRover.Tests
             var map = SetMap();
             var rover = new Rover(Direction.North, 2, 0);
 
-            var controller = new Controller(mockInput.Object, output, mockMapInput.Object, map, rover);
+            var controller = new Controller(mockInput.Object, output, mockMapInput.Object, map, rover); 
+
+            controller.Setup(); // TODO: added this line & now test hangs. filepath is not valid (used debugger)
 
             rover.Direction.Should().Be(Direction.North);
             rover.Location.X.Should().Be(2);

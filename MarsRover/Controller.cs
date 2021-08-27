@@ -11,7 +11,7 @@ namespace MarsRover
 
         Rover _rover;
 
-        public Controller(IInput input, IOutput output, IMapInput mapInput,Map map, Rover rover)
+        public Controller(IInput input, IOutput output, IMapInput mapInput, Map map, Rover rover)
         {
             _input = input;
             _output = output;
@@ -58,8 +58,8 @@ namespace MarsRover
         public void Setup()
         {
             _output.WriteLine(Messages.Title);
-            InitialiseMap();
-            InitialiseRover();
+            InitialiseMap(); 
+            InitialiseRover(); // replace with _generator.GenerateRover();
         }
 
         private void InitialiseMap()

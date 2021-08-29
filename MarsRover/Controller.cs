@@ -3,14 +3,19 @@ namespace MarsRover
     public class Controller
     {
         IInput _input;
+
         IOutput _output;
+
+        IMapInput _mapInput;
         Map _map;
 
         Rover _rover;
-        public Controller(IInput input, IOutput output, Map map, Rover rover)
+
+        public Controller(IInput input, IOutput output, IMapInput mapInput, Map map, Rover rover)
         {
             _input = input;
             _output = output;
+            _mapInput = mapInput;
             _map = map;
             _rover = rover;
         }
@@ -53,19 +58,23 @@ namespace MarsRover
         public void Setup()
         {
             _output.WriteLine(Messages.Title);
-            InitialiseMap();
-            InitialiseRover();
+            InitialiseMap(); 
+            InitialiseRover(); // replace with _generator.GenerateRover();
         }
 
         private void InitialiseMap()
         {
             _output.WriteLine(Messages.RequestMapInput);
-            var filePath = _input.Read(); //is filePath - Maps/map1.txt
-            var fileInput = new FileInput();
-            // need to determine if file exists
-            var fileExists = fileInput.FileExists(filePath);
-            // TODO: handle if file doesn't exist
-            var input = fileInput.Read(filePath);
+            var filePath = _input.Read(); 
+            var fileExists = _mapInput.FileExists(filePath); // TODO: file doesn't exist
+            while(!fileExists)
+            {
+                _output.WriteLine(Messages.InvalidInput);
+                _output.WriteLine(Messages.RequestMapInput);
+                filePath = _input.Read(); 
+                fileExists = _mapInput.FileExists(filePath);
+            }
+            var input = _mapInput.Read(filePath);
             var isValidMap = Validator.IsValidMap(input);
             while (!isValidMap)
             {
@@ -80,17 +89,9 @@ namespace MarsRover
 
         private void InitialiseRover()
         {
-            // ask for rover location from user
-            //             validate location
-            //             if not valid
-            //                 keep asking for valid location
-            //             if valid
-            //                 is there an obstacle?
-            //                 yes - repeat asking for location input
-            //                 no - create rover
-            //                 DisplayMap(map, rover)
             var direction = InitialiseDirection();
             var location = InitialiseLocation();
+            _rover = new Rover(direction, location.X, location.Y);
         }
 
         private Direction InitialiseDirection()

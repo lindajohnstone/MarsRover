@@ -6,36 +6,31 @@ using Xunit;
 
 namespace MarsRover.Tests
 {
-    public class ControllerShould
+    public class GeneratorShould
     {
-        /*
-            test for invalid file - verify how many times called?
-            test for valid file
-            test for invalid direction
-            test for valid direction
-            test for 
-        */
         [Fact]
-        public void Setup_ReturnsRoverLocationAndDirection_GivenValidMapAndRoverData()
+        public void GenerateRover_ReturnsRoverLocationAndDirection_GivenValidMapAndRoverData()
         {
+            var x = 2;
+            var y = 0;
+            var direction = "N";
+            var coordinates = new int[] { x, y };
             var mockInput = new Mock<IInput>();
             mockInput.SetupSequence(_ => _.Read())
-                .Returns("TestFiles/validFile1.txt")
-                .Returns("N")
-                .Returns("2,0");
+                .Returns(direction)
+                .Returns(string.Join(",", coordinates));
             var output = new StubOutput();
             var mockMapInput = new Mock<IMapInput>();
-            mockMapInput.Setup(_ => _.Read("TestFiles/validfile1.txt"));
             var map = SetMap();
-            var rover = new Rover(Direction.North, 2, 0);
+            var rover = new Rover(Direction.North, x, y); 
+            var generator = new Generator(mockInput.Object, output, mockMapInput.Object, map, rover);
+            var expectedDirection = Direction.North;
 
-            var controller = new Controller(mockInput.Object, output, mockMapInput.Object, map, rover); 
+            generator.GenerateRover();
 
-            controller.Setup(); // TODO: added this line & now test hangs. filepath is not valid (used debugger)
-
-            rover.Direction.Should().Be(Direction.North);
-            rover.Location.X.Should().Be(2);
-            rover.Location.Y.Should().Be(0);
+            rover.Direction.Should().Be(expectedDirection);
+            rover.Location.X.Should().Be(x);
+            rover.Location.Y.Should().Be(y);
         }
 
         public static Map SetMap()

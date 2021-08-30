@@ -11,13 +11,11 @@ namespace MarsRover
 
         Rover _rover;
 
-        public Controller(IInput input, IOutput output, IMapInput mapInput, Map map, Rover rover)
+        public Controller(IInput input, IOutput output, IMapInput mapInput)
         {
             _input = input;
             _output = output;
             _mapInput = mapInput;
-            _map = map;
-            _rover = rover;
         }
 
         /*

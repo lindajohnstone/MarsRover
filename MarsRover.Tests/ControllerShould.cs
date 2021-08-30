@@ -25,13 +25,15 @@ namespace MarsRover.Tests
                 .Returns("2,0");
             var output = new StubOutput();
             var mockMapInput = new Mock<IMapInput>();
-            mockMapInput.Setup(_ => _.Read("TestFiles/validfile1.txt"));
+            mockMapInput.Setup(_ => _.Read("TestFiles/validFile1.txt"));
+            mockMapInput.Setup(_ => _.FileExists("TestFiles/validFile1.txt"))
+                .Returns(true);
             var map = SetMap();
             var rover = new Rover(Direction.North, 2, 0);
 
-            var controller = new Controller(mockInput.Object, output, mockMapInput.Object, map, rover); 
+            var controller = new Controller(mockInput.Object, output, mockMapInput.Object); 
 
-            controller.Setup(); // TODO: added this line & now test hangs. filepath is not valid (used debugger)
+            controller.Setup(); // TODO: added this line & now test fails. filepath is not valid (used debugger)
 
             rover.Direction.Should().Be(Direction.North);
             rover.Location.X.Should().Be(2);

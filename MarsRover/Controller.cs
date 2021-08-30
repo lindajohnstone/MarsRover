@@ -7,9 +7,10 @@ namespace MarsRover
         IOutput _output;
 
         IMapInput _mapInput;
-        Map _map;
 
-        Rover _rover;
+        public Map Map { get; private set; }
+
+        public Rover Rover { get; private set; }
 
         public Controller(IInput input, IOutput output, IMapInput mapInput)
         {
@@ -56,11 +57,13 @@ namespace MarsRover
         public void Setup()
         {
             _output.WriteLine(Messages.Title);
-            InitialiseMap(); 
-            InitialiseRover(); // replace with _generator.GenerateRover();
+            Map = InitialiseMap();
+            _output.WriteLine(OutputFormatter.DisplayMap(Map));
+            Rover = InitialiseRover();
+            _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
         }
 
-        private void InitialiseMap()
+        private Map InitialiseMap()
         {
             _output.WriteLine(Messages.RequestMapInput);
             var filePath = _input.Read(); 
@@ -81,15 +84,14 @@ namespace MarsRover
                 input = _input.Read();
                 isValidMap = Validator.IsValidMap(input);
             }
-            _map = MapParser.ParseMap(input);
-            _output.WriteLine(OutputFormatter.DisplayMap(_map));
+            return Map = MapParser.ParseMap(input);
         }
 
-        private void InitialiseRover()
+        private Rover InitialiseRover()
         {
             var direction = InitialiseDirection();
             var location = InitialiseLocation();
-            _rover = new Rover(direction, location.X, location.Y);
+            return Rover = new Rover(direction, location.X, location.Y);
         }
 
         private Direction InitialiseDirection()
@@ -112,17 +114,17 @@ namespace MarsRover
         {
             _output.WriteLine(Messages.RoverStartLocation);
             var input = _input.Read();
-            var isValidLocation = Validator.IsValidLocation(input, _map.Width, _map.Height);
+            var isValidLocation = Validator.IsValidLocation(input, Map.Width, Map.Height);
             while(!isValidLocation)
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RoverStartLocation);
                 input = _input.Read();
-                isValidLocation = Validator.IsValidLocation(input, _map.Width, _map.Height);
+                isValidLocation = Validator.IsValidLocation(input, Map.Width, Map.Height);
             }
             var location = InputParser.ParseLocation(input);
             // need to check if location contains an obstacle
-            if (_map.HasObstacle(location)) // TODO: is this the correct way to do this??
+            if (Map.HasObstacle(location)) // TODO: is this the correct way to do this??
             {
                 _output.WriteLine(Messages.InvalidInput);
                 InitialiseLocation();

@@ -20,14 +20,14 @@ namespace MarsRover.Tests
         {
             var mockInput = new Mock<IInput>();
             mockInput.SetupSequence(_ => _.Read())
-                .Returns("TestFiles/validFile1.txt")
+                .Returns("../TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("2,0");
             var output = new StubOutput();
             var mockMapInput = new Mock<IMapInput>();
-            mockMapInput.Setup(_ => _.Read("TestFiles/validFile1.txt"))
+            mockMapInput.Setup(_ => _.Read("../TestFiles/validFile1.txt"))
                 .Returns("ONNN\nNNNN\nNNNN");
-            mockMapInput.Setup(_ => _.FileExists("TestFiles/validFile1.txt"))
+            mockMapInput.Setup(_ => _.FileExists("../TestFiles/validFile1.txt"))
                 .Returns(true);
             var controller = new Controller(mockInput.Object, output, mockMapInput.Object); 
 

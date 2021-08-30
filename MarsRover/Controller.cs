@@ -123,8 +123,8 @@ namespace MarsRover
                 isValidLocation = Validator.IsValidLocation(input, Map.Width, Map.Height);
             }
             var location = InputParser.ParseLocation(input);
-            // need to check if location contains an obstacle
-            if (Map.HasObstacle(location)) // TODO: is this the correct way to do this??
+
+            if (Map.HasObstacle(location)) 
             {
                 _output.WriteLine(Messages.InvalidInput);
                 InitialiseLocation();

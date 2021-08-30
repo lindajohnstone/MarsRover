@@ -15,8 +15,8 @@ namespace MarsRover
                     var location = new Location(x, y);
                     var square = map.GetSquareAtLocation(location);
                     if (square.HasObstacle())
-                        stringBuilder.Append("O");
-                    else stringBuilder.Append("N");
+                        stringBuilder.Append(MapDisplay.Obstacle);
+                    else stringBuilder.Append(MapDisplay.Empty);
                 }
                 stringBuilder.Append(Environment.NewLine);
             }

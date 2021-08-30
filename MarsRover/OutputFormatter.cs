@@ -34,13 +34,13 @@ namespace MarsRover
                     var square = map.GetSquareAtLocation(location);
                     var squareHasRover = LocationsAreEqual(square.Location, rover.Location);
                     if (square.HasObstacle()) 
-                        stringBuilder.Append("O");
+                        stringBuilder.Append(MapDisplay.Obstacle);
                     else
                     {
                         if (squareHasRover)
-                            stringBuilder.Append("R");
+                            stringBuilder.Append(MapDisplay.Rover);
                         else
-                            stringBuilder.Append("N");
+                            stringBuilder.Append(MapDisplay.Empty);
                     }
                 }
                 stringBuilder.Append(Environment.NewLine);

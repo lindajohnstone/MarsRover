@@ -6,10 +6,10 @@ namespace MarsRover.Tests
 {
     public class FileInputShould
     {
-        FileInput _fileInput;
+        FileMapInput _fileInput;
         public FileInputShould()
         {
-            _fileInput = new FileInput();
+            _fileInput = new FileMapInput();
         }
         [Theory]
         [MemberData(nameof(FileInputShouldTestData.FileInputTestData), MemberType = typeof(FileInputShouldTestData))]

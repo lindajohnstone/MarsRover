@@ -11,26 +11,22 @@ namespace MarsRover.Tests
         [Fact]
         public void GenerateRover_ReturnsRoverLocationAndDirection_GivenValidMapAndRoverData()
         {
-            var x = 2;
-            var y = 0;
-            var direction = "N";
-            var coordinates = new int[] { x, y };
             var mockInput = new Mock<IInput>();
             mockInput.SetupSequence(_ => _.Read())
-                .Returns(direction)
-                .Returns(string.Join(",", coordinates));
+                .Returns("N")
+                .Returns("2,0");
             var output = new StubOutput();
             var mockMapInput = new Mock<IMapInput>();
             var map = SetMap();
-            var rover = new Rover(Direction.North, x, y); 
+            var rover = new Rover(Direction.North, 2, 0); 
             var generator = new Generator(mockInput.Object, output, mockMapInput.Object, map, rover);
             var expectedDirection = Direction.North;
 
             generator.GenerateRover();
 
             rover.Direction.Should().Be(expectedDirection);
-            rover.Location.X.Should().Be(x);
-            rover.Location.Y.Should().Be(y);
+            rover.Location.X.Should().Be(2);
+            rover.Location.Y.Should().Be(0);
         }
 
         public static Map SetMap()

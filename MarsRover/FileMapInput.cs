@@ -53,7 +53,7 @@ namespace MarsRover
     // FBLRLRLRLR
 
 
-    public class FileInput : IMapInput
+    public class FileMapInput : IMapInput
     {
         public bool FileExists(string filePath)
         {

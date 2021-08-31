@@ -2,9 +2,9 @@ using Xunit;
 
 namespace MarsRover.Tests
 {
-    public class FileInputShouldTestData
+    public class FileMapInputShouldTestData
     {
-        public static TheoryData<string, string[]> FileInputTestData =
+        public static TheoryData<string, string[]> FileMapInputTestData =
             new TheoryData<string, string[]>
             {
                 {

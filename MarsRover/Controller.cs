@@ -19,60 +19,25 @@ namespace MarsRover
             _mapInput = mapInput;
         }
 
-        /*
-            Setup:
-                1/ ask for fileinput
-                2/ does file exist?
-                if file exists:
-                    validate the file
-                    if not
-                        keep asking if file is not valid
-                    if valid
-                        parse the map
-                        DisplayMap(map)
-                ask for rover direction from user
-                    validate direction
-                    if not valid
-                        keep asking for valid direction
-                    if valid
-                    ask for rover location from user
-                        validate location
-                        if not valid
-                            keep asking for valid location
-                        if valid
-                            is there an obstacle?
-                            yes - repeat asking for location input
-                            no - create rover
-                            DisplayMap(map, rover)
-                ** test to return map with rover when setup complete
-        */
-
-        // Move logic:
-        // 1/ GetTargetLocation to determine where Rover should Move to
-        // 2a/ use Map.GetSquareAtLocation in order to find Square -  ?? HasObstacle - Controller
-        // 2b/ use Map.HasObstacle on the square to check if there is an obstacle - Controller
-        // 3/ if no obstacle, set Rover.Location to the location of that square - ?? Move
-        // if there is an obstacle, Rover.Location remains the same
-
         public void Setup()
         {
             _output.WriteLine(Messages.Title);
-            Map = InitialiseMap();
+            InitialiseMap();
             _output.WriteLine(OutputFormatter.DisplayMap(Map));
-            Rover = InitialiseRover();
+            InitialiseRover();
             _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
         }
 
-        private Map InitialiseMap()
+        private void InitialiseMap()
         {
             _output.WriteLine(Messages.RequestMapInput);
-            var filePath = _input.Read(); 
-            var fileExists = _mapInput.FileExists(filePath); // TODO: file doesn't exist
+            var filePath = _input.ReadLine(); 
+            var fileExists = _mapInput.FileExists(filePath); 
             while(!fileExists)
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RequestMapInput);
-                filePath = _input.Read(); 
+                filePath = _input.ReadLine(); 
                 fileExists = _mapInput.FileExists(filePath);
             }
             var input = _mapInput.Read(filePath);
@@ -81,29 +46,29 @@ namespace MarsRover
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RequestMapInput);
-                input = _input.Read();
+                input = _input.ReadLine();
                 isValidMap = Validator.IsValidMap(input);
             }
-            return Map = MapParser.ParseMap(input);
+            Map = MapParser.ParseMap(input);
         }
 
-        private Rover InitialiseRover()
+        private void InitialiseRover()
         {
             var direction = InitialiseDirection();
             var location = InitialiseLocation();
-            return Rover = new Rover(direction, location.X, location.Y);
+            Rover = new Rover(direction, location.X, location.Y);
         }
 
         private Direction InitialiseDirection()
         {
             _output.WriteLine(Messages.RoverStartDirection);
-            var input = _input.Read();
+            var input = _input.ReadLine();
             var isValidDirection = Validator.IsValidDirection(input);
             while (!isValidDirection)
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RoverStartDirection);
-                input = _input.Read();
+                input = _input.ReadLine();
                 isValidDirection = Validator.IsValidDirection(input);
             }
             var direction = InputParser.ParseDirection(input);
@@ -113,23 +78,49 @@ namespace MarsRover
         private Location InitialiseLocation()
         {
             _output.WriteLine(Messages.RoverStartLocation);
-            var input = _input.Read();
+            var input = _input.ReadLine();
             var isValidLocation = Validator.IsValidLocation(input, Map.Width, Map.Height);
             while(!isValidLocation)
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RoverStartLocation);
-                input = _input.Read();
+                input = _input.ReadLine();
                 isValidLocation = Validator.IsValidLocation(input, Map.Width, Map.Height);
             }
             var location = InputParser.ParseLocation(input);
-            // need to check if location contains an obstacle
-            if (Map.HasObstacle(location)) // TODO: is this the correct way to do this??
+
+            if (Map.HasObstacle(location)) 
             {
                 _output.WriteLine(Messages.InvalidInput);
                 InitialiseLocation();
             }
             return location;
+        }
+        // user asked for string of commands
+        // user enters string of commands
+        // commands are validated
+        // commands are parsed 
+        // rover follows each command
+        // Move logic:
+        // 1/ GetTargetLocation to determine where Rover should Move to
+        // 2a/ use Map.GetSquareAtLocation in order to find Square -  ?? HasObstacle - Controller
+        // 2b/ use Map.HasObstacle on the square to check if there is an obstacle - Controller
+        // 3/ if no obstacle, set Rover.Location to the location of that square - ?? Move
+        // if there is an obstacle, Rover.Location remains the same
+        // Rover reports to user re obstacle
+        public void Run()
+        {
+            _output.WriteLine(Messages.RoverCommands);
+            var commandString = _input.ReadLine();
+            var areAllCommandsValid = Validator.AreCommandsValid(commandString);
+            while(!areAllCommandsValid)
+            {
+                _output.WriteLine(Messages.InvalidInput);
+                _output.WriteLine(Messages.RoverCommands);
+                commandString = _input.ReadLine();
+                areAllCommandsValid = Validator.AreCommandsValid(commandString);
+            }
+            var commands = InputParser.ParseCommands(commandString);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace MarsRover.Tests
             _fileInput = new FileMapInput();
         }
         [Theory]
-        [MemberData(nameof(FileInputShouldTestData.FileInputTestData), MemberType = typeof(FileInputShouldTestData))]
+        [MemberData(nameof(FileMapInputShouldTestData.FileMapInputTestData), MemberType = typeof(FileMapInputShouldTestData))]
         public void Read_ReturnsString_GivenFileInput(string path, params string[] inputs)
         {
             var expectedString = String.Join(Environment.NewLine, inputs);

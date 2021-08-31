@@ -15,8 +15,8 @@ namespace MarsRover
                     var location = new Location(x, y);
                     var square = map.GetSquareAtLocation(location);
                     if (square.HasObstacle())
-                        stringBuilder.Append("O");
-                    else stringBuilder.Append("N");
+                        stringBuilder.Append(MapDisplay.Obstacle);
+                    else stringBuilder.Append(MapDisplay.Empty);
                 }
                 stringBuilder.Append(Environment.NewLine);
             }
@@ -38,7 +38,7 @@ namespace MarsRover
                     else
                     {
                         if (squareHasRover)
-                            stringBuilder.Append(MapDisplay.Rover);
+                            stringBuilder.Append(FormatRover(rover));
                         else
                             stringBuilder.Append(MapDisplay.Empty);
                     }
@@ -52,6 +52,16 @@ namespace MarsRover
         {
             if (location1.X == location2.X && location1.Y == location2.Y) return true;
             return false;
+        }
+
+        private static string FormatRover(Rover rover)
+        {
+            var direction = rover.Direction;
+            if (direction == Direction.North) return MapDisplay.RoverNorth;
+            if (direction == Direction.South) return MapDisplay.RoverSouth;
+            if (direction == Direction.West) return MapDisplay.RoverWest;
+            if (direction == Direction.East) return MapDisplay.RoverEast;
+            return MapDisplay.Rover;
         }
     }
 }

@@ -4,7 +4,7 @@ namespace MarsRover
 {
     public class ConsoleInput : IInput
     {
-        public string Read()
+        public string ReadLine()
         {
             return Console.ReadLine();
         }

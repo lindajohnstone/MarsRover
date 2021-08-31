@@ -16,26 +16,45 @@ namespace MarsRover.Tests
             test for 
         */
         [Fact]
-        public void Setup_ReturnsRoverLocationAndDirection_GivenValidMapAndRoverData()
+        public void Setup_ReturnsMapOutput_GivenValidMapAndRoverData()
         {
             var mockInput = new Mock<IInput>();
-            mockInput.SetupSequence(_ => _.Read())
+            mockInput.SetupSequence(_ => _.ReadLine())
                 .Returns("../TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("2,0");
             var output = new StubOutput();
-            var mockMapInput = new Mock<IMapInput>();
+            // TODO: replacing mockMapInput with FileMapInput causes test & debugger to hang
+            var mockMapInput = new Mock<IMapInput>(); 
             mockMapInput.Setup(_ => _.Read("../TestFiles/validFile1.txt"))
                 .Returns("ONNN\nNNNN\nNNNN");
             mockMapInput.Setup(_ => _.FileExists("../TestFiles/validFile1.txt"))
                 .Returns(true);
             var controller = new Controller(mockInput.Object, output, mockMapInput.Object); 
+            var expectedString = "🟫⬜️⏫⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
 
-            controller.Setup(); 
+            controller.Setup();
 
-            controller.Rover.Direction.Should().Be(Direction.North);
-            controller.Rover.Location.X.Should().Be(2);
-            controller.Rover.Location.Y.Should().Be(0);
+            output.GetLastOutput().Should().BeEquivalentTo(expectedString);
+        }
+
+        [Fact]
+        public void Setup_ReturnsMapOutput_GivenValidAndInvalidMapAndRoverData()
+        {
+            var input = new StubInput();
+            var output = new StubOutput();
+            var fileMapInput = new FileMapInput();
+            var expectedString = "🟫⬜️⏫⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
+            input.GetReadLine("../TestFiles/validFile1.txt");
+            input.GetReadLine("N");
+            input.GetReadLine("2,0");
+            fileMapInput.Read("../TestFiles/validFile1.txt");
+            fileMapInput.FileExists("../TestFiles/validFile1.txt");
+            var controller = new Controller(input, output, fileMapInput);
+
+            controller.Setup();
+
+            output.GetLastOutput().Should().BeEquivalentTo(expectedString);
         }
     }
 }

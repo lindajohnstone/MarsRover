@@ -66,13 +66,13 @@ namespace MarsRover
         private void InitialiseMap()
         {
             _output.WriteLine(Messages.RequestMapInput);
-            var filePath = _input.Read(); 
-            var fileExists = _mapInput.FileExists(filePath); // TODO: file doesn't exist
+            var filePath = _input.ReadLine(); 
+            var fileExists = _mapInput.FileExists(filePath); 
             while(!fileExists)
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RequestMapInput);
-                filePath = _input.Read(); 
+                filePath = _input.ReadLine(); 
                 fileExists = _mapInput.FileExists(filePath);
             }
             var input = _mapInput.Read(filePath);
@@ -81,7 +81,7 @@ namespace MarsRover
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RequestMapInput);
-                input = _input.Read();
+                input = _input.ReadLine();
                 isValidMap = Validator.IsValidMap(input);
             }
             Map = MapParser.ParseMap(input);
@@ -97,13 +97,13 @@ namespace MarsRover
         private Direction InitialiseDirection()
         {
             _output.WriteLine(Messages.RoverStartDirection);
-            var input = _input.Read();
+            var input = _input.ReadLine();
             var isValidDirection = Validator.IsValidDirection(input);
             while (!isValidDirection)
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RoverStartDirection);
-                input = _input.Read();
+                input = _input.ReadLine();
                 isValidDirection = Validator.IsValidDirection(input);
             }
             var direction = InputParser.ParseDirection(input);
@@ -113,13 +113,13 @@ namespace MarsRover
         private Location InitialiseLocation()
         {
             _output.WriteLine(Messages.RoverStartLocation);
-            var input = _input.Read();
+            var input = _input.ReadLine();
             var isValidLocation = Validator.IsValidLocation(input, Map.Width, Map.Height);
             while(!isValidLocation)
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RoverStartLocation);
-                input = _input.Read();
+                input = _input.ReadLine();
                 isValidLocation = Validator.IsValidLocation(input, Map.Width, Map.Height);
             }
             var location = InputParser.ParseLocation(input);

@@ -8,13 +8,6 @@ namespace MarsRover.Tests
 {
     public class ControllerShould
     {
-        /*
-            test for invalid file - verify how many times called?
-            test for valid file
-            test for invalid direction
-            test for valid direction
-            test for 
-        */
         [Fact]
         public void Setup_ReturnsMapOutput_GivenValidMapAndRoverData()
         {
@@ -25,8 +18,6 @@ namespace MarsRover.Tests
                 .Returns("2,0");
             var output = new StubOutput();
             var fileMapInput = new FileMapInput();
-            fileMapInput.Read("TestFiles/validFile1.txt");
-            fileMapInput.FileExists("TestFiles/validFile1.txt");
             var controller = new Controller(mockInput.Object, output, fileMapInput); 
             var expectedString = "🟫⬜️⏫⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
 
@@ -47,9 +38,6 @@ namespace MarsRover.Tests
             var output = new StubOutput();
             var fileMapInput = new FileMapInput();
             var expectedString = "🟫⬜️⏫⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
-            var filePath = "TestFiles/validFile1.txt";
-            fileMapInput.Read(filePath);
-            fileMapInput.FileExists(filePath);
             var controller = new Controller(mockInput.Object, output, fileMapInput);
 
             controller.Setup();
@@ -69,9 +57,6 @@ namespace MarsRover.Tests
             var output = new StubOutput();
             var fileMapInput = new FileMapInput();
             var expectedString = "🟫⬜️⏫⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
-            var filePath = "TestFiles/validFile1.txt";
-            fileMapInput.Read(filePath);
-            fileMapInput.FileExists(filePath);
             var controller = new Controller(mockInput.Object, output, fileMapInput);
 
             controller.Setup();
@@ -91,9 +76,6 @@ namespace MarsRover.Tests
             var output = new StubOutput();
             var fileMapInput = new FileMapInput();
             var expectedString = "🟫⬜️⏫⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
-            var filePath = "TestFiles/validFile1.txt";
-            fileMapInput.Read(filePath);
-            fileMapInput.FileExists(filePath);
             var controller = new Controller(mockInput.Object, output, fileMapInput);
 
             controller.Setup();

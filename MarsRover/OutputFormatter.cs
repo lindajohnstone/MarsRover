@@ -38,7 +38,7 @@ namespace MarsRover
                     else
                     {
                         if (squareHasRover)
-                            stringBuilder.Append(MapDisplay.Rover);
+                            stringBuilder.Append(DisplayRover(rover));
                         else
                             stringBuilder.Append(MapDisplay.Empty);
                     }
@@ -46,6 +46,11 @@ namespace MarsRover
                 stringBuilder.Append(Environment.NewLine);
             }
             return stringBuilder.ToString().TrimEnd();
+        }
+
+        private static string DisplayRover(Rover rover)
+        {
+            throw new NotImplementedException();
         }
 
         private static bool LocationsAreEqual(Location location1, Location location2)

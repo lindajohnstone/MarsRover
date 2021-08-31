@@ -57,13 +57,13 @@ namespace MarsRover
         public void Setup()
         {
             _output.WriteLine(Messages.Title);
-            Map = InitialiseMap();
+            InitialiseMap();
             _output.WriteLine(OutputFormatter.DisplayMap(Map));
-            Rover = InitialiseRover();
+            InitialiseRover();
             _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
         }
 
-        private Map InitialiseMap()
+        private void InitialiseMap()
         {
             _output.WriteLine(Messages.RequestMapInput);
             var filePath = _input.Read(); 
@@ -84,14 +84,14 @@ namespace MarsRover
                 input = _input.Read();
                 isValidMap = Validator.IsValidMap(input);
             }
-            return Map = MapParser.ParseMap(input);
+            Map = MapParser.ParseMap(input);
         }
 
-        private Rover InitialiseRover()
+        private void InitialiseRover()
         {
             var direction = InitialiseDirection();
             var location = InitialiseLocation();
-            return Rover = new Rover(direction, location.X, location.Y);
+            Rover = new Rover(direction, location.X, location.Y);
         }
 
         private Direction InitialiseDirection()

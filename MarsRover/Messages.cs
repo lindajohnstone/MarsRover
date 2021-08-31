@@ -13,5 +13,7 @@ namespace MarsRover
         public const string RoverStartLocation = "Enter the starting location for the Rover as a number followed by a comma then a number (e.g. '0,0').";
 
         public const string RoverCommands = "Enter Rovers' commands as a string containing only the letters 'F', 'B', 'L', 'R'.";
+
+        public const string RoverReportsObstacle = "Rover says I can't move.";
     }
 }

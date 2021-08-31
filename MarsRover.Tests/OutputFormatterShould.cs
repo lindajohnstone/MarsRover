@@ -21,10 +21,10 @@ namespace MarsRover.Tests
         
         [Theory]
         [MemberData(nameof(OutputFormatterShouldTestData.FormatMapWithRoverTestData), MemberType = typeof(OutputFormatterShouldTestData))]
-        public void FormatMap_ReturnsMapWithRover_GivenMapAndRover(List<Square> squares, int width, int height, params string[] inputs)
+        public void FormatMap_ReturnsMapWithRover_GivenMapAndRover(List<Square> squares, int width, int height, int x, int y, Direction direction, params string[] inputs)
         {
             var map = new Map(width, height, squares);
-            var rover = new Rover(Direction.North, 2, 1);
+            var rover = new Rover(direction, x, y);
             var expectedMap = String.Join(Environment.NewLine, inputs);
 
             var result = OutputFormatter.DisplayMap(map, rover);

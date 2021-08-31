@@ -31,15 +31,7 @@ namespace MarsRover
         private void InitialiseMap()
         {
             _output.WriteLine(Messages.RequestMapInput);
-            var filePath = _input.ReadLine(); 
-            var fileExists = _mapInput.FileExists(filePath); 
-            while(!fileExists)
-            {
-                _output.WriteLine(Messages.InvalidInput);
-                _output.WriteLine(Messages.RequestMapInput);
-                filePath = _input.ReadLine(); 
-                fileExists = _mapInput.FileExists(filePath);
-            }
+            var filePath = GetFilePath();
             var input = _mapInput.Read(filePath);
             var isValidMap = Validator.IsValidMap(input);
             while (!isValidMap)
@@ -50,6 +42,20 @@ namespace MarsRover
                 isValidMap = Validator.IsValidMap(input);
             }
             Map = MapParser.ParseMap(input);
+        }
+
+        private string GetFilePath() // TODO: what is method doing? name??
+        {
+            var filePath = _input.ReadLine();
+            var fileExists = _mapInput.FileExists(filePath);
+            while (!fileExists)
+            {
+                _output.WriteLine(Messages.InvalidInput);
+                _output.WriteLine(Messages.RequestMapInput);
+                filePath = _input.ReadLine();
+                fileExists = _mapInput.FileExists(filePath);
+            }
+            return filePath;
         }
 
         private void InitialiseRover()

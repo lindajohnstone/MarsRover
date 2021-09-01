@@ -60,7 +60,6 @@ namespace MarsRover
             };
         }
 
- 
         private void MoveForward(int maxWidth, int maxHeight) // need to know what direction - get next location from Command
         {
             var x = Location.X;
@@ -81,13 +80,19 @@ namespace MarsRover
 
         private void MoveBackward(int maxWidth, int maxHeight)
         {
+            var x = Location.X;
+            var y = Location.Y;
+            var xLeft = x == maxWidth - 1 ? 0 : x + 1;
+            var xRight = x == 0 ? maxWidth - 1 : x - 1;
+            var yTop = y == maxHeight - 1 ? 0 : y + 1;
+            var yBottom = y == 0 ? maxHeight - 1 : y - 1;
             Location = Direction switch
             {
-                Direction.North => new Location(Location.X, Location.Y + 1),
-                Direction.South => new Location(Location.X, Location.Y - 1),
-                Direction.West => new Location(Location.X + 1, Location.Y),
-                Direction.East => new Location(Location.X - 1, Location.Y),
-                _ => new Location(Location.X, Location.Y)
+                Direction.North => new Location(x, yTop),
+                Direction.South => new Location(x, yBottom),
+                Direction.West => new Location(xLeft, y),
+                Direction.East => new Location(xRight, y),
+                _ => new Location(x, y)
             };
         }
     }

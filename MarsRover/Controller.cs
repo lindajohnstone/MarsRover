@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace MarsRover
 {
     public class Controller
@@ -19,7 +21,24 @@ namespace MarsRover
             _mapInput = mapInput;
         }
 
-        public void Setup()
+        public void Run()
+        {
+            Setup();
+            var commands = GetCommands();
+            foreach (var command in commands)
+            {
+                Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                if (Map.HasObstacle(Rover.Location))
+                {
+                    _output.WriteLine(Messages.RoverReportsObstacle);
+                    return;
+                }
+                else
+                    _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
+            }
+        }
+
+        private void Setup()
         {
             _output.WriteLine(Messages.Title);
             InitialiseMap();
@@ -31,15 +50,7 @@ namespace MarsRover
         private void InitialiseMap()
         {
             _output.WriteLine(Messages.RequestMapInput);
-            var filePath = _input.ReadLine(); 
-            var fileExists = _mapInput.FileExists(filePath); 
-            while(!fileExists)
-            {
-                _output.WriteLine(Messages.InvalidInput);
-                _output.WriteLine(Messages.RequestMapInput);
-                filePath = _input.ReadLine(); 
-                fileExists = _mapInput.FileExists(filePath);
-            }
+            var filePath = GetValidFilePath();
             var input = _mapInput.Read(filePath);
             var isValidMap = Validator.IsValidMap(input);
             while (!isValidMap)
@@ -50,6 +61,20 @@ namespace MarsRover
                 isValidMap = Validator.IsValidMap(input);
             }
             Map = MapParser.ParseMap(input);
+        }
+
+        private string GetValidFilePath() // TODO: what is method doing? name??
+        {
+            var filePath = _input.ReadLine();
+            var fileExists = _mapInput.FileExists(filePath);
+            while (!fileExists)
+            {
+                _output.WriteLine(Messages.InvalidInput);
+                _output.WriteLine(Messages.RequestMapInput);
+                filePath = _input.ReadLine();
+                fileExists = _mapInput.FileExists(filePath);
+            }
+            return filePath;
         }
 
         private void InitialiseRover()
@@ -91,36 +116,26 @@ namespace MarsRover
 
             if (Map.HasObstacle(location)) 
             {
-                _output.WriteLine(Messages.InvalidInput);
+                _output.WriteLine(Messages.InvalidLocation);
                 InitialiseLocation();
             }
             return location;
         }
-        // user asked for string of commands
-        // user enters string of commands
-        // commands are validated
-        // commands are parsed 
-        // rover follows each command
-        // Move logic:
-        // 1/ GetTargetLocation to determine where Rover should Move to
-        // 2a/ use Map.GetSquareAtLocation in order to find Square -  ?? HasObstacle - Controller
-        // 2b/ use Map.HasObstacle on the square to check if there is an obstacle - Controller
-        // 3/ if no obstacle, set Rover.Location to the location of that square - ?? Move
-        // if there is an obstacle, Rover.Location remains the same
-        // Rover reports to user re obstacle
-        public void Run()
+
+        private List<Command> GetCommands()
         {
+            var commands = new List<Command>();
             _output.WriteLine(Messages.RoverCommands);
             var commandString = _input.ReadLine();
             var areAllCommandsValid = Validator.AreCommandsValid(commandString);
-            while(!areAllCommandsValid)
+            while (!areAllCommandsValid)
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RoverCommands);
                 commandString = _input.ReadLine();
                 areAllCommandsValid = Validator.AreCommandsValid(commandString);
             }
-            var commands = InputParser.ParseCommands(commandString);
+            return commands = InputParser.ParseCommands(commandString);
         }
     }
 }

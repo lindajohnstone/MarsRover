@@ -9,7 +9,7 @@ namespace MarsRover
         {
             var lines = SplitInput(input, "\n");
             var numberOfLines = lines.Length;
-            if (numberOfLines == 1) return false;
+            if (numberOfLines <= 1) return false;
             var areAllLinesEqual = AreAllLinesEqual(lines);
             var areAllCharsValid = AreAllCharsValid(lines);
             if (!areAllLinesEqual || !areAllCharsValid) return false;

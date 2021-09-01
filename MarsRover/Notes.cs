@@ -2,7 +2,7 @@ namespace MarsRover
 {
     public class Notes
     {
-        /*
+        /*//TODO: delete class
             FileInput - if file path is incorrect (i.e. file does not exist) - must handle
                     - use try catch on Controller (Run)
                     - FileNotFoundException or DirectoryNotFoundException

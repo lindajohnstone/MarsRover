@@ -27,6 +27,7 @@ namespace MarsRover.Tests
         [InlineData("TestFiles/validFile2.txt")]
         [InlineData("TestFiles/validFile3.txt")]
         [InlineData("TestFiles/validFile4.txt")]
+        [InlineData("emptyFile.txt")]
         public void FileExists_ReturnsTrue_GivenValidFilePath(string path)
         {
             var result = _fileInput.FileExists(path);

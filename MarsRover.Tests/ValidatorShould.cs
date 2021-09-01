@@ -19,6 +19,7 @@ namespace MarsRover.Tests
 
         [Theory]
         [InlineData("ONNN")]
+        [InlineData("")]
         [InlineData("ONNN\nNNN")]
         [InlineData("PNNN\nNNN")]
         public void IsValidMap_ReturnsFalse_GivenInvalidMapString(string mapString)

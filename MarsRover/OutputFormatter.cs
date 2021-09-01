@@ -38,7 +38,7 @@ namespace MarsRover
                     else
                     {
                         if (squareHasRover)
-                            stringBuilder.Append(FormatRover(rover));
+                            stringBuilder.Append(DisplayRover(rover));
                         else
                             stringBuilder.Append(MapDisplay.Empty);
                     }
@@ -54,7 +54,7 @@ namespace MarsRover
             return false;
         }
 
-        private static string FormatRover(Rover rover)
+        private static string DisplayRover(Rover rover)
         {
             var direction = rover.Direction;
             return direction switch

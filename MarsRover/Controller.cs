@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace MarsRover
 {
     public class Controller
@@ -18,7 +20,7 @@ namespace MarsRover
             _output = output;
             _mapInput = mapInput;
         }
-
+        // TODO: consider adding Setup to Run, making only 1 public file
         public void Setup()
         {
             _output.WriteLine(Messages.Title);
@@ -97,7 +99,7 @@ namespace MarsRover
 
             if (Map.HasObstacle(location)) 
             {
-                _output.WriteLine(Messages.InvalidInput);
+                _output.WriteLine(Messages.InvalidLocation);
                 InitialiseLocation();
             }
             return location;
@@ -116,17 +118,41 @@ namespace MarsRover
         // Rover reports to user re obstacle
         public void Run()
         {
+            var commands = GetCommands();
+            foreach (var command in commands)
+            {
+                // retain Rovers original location
+                // Rover.ExecuteCommand
+                // if command = forward or backward
+                // Map.HasObstacle
+                // if true, Rover send message to state it can't move & break or return out of method
+                // if false, Rover.Location == square.Location
+                var originalLocation = Rover.Location;
+                Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                if(Map.HasObstacle(Rover.Location)) 
+                {
+                    _output.WriteLine(Messages.RoverReportsObstacle);
+                    return;
+                }
+                else
+                    _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
+            }
+        }
+
+        private List<Command> GetCommands()
+        {
+            var commands = new List<Command>();
             _output.WriteLine(Messages.RoverCommands);
             var commandString = _input.ReadLine();
             var areAllCommandsValid = Validator.AreCommandsValid(commandString);
-            while(!areAllCommandsValid)
+            while (!areAllCommandsValid)
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RoverCommands);
                 commandString = _input.ReadLine();
                 areAllCommandsValid = Validator.AreCommandsValid(commandString);
             }
-            var commands = InputParser.ParseCommands(commandString);
+            return commands = InputParser.ParseCommands(commandString);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace MarsRover
                     _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
             }
         }
-        
+
         private void Setup()
         {
             _output.WriteLine(Messages.Title);

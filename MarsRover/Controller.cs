@@ -20,8 +20,25 @@ namespace MarsRover
             _output = output;
             _mapInput = mapInput;
         }
-        // TODO: consider adding Setup to Run, making only 1 public file
-        public void Setup()
+
+        public void Run()
+        {
+            Setup();
+            var commands = GetCommands();
+            foreach (var command in commands)
+            {
+                Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                if (Map.HasObstacle(Rover.Location))
+                {
+                    _output.WriteLine(Messages.RoverReportsObstacle);
+                    return;
+                }
+                else
+                    _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
+            }
+        }
+        
+        private void Setup()
         {
             _output.WriteLine(Messages.Title);
             InitialiseMap();
@@ -103,40 +120,6 @@ namespace MarsRover
                 InitialiseLocation();
             }
             return location;
-        }
-        // user asked for string of commands
-        // user enters string of commands
-        // commands are validated
-        // commands are parsed 
-        // rover follows each command
-        // Move logic:
-        // 1/ GetTargetLocation to determine where Rover should Move to
-        // 2a/ use Map.GetSquareAtLocation in order to find Square -  ?? HasObstacle - Controller
-        // 2b/ use Map.HasObstacle on the square to check if there is an obstacle - Controller
-        // 3/ if no obstacle, set Rover.Location to the location of that square - ?? Move
-        // if there is an obstacle, Rover.Location remains the same
-        // Rover reports to user re obstacle
-        public void Run()
-        {
-            var commands = GetCommands();
-            foreach (var command in commands)
-            {
-                // retain Rovers original location
-                // Rover.ExecuteCommand
-                // if command = forward or backward
-                // Map.HasObstacle
-                // if true, Rover send message to state it can't move & break or return out of method
-                // if false, Rover.Location == square.Location
-                var originalLocation = Rover.Location;
-                Rover.ExecuteCommand(command, Map.Width, Map.Height);
-                if(Map.HasObstacle(Rover.Location)) 
-                {
-                    _output.WriteLine(Messages.RoverReportsObstacle);
-                    return;
-                }
-                else
-                    _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
-            }
         }
 
         private List<Command> GetCommands()

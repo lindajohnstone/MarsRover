@@ -34,7 +34,7 @@ namespace MarsRover
                     return;
                 }
                 else
-                    _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
+                    _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
             }
         }
 
@@ -42,9 +42,9 @@ namespace MarsRover
         {
             _output.WriteLine(Messages.Title);
             InitialiseMap();
-            _output.WriteLine(OutputFormatter.DisplayMap(Map));
+            _output.WriteLine(OutputFormatter.FormatMap(Map));
             InitialiseRover();
-            _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
+            _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
         }
 
         private void InitialiseMap()
@@ -63,7 +63,7 @@ namespace MarsRover
             Map = MapParser.ParseMap(input);
         }
 
-        private string GetValidFilePath() // TODO: what is method doing? name??
+        private string GetValidFilePath() 
         {
             var filePath = _input.ReadLine();
             var fileExists = _mapInput.FileExists(filePath);
@@ -124,7 +124,6 @@ namespace MarsRover
 
         private List<Command> GetCommands()
         {
-            var commands = new List<Command>();
             _output.WriteLine(Messages.RoverCommands);
             var commandString = _input.ReadLine();
             var areAllCommandsValid = Validator.AreCommandsValid(commandString);
@@ -135,7 +134,7 @@ namespace MarsRover
                 commandString = _input.ReadLine();
                 areAllCommandsValid = Validator.AreCommandsValid(commandString);
             }
-            return commands = InputParser.ParseCommands(commandString);
+            return InputParser.ParseCommands(commandString);
         }
     }
 }

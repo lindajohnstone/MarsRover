@@ -38,21 +38,6 @@ namespace MarsRover
             }
         }
 
-        private void FollowCommands(List<Command> commands)
-        {
-            foreach (var command in commands)
-            {
-                Rover.ExecuteCommand(command, Map.Width, Map.Height);
-                if (Map.HasObstacle(Rover.Location))
-                {
-                    _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
-                    break;
-                }
-                else _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
-                _output.WriteLine(Environment.NewLine);
-            }
-        }
-
         private void Setup()
         {
             _output.WriteLine(Messages.Title);
@@ -137,7 +122,7 @@ namespace MarsRover
             return location;
         }
 
-        private List<Command> GetCommands(string commandString) // TODO: rename parameter
+        private List<Command> GetCommands(string commandString) // TODO: rename parameter ??
         {
             var areAllCommandsValid = Validator.AreCommandsValid(commandString);
             while (!areAllCommandsValid)
@@ -148,6 +133,21 @@ namespace MarsRover
                 areAllCommandsValid = Validator.AreCommandsValid(commandString);
             }
             return InputParser.ParseCommands(commandString);
+        }
+
+        private void FollowCommands(List<Command> commands)
+        {
+            foreach (var command in commands)
+            {
+                Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                if (Map.HasObstacle(Rover.Location))
+                {
+                    _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
+                    break;
+                }
+                else _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                _output.WriteLine(Environment.NewLine);
+            }
         }
     }
 }

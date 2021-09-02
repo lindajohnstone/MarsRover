@@ -38,7 +38,7 @@ namespace MarsRover.Tests
                 .Returns("lfflb");
             var output = new StubOutput();
             var fileMapInput = new FileMapInput();
-            var expectedString = "Rover says Rover can't move. Obstacle at 0,0.";
+            var expectedString = "Rover can't move. Obstacle at 0,0.";
             var controller = new Controller(mockInput.Object, output, fileMapInput);
 
             controller.Run();

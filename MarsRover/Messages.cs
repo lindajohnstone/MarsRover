@@ -16,6 +16,6 @@ namespace MarsRover
         
         public const string InvalidLocation = "Rover cannot occupy that location as it contains an obstacle.";
 
-        public const string RoverReportsObstacle = "Rover says Rover can't move. Obstacle at {0},{1}.";
+        public const string RoverReportsObstacle = "Rover can't move. Obstacle at {0},{1}.";
     }
 }

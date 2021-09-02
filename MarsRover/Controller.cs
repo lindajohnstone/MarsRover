@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace MarsRover
@@ -24,17 +25,30 @@ namespace MarsRover
         public void Run()
         {
             Setup();
-            var commands = GetCommands();
+            _output.WriteLine(Messages.RoverCommands);
+            var input = _input.ReadLine();
+            while (input != "q")
+            {
+                var commands = GetCommands(input);
+                FollowCommands(commands);
+                _output.WriteLine(Environment.NewLine);
+                _output.WriteLine(Messages.RoverCommands);
+                _output.WriteLine(Messages.Quit);
+                input = _input.ReadLine();
+            }
+        }
+
+        private void FollowCommands(List<Command> commands)
+        {
             foreach (var command in commands)
             {
                 Rover.ExecuteCommand(command, Map.Width, Map.Height);
                 if (Map.HasObstacle(Rover.Location))
                 {
                     _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
-                    return;
                 }
-                else
-                    _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                else _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                _output.WriteLine(Environment.NewLine);
             }
         }
 
@@ -122,10 +136,8 @@ namespace MarsRover
             return location;
         }
 
-        private List<Command> GetCommands()
+        private List<Command> GetCommands(string commandString) // TODO: rename parameter
         {
-            _output.WriteLine(Messages.RoverCommands);
-            var commandString = _input.ReadLine();
             var areAllCommandsValid = Validator.AreCommandsValid(commandString);
             while (!areAllCommandsValid)
             {

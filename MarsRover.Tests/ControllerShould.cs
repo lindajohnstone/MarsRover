@@ -15,7 +15,8 @@ namespace MarsRover.Tests
                 .Returns("N")
                 .Returns("1.0")
                 .Returns("2,0")
-                .Returns("lfrlb");
+                .Returns("lfrlb")
+                .Returns("q");
             var output = new StubOutput();
             var fileMapInput = new FileMapInput();
             var expectedString = "🟫⬜️⏪⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
@@ -23,7 +24,7 @@ namespace MarsRover.Tests
 
             controller.Run();
 
-            output.GetLastOutput().Should().BeEquivalentTo(expectedString);
+            output.GetLastMapOutput().Should().BeEquivalentTo(expectedString);
         }
 
         [Fact]
@@ -35,7 +36,8 @@ namespace MarsRover.Tests
                 .Returns("N")
                 .Returns("1.0")
                 .Returns("2,0")
-                .Returns("lfflb");
+                .Returns("lfflb")
+                .Returns("q");
             var output = new StubOutput();
             var fileMapInput = new FileMapInput();
             var expectedString = "Rover can't move. Obstacle at 0,0.";
@@ -43,7 +45,7 @@ namespace MarsRover.Tests
 
             controller.Run();
 
-            output.GetLastOutput().Should().BeEquivalentTo(expectedString);
+            output.OutputList.Should().Contain(expectedString);
         }
     }
 }

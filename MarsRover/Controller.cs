@@ -30,7 +30,7 @@ namespace MarsRover
                 Rover.ExecuteCommand(command, Map.Width, Map.Height);
                 if (Map.HasObstacle(Rover.Location))
                 {
-                    _output.WriteLine(Messages.RoverReportsObstacle);
+                    _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
                     return;
                 }
                 else

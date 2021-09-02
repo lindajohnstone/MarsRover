@@ -46,6 +46,7 @@ namespace MarsRover
                 if (Map.HasObstacle(Rover.Location))
                 {
                     _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
+                    break;
                 }
                 else _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
                 _output.WriteLine(Environment.NewLine);

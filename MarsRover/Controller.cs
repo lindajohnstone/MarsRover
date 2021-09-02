@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace MarsRover
@@ -24,17 +25,16 @@ namespace MarsRover
         public void Run()
         {
             Setup();
-            var commands = GetCommands();
-            foreach (var command in commands)
+            _output.WriteLine(Messages.RoverCommands);
+            var input = _input.ReadLine();
+            while (input != "q")
             {
-                Rover.ExecuteCommand(command, Map.Width, Map.Height);
-                if (Map.HasObstacle(Rover.Location))
-                {
-                    _output.WriteLine(Messages.RoverReportsObstacle);
-                    return;
-                }
-                else
-                    _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
+                var commands = GetCommands(input);
+                FollowCommands(commands);
+                _output.WriteLine(Environment.NewLine);
+                _output.WriteLine(Messages.RoverCommands);
+                _output.WriteLine(Messages.Quit);
+                input = _input.ReadLine();
             }
         }
 
@@ -42,9 +42,9 @@ namespace MarsRover
         {
             _output.WriteLine(Messages.Title);
             InitialiseMap();
-            _output.WriteLine(OutputFormatter.DisplayMap(Map));
+            _output.WriteLine(OutputFormatter.FormatMap(Map));
             InitialiseRover();
-            _output.WriteLine(OutputFormatter.DisplayMap(Map, Rover));
+            _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
         }
 
         private void InitialiseMap()
@@ -63,7 +63,7 @@ namespace MarsRover
             Map = MapParser.ParseMap(input);
         }
 
-        private string GetValidFilePath() // TODO: what is method doing? name??
+        private string GetValidFilePath() 
         {
             var filePath = _input.ReadLine();
             var fileExists = _mapInput.FileExists(filePath);
@@ -122,11 +122,8 @@ namespace MarsRover
             return location;
         }
 
-        private List<Command> GetCommands()
+        private List<Command> GetCommands(string commandString) // TODO: rename parameter ??
         {
-            var commands = new List<Command>();
-            _output.WriteLine(Messages.RoverCommands);
-            var commandString = _input.ReadLine();
             var areAllCommandsValid = Validator.AreCommandsValid(commandString);
             while (!areAllCommandsValid)
             {
@@ -135,7 +132,22 @@ namespace MarsRover
                 commandString = _input.ReadLine();
                 areAllCommandsValid = Validator.AreCommandsValid(commandString);
             }
-            return commands = InputParser.ParseCommands(commandString);
+            return InputParser.ParseCommands(commandString);
+        }
+
+        private void FollowCommands(List<Command> commands)
+        {
+            foreach (var command in commands)
+            {
+                Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                if (Map.HasObstacle(Rover.Location))
+                {
+                    _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
+                    break;
+                }
+                else _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                _output.WriteLine(Environment.NewLine);
+            }
         }
     }
 }

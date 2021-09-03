@@ -141,13 +141,13 @@ namespace MarsRover
         */
         private void FollowCommands(List<Command> commands)
         {
-            for (var i = 0; i < commands.Count; i++)
+            foreach (var command in commands)
             {
-                Rover.ExecuteCommand(commands[i], Map.Width, Map.Height);
+                Rover.ExecuteCommand(command, Map.Width, Map.Height);
                 if (Map.HasObstacle(Rover.Location))
                 {
                     _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
-                    Rover.ExecuteCommand(commands[i - 1], Map.Width, Map.Height);
+                    Rover.ExecuteCommand(commands[^1], Map.Width, Map.Height);
                     break;
                 }
                 else _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));

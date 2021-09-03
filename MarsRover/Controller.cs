@@ -147,7 +147,6 @@ namespace MarsRover
                 if (Map.HasObstacle(Rover.Location))
                 {
                     _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
-                    Rover.ExecuteCommand(commands[^1], Map.Width, Map.Height);
                     break;
                 }
                 else _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));

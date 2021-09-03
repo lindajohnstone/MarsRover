@@ -137,7 +137,7 @@ namespace MarsRover
         /*
             TODO: if (Map.HasObstacle(Rover.Location)) == true, Rover.Location is on a Square containing an Obstacle
             Therefore, cannot move...
-            How to revert command? - or find another way to check if the Square has an Obstacle
+            How to revert command? - or find a way to check if the Square has an Obstacle before moving to it
         */
         private void FollowCommands(List<Command> commands)
         {

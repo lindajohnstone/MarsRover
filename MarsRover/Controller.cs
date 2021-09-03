@@ -134,15 +134,20 @@ namespace MarsRover
             }
             return InputParser.ParseCommands(commands);
         }
-
+        /*
+            TODO: if (Map.HasObstacle(Rover.Location)) == true, Rover.Location is on a Square containing an Obstacle
+            Therefore, cannot move...
+            How to revert command? - or find another way to check if the Square has an Obstacle
+        */
         private void FollowCommands(List<Command> commands)
         {
-            foreach (var command in commands)
+            for (var i = 0; i < commands.Count; i++)
             {
-                Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                Rover.ExecuteCommand(commands[i], Map.Width, Map.Height);
                 if (Map.HasObstacle(Rover.Location))
                 {
                     _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
+                    Rover.ExecuteCommand(commands[i - 1], Map.Width, Map.Height);
                     break;
                 }
                 else _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));

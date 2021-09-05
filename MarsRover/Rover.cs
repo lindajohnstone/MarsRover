@@ -5,6 +5,8 @@ namespace MarsRover
         // has a Direction & a Location 
         // Move - Forward/Backward
         // Turn - Left/Right
+
+        // TODO: Rover has Direction & Square not Direction & Location??
         public Rover(Direction direction, int x, int y)
         {
             Direction = direction;
@@ -60,7 +62,7 @@ namespace MarsRover
             };
         }
 
-        private void MoveForward(int maxWidth, int maxHeight) // need to know what direction - get next location from Command
+        private void MoveForward(int maxWidth, int maxHeight) 
         {
             var x = Location.X;
             var y = Location.Y;

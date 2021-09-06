@@ -27,14 +27,17 @@ namespace MarsRover
             Setup();
             _output.WriteLine(Messages.RoverCommands);
             var input = _input.ReadLine();
-            while (input != "q" || Map.HasObstacle(Rover.Location))
+            while (input != "q")
             {
                 var commands = GetCommands(input);
                 FollowCommands(commands);
-                _output.WriteLine(Environment.NewLine);
-                _output.WriteLine(Messages.RoverCommands);
-                _output.WriteLine(Messages.Quit);
-                input = _input.ReadLine();
+                if (!Map.HasObstacle(Rover.Location))
+                {
+                    _output.WriteLine(Environment.NewLine);
+                    _output.WriteLine(Messages.RoverCommands);
+                    _output.WriteLine(Messages.Quit);
+                    input = _input.ReadLine();
+                }
             }
         }
 
@@ -146,14 +149,25 @@ namespace MarsRover
             {
                 // store the temp location, do the check & then move
                 Rover.ExecuteCommand(command, Map.Width, Map.Height);
-                if (Map.HasObstacle(Rover.Location))
+                // if (Map.HasObstacle(Rover.Location))
+                // {
+                //     _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
+                //     Rover.SetLocation(currentLocation);
+                //     break;
+                // }
+                // else _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                // _output.WriteLine(Environment.NewLine);
+                if (!Map.HasObstacle(Rover.Location))
+                {
+                    _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                    _output.WriteLine(Environment.NewLine);
+                }
+                else
                 {
                     _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
                     Rover.SetLocation(currentLocation);
-                    break;
+                    return;
                 }
-                else _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
-                _output.WriteLine(Environment.NewLine);
             }
         }
     }

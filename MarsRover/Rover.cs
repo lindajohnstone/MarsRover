@@ -16,7 +16,7 @@ namespace MarsRover
 
         public Location Location { get; private set; }
 
-        public Location SetLocation(Location location)
+        public Location SetLocation(Location location) // TODO: valid way to do this? name ok? Not sure it works...
         {
             return new Location(location.X, location.Y);
         }

@@ -31,13 +31,10 @@ namespace MarsRover
             {
                 var commands = GetCommands(input);
                 FollowCommands(commands);
-                if (!Map.HasObstacle(Rover.Location))
-                {
-                    _output.WriteLine(Environment.NewLine);
-                    _output.WriteLine(Messages.RoverCommands);
-                    _output.WriteLine(Messages.Quit);
-                    input = _input.ReadLine();
-                }
+                _output.WriteLine(Environment.NewLine);
+                _output.WriteLine(Messages.RoverCommands);
+                _output.WriteLine(Messages.Quit);
+                input = _input.ReadLine();
             }
         }
 
@@ -166,7 +163,6 @@ namespace MarsRover
                 {
                     _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
                     Rover.SetLocation(currentLocation);
-                    return;
                 }
             }
         }

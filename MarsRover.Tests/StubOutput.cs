@@ -27,7 +27,7 @@ namespace MarsRover.Tests
 
         public string GetLastMapOutput()
         {
-            return OutputList[^5];
+            return OutputList[^6];
         }
     }
 }

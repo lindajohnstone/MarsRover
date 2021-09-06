@@ -6,7 +6,6 @@ namespace MarsRover
         // Move - Forward/Backward
         // Turn - Left/Right
 
-        // TODO: Rover has Direction & Square not Direction & Location??
         public Rover(Direction direction, int x, int y)
         {
             Direction = direction;
@@ -16,6 +15,11 @@ namespace MarsRover
         public Direction Direction { get; private set; }
 
         public Location Location { get; private set; }
+
+        public Location SetLocation(Location location) // TODO: valid way to do this? name ok? Not sure it works...
+        {
+            return new Location(location.X, location.Y);
+        }
 
         public void ExecuteCommand(Command command, int maxWidth, int maxHeight)
         {
@@ -61,7 +65,7 @@ namespace MarsRover
                 _ => Direction.None
             };
         }
-
+        
         private void MoveForward(int maxWidth, int maxHeight) 
         {
             var x = Location.X;

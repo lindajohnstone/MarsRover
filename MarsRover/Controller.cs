@@ -141,12 +141,15 @@ namespace MarsRover
         */
         private void FollowCommands(List<Command> commands)
         {
+            var currentLocation = Rover.Location;
             foreach (var command in commands)
             {
+                // store the temp location, do the check & then move
                 Rover.ExecuteCommand(command, Map.Width, Map.Height);
                 if (Map.HasObstacle(Rover.Location))
                 {
                     _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
+                    Rover.SetLocation(currentLocation);
                     break;
                 }
                 else _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));

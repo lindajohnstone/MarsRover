@@ -27,7 +27,7 @@ namespace MarsRover
             Setup();
             _output.WriteLine(Messages.RoverCommands);
             var input = _input.ReadLine();
-            while (input != "q")
+            while (input != "q" || Map.HasObstacle(Rover.Location))
             {
                 var commands = GetCommands(input);
                 FollowCommands(commands);

@@ -29,11 +29,6 @@ namespace MarsRover
             var input = _input.ReadLine();
             while (input != "q")
             {
-                if (Map.HasObstacle(Rover.Location))
-                {
-                    _output.WriteLine(Messages.RoverReportsObstacle); // TODO: This works if enter is pressed when asked for input if line 164 commented out
-                    return;
-                }
                 var commands = GetCommands(input);
                 FollowCommands(commands);
                 _output.WriteLine(Environment.NewLine);
@@ -140,38 +135,39 @@ namespace MarsRover
             }
             return InputParser.ParseCommands(commands);
         }
-        /*
-            TODO: if (Map.HasObstacle(Rover.Location)) == true, Rover.Location is on a Square containing an Obstacle
-            Therefore, cannot move...
-            How to revert command? - or find a way to check if the Square has an Obstacle before moving to it
-            Store temp location, check if there is an obstacle, if not, move to that location - how??
-            Temp solution = MoveRoverToPreviousLocation
-        */
+        
+        // TODO: manual testing shows that after an obstacle has been found, map display does not show location of Rover
         private void FollowCommands(List<Command> commands)
         {
-            var currentLocation = Rover.Location;
+            var width = Map.Width;
+            var height = Map.Height;
             foreach (var command in commands)
             {
-                Rover.ExecuteCommand(command, Map.Width, Map.Height);
-                if (!Map.HasObstacle(Rover.Location))
+                if (command == Command.Forward || command == Command.Backward)
                 {
-                    _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
-                    _output.WriteLine(Environment.NewLine);
+                    var targetLocation = Rover.GetTargetLocation(command, width, height);
+                    if (!Map.HasObstacle(targetLocation))
+                    {
+                        FollowCommand(width, height, command);
+                    }
+                    else
+                    {
+                        _output.WriteLine(string.Format(Messages.RoverReportsObstacle, targetLocation.X, targetLocation.Y));
+                        return;
+                    }
                 }
                 else
                 {
-                    _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
-                    // MoveRoverToPreviousLocation(command);
-                    Rover.SetLocation(currentLocation);
-                    return;
+                    FollowCommand(width, height, command);
                 }
             }
         }
 
-        private void MoveRoverToPreviousLocation(Command command)
+        private void FollowCommand(int width, int height, Command command)
         {
-            if (command == Command.Backward) Rover.ExecuteCommand(Command.Backward, Map.Width, Map.Height);
-            else Rover.ExecuteCommand(Command.Backward, Map.Width, Map.Height);
+            Rover.ExecuteCommand(command, width, height);
+            _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+            _output.WriteLine(Environment.NewLine);
         }
     }
 }

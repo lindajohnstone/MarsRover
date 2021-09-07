@@ -10,10 +10,5 @@ namespace MarsRover
         {
             Console.WriteLine(value);
         }
-
-        public void Write(string value)
-        {
-            Console.Write(value);
-        }
     }
 }

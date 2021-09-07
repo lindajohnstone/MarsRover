@@ -18,8 +18,6 @@ namespace MarsRover
 
         public const string RoverReportsObstacle = "Rover can't move. Obstacle at {0},{1}.";
 
-        
-
         public const string Quit = "Or enter 'q' to quit.";
 
         public const string End = "Mars Rover has completed his mission.";

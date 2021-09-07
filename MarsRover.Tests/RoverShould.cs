@@ -99,5 +99,24 @@ namespace MarsRover.Tests
 
             rover.Location.Should().BeEquivalentTo(expectedEndLocation);
         }
+
+        [Theory]
+        [InlineData(Command.Forward, Direction.South, 2, 3)]
+        [InlineData(Command.Forward, Direction.North, 2, 1)]
+        [InlineData(Command.Forward, Direction.East, 3, 2)]
+        [InlineData(Command.Forward, Direction.West, 1, 2)]
+        [InlineData(Command.Backward, Direction.South, 2, 1)]
+        [InlineData(Command.Backward, Direction.North, 2, 3)]
+        [InlineData(Command.Backward, Direction.East, 1, 2)]
+        [InlineData(Command.Backward, Direction.West, 3, 2)]
+        public void GetTargetLocation_ReturnLocation_GivenCommandAndBoundaryCoordinates(Command command, Direction direction, int x, int y)
+        {
+            var targetLocation = new Location(x,y);
+            var rover = new Rover(direction, 2, 2);
+
+            rover.GetTargetLocation(command, 5, 4);
+
+            rover.Location.Should().BeEquivalentTo(targetLocation);
+        }
     }
 }

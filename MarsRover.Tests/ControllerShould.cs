@@ -36,7 +36,7 @@ namespace MarsRover.Tests
                 .Returns("N")
                 .Returns("1.0")
                 .Returns("1,0")
-                .Returns("lf")
+                .Returns("lfr")
                 .Returns("q");
             var output = new StubOutput();
             var fileMapInput = new FileMapInput();

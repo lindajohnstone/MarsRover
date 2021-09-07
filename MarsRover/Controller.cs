@@ -135,28 +135,20 @@ namespace MarsRover
             }
             return InputParser.ParseCommands(commands);
         }
-        /*
-            TODO: if (Map.HasObstacle(Rover.Location)) == true, Rover.Location is on a Square containing an Obstacle
-            Therefore, cannot move...
-            How to revert command? - or find a way to check if the Square has an Obstacle before moving to it
-            Store temp location, check if there is an obstacle, if not, move to that location - how??
-            Temp solution = MoveRoverToPreviousLocation
-        */
+        
+        // TODO: manual testing shows that after an obstacle has been found, map display does not show location of Rover
         private void FollowCommands(List<Command> commands)
         {
+            var width = Map.Width;
+            var height = Map.Height;
             foreach (var command in commands)
             {
-                // targetLocation = Rover.GetTargetLocation(command, Map.Width, Map.Height);
-                // check validity of location i.e. does it have an obstacle
-                // Rover.ExecuteCommand(command, Map.Width, Map.Height)
                 if (command == Command.Forward || command == Command.Backward)
                 {
-                    var targetLocation = Rover.GetTargetLocation(command, Map.Width, Map.Height);
+                    var targetLocation = Rover.GetTargetLocation(command, width, height);
                     if (!Map.HasObstacle(targetLocation))
                     {
-                        Rover.ExecuteCommand(command, Map.Width, Map.Height);
-                        _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
-                        _output.WriteLine(Environment.NewLine);
+                        FollowCommand(width, height, command);
                     }
                     else
                     {
@@ -166,11 +158,16 @@ namespace MarsRover
                 }
                 else
                 {
-                    Rover.ExecuteCommand(command, Map.Width, Map.Height);
-                    _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
-                    _output.WriteLine(Environment.NewLine);
+                    FollowCommand(width, height, command);
                 }
             }
+        }
+
+        private void FollowCommand(int width, int height, Command command)
+        {
+            Rover.ExecuteCommand(command, width, height);
+            _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+            _output.WriteLine(Environment.NewLine);
         }
     }
 }

@@ -35,8 +35,8 @@ namespace MarsRover.Tests
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("1.0")
-                .Returns("2,0")
-                .Returns("lfflb")
+                .Returns("1,0")
+                .Returns("lf")
                 .Returns("q");
             var output = new StubOutput();
             var fileMapInput = new FileMapInput();

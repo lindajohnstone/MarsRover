@@ -149,28 +149,67 @@ namespace MarsRover
                 // targetLocation = Rover.GetTargetLocation(command, Map.Width, Map.Height);
                 // check validity of location i.e. does it have an obstacle
                 // Rover.ExecuteCommand(command, Map.Width, Map.Height)
-                // TODO: more than 1 command is run prior to printing
-                if (command == Command.TurnLeft || command == Command.TurnRight)
+                var targetLocation = Rover.GetTargetLocation(command, Map.Width, Map.Height);
+                switch (command)
                 {
-                    Rover.ExecuteCommand(command, Map.Width, Map.Height);
-                    _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
-                    _output.WriteLine(Environment.NewLine);
-                }
-                else
-                {
-                    var targetLocation = Rover.GetTargetLocation(command, Map.Width, Map.Height);
-                    if (!Map.HasObstacle(targetLocation))
-                    {
+                    case Command.TurnLeft:
                         Rover.ExecuteCommand(command, Map.Width, Map.Height);
                         _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
                         _output.WriteLine(Environment.NewLine);
-                    }
-                    else
-                    {
-                        _output.WriteLine(string.Format(Messages.RoverReportsObstacle, targetLocation.X, targetLocation.Y));
-                        return;
-                    }
+                        break;
+                    case Command.TurnRight:
+                        Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                        _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                        _output.WriteLine(Environment.NewLine);
+                        break;
+                    case Command.Forward:
+                        if (!Map.HasObstacle(targetLocation))
+                        {
+                            Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                            _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                            _output.WriteLine(Environment.NewLine);
+                        }
+                        else
+                        {
+                            _output.WriteLine(string.Format(Messages.RoverReportsObstacle, targetLocation.X, targetLocation.Y));
+                            return;
+                        }
+                        break;
+                    case Command.Backward:
+                        if (!Map.HasObstacle(targetLocation))
+                        {
+                            Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                            _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                            _output.WriteLine(Environment.NewLine);
+                        }
+                        else
+                        {
+                            _output.WriteLine(string.Format(Messages.RoverReportsObstacle, targetLocation.X, targetLocation.Y));
+                            return;
+                        }
+                        break;
                 }
+                // if (command == Command.TurnLeft || command == Command.TurnRight)
+                // {
+                //     Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                //     _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                //     _output.WriteLine(Environment.NewLine);
+                // }
+                // else
+                // {
+                //     var targetLocation = Rover.GetTargetLocation(command, Map.Width, Map.Height);
+                //     if (!Map.HasObstacle(targetLocation))
+                //     {
+                //         Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                //         _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                //         _output.WriteLine(Environment.NewLine);
+                //     }
+                //     else
+                //     {
+                //         _output.WriteLine(string.Format(Messages.RoverReportsObstacle, targetLocation.X, targetLocation.Y));
+                //         return;
+                //     }
+                // }
 
                 // Rover.ExecuteCommand(command, Map.Width, Map.Height);
                 // if (!Map.HasObstacle(Rover.Location))

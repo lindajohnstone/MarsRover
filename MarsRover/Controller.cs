@@ -135,13 +135,22 @@ namespace MarsRover
             }
             return InputParser.ParseCommands(commands);
         }
-        
+        /*
+            TODO: if (Map.HasObstacle(Rover.Location)) == true, Rover.Location is on a Square containing an Obstacle
+            Therefore, cannot move...
+            How to revert command? - or find a way to check if the Square has an Obstacle before moving to it
+            Store temp location, check if there is an obstacle, if not, move to that location - how??
+            Temp solution = MoveRoverToPreviousLocation
+        */
         private void FollowCommands(List<Command> commands)
         {
             foreach (var command in commands)
             {
-                var targetLocation = Rover.GetTargetLocation(command, Map.Width, Map.Height);
-                if (!Map.HasObstacle(targetLocation))
+                // targetLocation = Rover.GetTargetLocation(command, Map.Width, Map.Height);
+                // check validity of location i.e. does it have an obstacle
+                // Rover.ExecuteCommand(command, Map.Width, Map.Height)
+                // TODO: more than 1 command is run prior to printing
+                if (command == Command.TurnLeft || command == Command.TurnRight)
                 {
                     Rover.ExecuteCommand(command, Map.Width, Map.Height);
                     _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
@@ -149,9 +158,31 @@ namespace MarsRover
                 }
                 else
                 {
-                    _output.WriteLine(string.Format(Messages.RoverReportsObstacle, targetLocation.X, targetLocation.Y));
-                    return;
+                    var targetLocation = Rover.GetTargetLocation(command, Map.Width, Map.Height);
+                    if (!Map.HasObstacle(targetLocation))
+                    {
+                        Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                        _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                        _output.WriteLine(Environment.NewLine);
+                    }
+                    else
+                    {
+                        _output.WriteLine(string.Format(Messages.RoverReportsObstacle, targetLocation.X, targetLocation.Y));
+                        return;
+                    }
                 }
+
+                // Rover.ExecuteCommand(command, Map.Width, Map.Height);
+                // if (!Map.HasObstacle(Rover.Location))
+                // {
+                //     _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+                //     _output.WriteLine(Environment.NewLine);
+                // }
+                // else
+                // {
+                //     _output.WriteLine(string.Format(Messages.RoverReportsObstacle, Rover.Location.X, Rover.Location.Y));
+                //     return;
+                // }
             }
         }
     }

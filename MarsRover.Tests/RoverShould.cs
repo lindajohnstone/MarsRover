@@ -111,12 +111,12 @@ namespace MarsRover.Tests
         [InlineData(Command.Backward, Direction.West, 3, 2)]
         public void GetTargetLocation_ReturnLocation_GivenCommandAndBoundaryCoordinates(Command command, Direction direction, int x, int y)
         {
-            var targetLocation = new Location(x,y);
+            var expectedLocation = new Location(x,y);
             var rover = new Rover(direction, 2, 2);
 
-            rover.GetTargetLocation(command, 5, 4);
+            var result = rover.GetTargetLocation(command, 5, 4);
 
-            rover.Location.Should().BeEquivalentTo(targetLocation);
+            result.Should().BeEquivalentTo(expectedLocation);
         }
     }
 }

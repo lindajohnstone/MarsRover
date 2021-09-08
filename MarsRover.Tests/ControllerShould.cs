@@ -47,5 +47,26 @@ namespace MarsRover.Tests
 
             output.OutputList.Should().Contain(expectedString);
         }
+
+        [Fact]
+        public void Run_ReturnsRoverReport_GivenRoverCommandsThatResultInAnObstacleAnd2ConsecutiveCommandsSame()
+        {
+            var mockInput = new Mock<IInput>();
+            mockInput.SetupSequence(_ => _.ReadLine())
+                .Returns("TestFiles/validFile1.txt")
+                .Returns("N")
+                .Returns("1.0")
+                .Returns("2,0")
+                .Returns("lff")
+                .Returns("q");
+            var output = new StubOutput();
+            var fileMapInput = new FileMapInput();
+            var expectedString = "Rover can't move. Obstacle at 0,0.";
+            var controller = new Controller(mockInput.Object, output, fileMapInput);
+
+            controller.Run();
+
+            output.OutputList.Should().Contain(expectedString);
+        }
     }
 }

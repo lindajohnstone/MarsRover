@@ -73,43 +73,44 @@ namespace MarsRover
 
         public Location GetTargetLocation(Command command, int maxWidth, int maxHeight)
         {
-            // return command == Command.Forward ? MoveForward(maxWidth, maxHeight) : MoveBackward(maxWidth, maxHeight);
+            if (command == Command.Forward) return GetTargetLocationForward(maxWidth, maxHeight);
+            return GetTargetLocationBackward(maxWidth, maxHeight);
+        }
+
+        private Location GetTargetLocationForward(int maxWidth, int maxHeight)
+        {
             var x = Location.X;
             var y = Location.Y;
-            var xLeft = 0;
-            var xRight = 0;
-            var yTop = 0;
-            var yBottom = 0;
-            if (command == Command.Forward)
+            var xLeft = x == 0 ? maxWidth - 1 : x - 1;
+            var xRight = x == maxWidth - 1 ? 0 : x + 1;
+            var yTop = y == 0 ? maxHeight - 1 : y - 1;
+            var yBottom = y == maxHeight - 1 ? 0 : y + 1;
+            return Direction switch
             {
-                xLeft = x == 0 ? maxWidth - 1 : x - 1;
-                xRight = x == maxWidth - 1 ? 0 : x + 1;
-                yTop = y == 0 ? maxHeight - 1 : y - 1;
-                yBottom = y == maxHeight - 1 ? 0 : y + 1;
-                return Direction switch
-                {
-                    Direction.North => new Location(x, yTop),
-                    Direction.South => new Location(x, yBottom),
-                    Direction.West => new Location(xLeft, y),
-                    Direction.East => new Location(xRight, y),
-                    _ => new Location(x, y)
-                };
-            }
-            else
+                Direction.North => new Location(x, yTop),
+                Direction.South => new Location(x, yBottom),
+                Direction.West => new Location(xLeft, y),
+                Direction.East => new Location(xRight, y),
+                _ => new Location(x, y)
+            };
+        }
+
+        private Location GetTargetLocationBackward(int maxWidth, int maxHeight)
+        {
+            var x = Location.X;
+            var y = Location.Y;
+            var xLeft = x == maxWidth - 1 ? 0 : x + 1;
+            var xRight = x == 0 ? maxWidth - 1 : x - 1;
+            var yTop = y == maxHeight - 1 ? 0 : y + 1;
+            var yBottom = y == 0 ? maxHeight - 1 : y - 1;
+            return Direction switch
             {
-                xLeft = x == maxWidth - 1 ? 0 : x + 1;
-                xRight = x == 0 ? maxWidth - 1 : x - 1;
-                yTop = y == maxHeight - 1 ? 0 : y + 1;
-                yBottom = y == 0 ? maxHeight - 1 : y - 1;
-                return Direction switch
-                {
-                    Direction.North => new Location(x, yTop),
-                    Direction.South => new Location(x, yBottom),
-                    Direction.West => new Location(xLeft, y),
-                    Direction.East => new Location(xRight, y),
-                    _ => new Location(x, y)
-                };
-            }
+                Direction.North => new Location(x, yTop),
+                Direction.South => new Location(x, yBottom),
+                Direction.West => new Location(xLeft, y),
+                Direction.East => new Location(xRight, y),
+                _ => new Location(x, y)
+            };
         }
     }
 }

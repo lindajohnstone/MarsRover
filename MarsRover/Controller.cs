@@ -136,7 +136,6 @@ namespace MarsRover
             return InputParser.ParseCommands(commands);
         }
         
-        // TODO: manual testing shows that after an obstacle has been found, & new command string, map display does not show location
         private void FollowCommands(List<Command> commands)
         {
             var width = Map.Width;

@@ -136,7 +136,6 @@ namespace MarsRover
             return InputParser.ParseCommands(commands);
         }
         
-        // TODO: manual testing shows that after an obstacle has been found, map display does not show location of Rover
         private void FollowCommands(List<Command> commands)
         {
             var width = Map.Width;
@@ -146,20 +145,13 @@ namespace MarsRover
                 if (command == Command.Forward || command == Command.Backward)
                 {
                     var targetLocation = Rover.GetTargetLocation(command, width, height);
-                    if (!Map.HasObstacle(targetLocation))
-                    {
-                        FollowCommand(width, height, command);
-                    }
-                    else
+                    if (Map.HasObstacle(targetLocation))
                     {
                         _output.WriteLine(string.Format(Messages.RoverReportsObstacle, targetLocation.X, targetLocation.Y));
                         return;
                     }
                 }
-                else
-                {
-                    FollowCommand(width, height, command);
-                }
+                FollowCommand(width, height, command);
             }
         }
 

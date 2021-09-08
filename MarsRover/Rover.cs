@@ -61,7 +61,23 @@ namespace MarsRover
             };
         }
         
-        private Location MoveForward(int maxWidth, int maxHeight) 
+        private void MoveForward(int maxWidth, int maxHeight) 
+        {
+            Location = GetTargetLocation(Command.Forward, maxWidth, maxHeight);
+        }
+
+        private void MoveBackward(int maxWidth, int maxHeight)
+        {
+            Location = GetTargetLocation(Command.Backward, maxWidth, maxHeight);
+        }
+
+        public Location GetTargetLocation(Command command, int maxWidth, int maxHeight)
+        {
+            if (command == Command.Forward) return GetTargetLocationForward(maxWidth, maxHeight);
+            return GetTargetLocationBackward(maxWidth, maxHeight);
+        }
+
+        private Location GetTargetLocationForward(int maxWidth, int maxHeight)
         {
             var x = Location.X;
             var y = Location.Y;
@@ -69,7 +85,7 @@ namespace MarsRover
             var xRight = x == maxWidth - 1 ? 0 : x + 1;
             var yTop = y == 0 ? maxHeight - 1 : y - 1;
             var yBottom = y == maxHeight - 1 ? 0 : y + 1;
-            return Location = Direction switch
+            return Direction switch
             {
                 Direction.North => new Location(x, yTop),
                 Direction.South => new Location(x, yBottom),
@@ -79,7 +95,7 @@ namespace MarsRover
             };
         }
 
-        private Location MoveBackward(int maxWidth, int maxHeight)
+        private Location GetTargetLocationBackward(int maxWidth, int maxHeight)
         {
             var x = Location.X;
             var y = Location.Y;
@@ -87,7 +103,7 @@ namespace MarsRover
             var xRight = x == 0 ? maxWidth - 1 : x - 1;
             var yTop = y == maxHeight - 1 ? 0 : y + 1;
             var yBottom = y == 0 ? maxHeight - 1 : y - 1;
-            return Location = Direction switch
+            return Direction switch
             {
                 Direction.North => new Location(x, yTop),
                 Direction.South => new Location(x, yBottom),
@@ -95,11 +111,6 @@ namespace MarsRover
                 Direction.East => new Location(xRight, y),
                 _ => new Location(x, y)
             };
-        }
-
-        public Location GetTargetLocation(Command command, int maxWidth, int maxHeight)
-        {
-            return command == Command.Forward ? MoveForward(maxWidth, maxHeight) : MoveBackward(maxWidth, maxHeight);
         }
     }
 }

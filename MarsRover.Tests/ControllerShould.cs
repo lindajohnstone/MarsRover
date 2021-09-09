@@ -6,67 +6,84 @@ namespace MarsRover.Tests
 {
     public class ControllerShould
     {
+        Controller _controller;
+        Mock<IInput> _mockInput;
+        StubOutput _output;
+        FileMapInput _fileMapInput;
+
+        public ControllerShould()
+        {
+            _mockInput = new Mock<IInput>();
+            _output = new StubOutput();
+            _fileMapInput = new FileMapInput();
+            _controller = new Controller(_mockInput.Object, _output, _fileMapInput);
+        }
         [Fact]
         public void Run_ReturnsMapOutput_GivenRoverCommandsThatResultInNoObstacle()
         {
-            var mockInput = new Mock<IInput>();
-            mockInput.SetupSequence(_ => _.ReadLine())
+            _mockInput.SetupSequence(_ => _.ReadLine())
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("1.0")
                 .Returns("2,0")
                 .Returns("lfrlb")
                 .Returns("q");
-            var output = new StubOutput();
-            var fileMapInput = new FileMapInput();
             var expectedString = "🟫⬜️⏪⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
-            var controller = new Controller(mockInput.Object, output, fileMapInput);
+            
+            _controller.Run();
 
-            controller.Run();
-
-            output.GetLastMapOutput().Should().BeEquivalentTo(expectedString);
+            _output.GetLastMapOutput().Should().BeEquivalentTo(expectedString);
         }
 
         [Fact]
         public void Run_ReturnsRoverReport_GivenRoverCommandsThatResultInAnObstacle()
         {
-            var mockInput = new Mock<IInput>();
-            mockInput.SetupSequence(_ => _.ReadLine())
+            _mockInput.SetupSequence(_ => _.ReadLine())
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("1.0")
                 .Returns("1,0")
                 .Returns("lfr")
                 .Returns("q");
-            var output = new StubOutput();
-            var fileMapInput = new FileMapInput();
             var expectedString = "Rover can't move. Obstacle at 0,0.";
-            var controller = new Controller(mockInput.Object, output, fileMapInput);
 
-            controller.Run();
+            _controller.Run();
 
-            output.OutputList.Should().Contain(expectedString);
+            _output.OutputList.Should().Contain(expectedString);
         }
 
         [Fact]
         public void Run_ReturnsRoverReport_GivenRoverCommandsThatResultInAnObstacleAnd2ConsecutiveCommandsSame()
         {
-            var mockInput = new Mock<IInput>();
-            mockInput.SetupSequence(_ => _.ReadLine())
+            _mockInput.SetupSequence(_ => _.ReadLine())
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("1.0")
                 .Returns("2,0")
                 .Returns("lff")
                 .Returns("q");
-            var output = new StubOutput();
-            var fileMapInput = new FileMapInput();
             var expectedString = "Rover can't move. Obstacle at 0,0.";
-            var controller = new Controller(mockInput.Object, output, fileMapInput);
+            
+            _controller.Run();
 
-            controller.Run();
+            _output.OutputList.Should().Contain(expectedString);
+        }
 
-            output.OutputList.Should().Contain(expectedString);
+        [Fact]
+        public void Run_ReturnsEndMessage_Given2SetsOfRoverCommands()
+        {
+            _mockInput.SetupSequence(_ => _.ReadLine())
+                .Returns("TestFiles/validFile1.txt")
+                .Returns("N")
+                .Returns("2,0")
+                .Returns("lff")
+                .Returns("rff")
+                .Returns("q");
+            var expectedString = "Mars Rover has completed his mission.";
+
+            _controller.Run();
+
+            _output.GetLastOutput().Should().BeEquivalentTo(expectedString);
         }
     }
 }

@@ -15,6 +15,11 @@ namespace MarsRover.Tests
             OutputList.Add(value);
         }
 
+        public string GetLastOutput()
+        {
+            return OutputList[^1];
+        }
+        
         public string GetLastMapOutput()
         {
             return OutputList[^6];

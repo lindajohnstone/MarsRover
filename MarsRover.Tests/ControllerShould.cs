@@ -6,10 +6,10 @@ namespace MarsRover.Tests
 {
     public class ControllerShould
     {
-        Controller _controller;
-        Mock<IInput> _mockInput;
-        StubOutput _output;
-        FileMapInput _fileMapInput;
+        private readonly Controller _controller;
+        private Mock<IInput> _mockInput;
+        private readonly StubOutput _output;
+        private readonly FileMapInput _fileMapInput;
 
         public ControllerShould()
         {
@@ -38,7 +38,7 @@ namespace MarsRover.Tests
         [Fact]
         public void Run_ReturnsRoverReport_GivenRoverCommandsThatResultInAnObstacle()
         {
-            _mockInput.SetupSequence(_ => _.ReadLine())
+            _mockInput.SetupSequence(i => i.ReadLine())
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("1.0")
@@ -55,7 +55,7 @@ namespace MarsRover.Tests
         [Fact]
         public void Run_ReturnsRoverReport_GivenRoverCommandsThatResultInAnObstacleAnd2ConsecutiveCommandsSame()
         {
-            _mockInput.SetupSequence(_ => _.ReadLine())
+            _mockInput.SetupSequence(i => i.ReadLine())
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("1.0")
@@ -70,20 +70,20 @@ namespace MarsRover.Tests
         }
 
         [Fact]
-        public void Run_ReturnsEndMessage_Given2SetsOfRoverCommands()
+        public void Run_ReturnsRoverEndLocation_GivenMapAnd2SetsOfRoverCommands()
         {
-            _mockInput.SetupSequence(_ => _.ReadLine())
+            _mockInput.SetupSequence(i => i.ReadLine())
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("2,0")
                 .Returns("lff")
                 .Returns("rff")
                 .Returns("q");
-            var expectedString = "Mars Rover has completed his mission.";
+            var expectedLocation = new Location(1,1);
 
             _controller.Run();
 
-            _output.GetLastOutput().Should().BeEquivalentTo(expectedString);
+            _controller.Rover.Location.Should().BeEquivalentTo(expectedLocation);
         }
     }
 }

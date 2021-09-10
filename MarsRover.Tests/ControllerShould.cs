@@ -79,11 +79,11 @@ namespace MarsRover.Tests
                 .Returns("lff")
                 .Returns("rff")
                 .Returns("q");
-            var expectedLocation = new Location(1,1);
+            var expectedString = "🟫⬜️⬜️⬜️\n⬜️⏫⬜️⬜️\n⬜️⬜️⬜️⬜️";
 
             _controller.Run();
 
-            _controller.Rover.Location.Should().BeEquivalentTo(expectedLocation);
+            _output.GetLastMapOutput().Should().BeEquivalentTo(expectedString);
         }
     }
 }

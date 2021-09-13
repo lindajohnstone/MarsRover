@@ -85,5 +85,23 @@ namespace MarsRover.Tests
 
             _output.GetLastMapOutput().Should().BeEquivalentTo(expectedString);
         }
+
+        [Fact]
+        public void Run_ReturnRoverEndLocation_GivenRoverInitialLocationHasObstacle()
+        {
+            _mockInput.SetupSequence(i => i.ReadLine())
+                .Returns("TestFiles/validFile1.txt")
+                .Returns("N")
+                .Returns("0,0")
+                .Returns("2,0")
+                .Returns("lff")
+                .Returns("rff")
+                .Returns("q");
+            var expectedString = "🟫⬜️⬜️⬜️\n⬜️⏫⬜️⬜️\n⬜️⬜️⬜️⬜️";
+
+            _controller.Run();
+
+            _output.GetLastMapOutput().Should().BeEquivalentTo(expectedString);
+        }
     }
 }

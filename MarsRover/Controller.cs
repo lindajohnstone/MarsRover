@@ -118,6 +118,7 @@ namespace MarsRover
             if (Map.HasObstacle(location)) 
             {
                 _output.WriteLine(Messages.InvalidLocation);
+                isValidLocation = false;
                 InitialiseLocation();
             }
             return location;

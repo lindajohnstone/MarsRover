@@ -1,46 +1,26 @@
 using System;
-using System.Collections.Generic;
 
 namespace MarsRover
 {
-    public class Controller
+    public class Generator
     {
-        IInput _input;
+        private readonly IInput _input;
+        private readonly IMapInput _mapInput;
 
-        IOutput _output;
-
-        IMapInput _mapInput;
-
-        Generator _generator;
+        private readonly IOutput _output;
 
         public Map Map { get; private set; }
 
-        public Rover Rover { get; private set; }
+        public Rover Rover { get; set; }
 
-        public Controller(IOutput output, Generator generator)
+        public Generator(IInput input, IOutput output, IMapInput fileMapInput)
         {
+            _input = input;
             _output = output;
-            _generator = generator;
+            _mapInput = fileMapInput;
         }
 
-        public void Run()
-        {
-            _generator.Setup();
-            _output.WriteLine(Messages.RoverCommands);
-            var input = _input.ReadLine();
-            while (input != "q")
-            {
-                var commands = GetCommands(input);
-                FollowCommands(commands);
-                _output.WriteLine(Environment.NewLine);
-                _output.WriteLine(Messages.RoverCommands);
-                _output.WriteLine(Messages.Quit);
-                input = _input.ReadLine();
-            }
-            _output.WriteLine(Messages.End);
-        }
-
-        private void Setup()
+        public void Setup()
         {
             _output.WriteLine(Messages.Title);
             InitialiseMap();
@@ -65,7 +45,7 @@ namespace MarsRover
             Map = MapParser.ParseMap(input);
         }
 
-        private string GetValidFilePath() 
+        private string GetValidFilePath()
         {
             var filePath = _input.ReadLine();
             var fileExists = _mapInput.FileExists(filePath);
@@ -107,7 +87,7 @@ namespace MarsRover
             _output.WriteLine(Messages.RoverStartLocation);
             var input = _input.ReadLine();
             var isValidLocation = Validator.IsValidLocation(input, Map.Width, Map.Height);
-            while(!isValidLocation)
+            while (!isValidLocation)
             {
                 _output.WriteLine(Messages.InvalidInput);
                 _output.WriteLine(Messages.RoverStartLocation);
@@ -116,51 +96,12 @@ namespace MarsRover
             }
             var location = InputParser.ParseLocation(input);
 
-            if (Map.HasObstacle(location)) 
+            if (Map.HasObstacle(location))
             {
                 _output.WriteLine(Messages.InvalidLocation);
                 location = InitialiseLocation();
             }
             return location;
-        }
-
-        private List<Command> GetCommands(string commands) 
-        {
-            var areAllCommandsValid = Validator.AreCommandsValid(commands);
-            while (!areAllCommandsValid)
-            {
-                _output.WriteLine(Messages.InvalidInput);
-                _output.WriteLine(Messages.RoverCommands);
-                commands = _input.ReadLine();
-                areAllCommandsValid = Validator.AreCommandsValid(commands);
-            }
-            return InputParser.ParseCommands(commands);
-        }
-        
-        private void FollowCommands(List<Command> commands)
-        {
-            var width = Map.Width;
-            var height = Map.Height;
-            foreach (var command in commands)
-            {
-                if (command == Command.Forward || command == Command.Backward)
-                {
-                    var targetLocation = Rover.GetTargetLocation(command, width, height);
-                    if (Map.HasObstacle(targetLocation))
-                    {
-                        _output.WriteLine(string.Format(Messages.RoverReportsObstacle, targetLocation.X, targetLocation.Y));
-                        return;
-                    }
-                }
-                FollowCommand(width, height, command);
-            }
-        }
-
-        private void FollowCommand(int width, int height, Command command)
-        {
-            Rover.ExecuteCommand(command, width, height);
-            _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
-            _output.WriteLine(Environment.NewLine);
-        }
+        }        
     }
 }

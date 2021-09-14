@@ -11,7 +11,7 @@ namespace MarsRover
             var output = new ConsoleOutput();
             var mapInput = new FileMapInput();
             var generator = new Generator(input, output, mapInput);
-            var controller = new Controller(output, generator);
+            var controller = new Controller(input, output, generator);
             controller.Run();
         }
     }

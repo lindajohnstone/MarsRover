@@ -5,13 +5,10 @@ namespace MarsRover
     public class Generator
     {
         private readonly IInput _input;
+        
         private readonly IMapInput _mapInput;
 
         private readonly IOutput _output;
-
-        public Map Map { get; private set; }
-
-        public Rover Rover { get; set; }
 
         public Generator(IInput input, IOutput output, IMapInput fileMapInput)
         {
@@ -19,6 +16,10 @@ namespace MarsRover
             _output = output;
             _mapInput = fileMapInput;
         }
+
+        public Map Map { get; private set; }
+
+        public Rover Rover { get; set; }
 
         public void Setup()
         {

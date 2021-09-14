@@ -5,11 +5,11 @@ namespace MarsRover
 {
     public class Controller
     {
-        IInput _input;
+        private readonly IInput _input;
 
-        IOutput _output;
+        private readonly IOutput _output;
 
-        Generator _generator;
+        private readonly Generator _generator;
 
         public Controller(IInput input, IOutput output, Generator generator)
         {
@@ -52,7 +52,7 @@ namespace MarsRover
         {
             var width = _generator.Map.Width;
             var height = _generator.Map.Height;
-            foreach (var command in commands)
+            foreach (var command in commands) // TODO: should the type of the loop variable be explicit (Command)?
             {
                 if (command == Command.Forward || command == Command.Backward)
                 {

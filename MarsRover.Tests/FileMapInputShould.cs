@@ -6,7 +6,7 @@ namespace MarsRover.Tests
 {
     public class FileInputShould
     {
-        FileMapInput _fileInput;
+        private readonly FileMapInput _fileInput;
         public FileInputShould()
         {
             _fileInput = new FileMapInput();

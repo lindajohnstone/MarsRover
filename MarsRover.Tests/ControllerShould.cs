@@ -10,13 +10,15 @@ namespace MarsRover.Tests
         private Mock<IInput> _mockInput;
         private readonly StubOutput _output;
         private readonly FileMapInput _fileMapInput;
+        private readonly Generator _generator;
 
         public ControllerShould()
         {
             _mockInput = new Mock<IInput>();
             _output = new StubOutput();
             _fileMapInput = new FileMapInput();
-            _controller = new Controller(_mockInput.Object, _output, _fileMapInput);
+            _generator = new Generator(_mockInput.Object, _output, _fileMapInput);
+            _controller = new Controller(_mockInput.Object, _output, _generator);
         }
         [Fact]
         public void Run_ReturnsMapOutput_GivenRoverCommandsThatResultInNoObstacle()
@@ -29,7 +31,7 @@ namespace MarsRover.Tests
                 .Returns("lfrlb")
                 .Returns("q");
             var expectedString = "🟫⬜️⏪⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
-            
+
             _controller.Run();
 
             _output.GetLastMapOutput().Should().BeEquivalentTo(expectedString);
@@ -75,6 +77,24 @@ namespace MarsRover.Tests
             _mockInput.SetupSequence(i => i.ReadLine())
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
+                .Returns("2,0")
+                .Returns("lff")
+                .Returns("rff")
+                .Returns("q");
+            var expectedString = "🟫⬜️⬜️⬜️\n⬜️⏫⬜️⬜️\n⬜️⬜️⬜️⬜️";
+
+            _controller.Run();
+
+            _output.GetLastMapOutput().Should().BeEquivalentTo(expectedString);
+        }
+
+        [Fact]
+        public void Run_ReturnRoverEndLocation_GivenRoverInitialLocationHasObstacle()
+        {
+            _mockInput.SetupSequence(i => i.ReadLine())
+                .Returns("TestFiles/validFile1.txt")
+                .Returns("N")
+                .Returns("0,0")
                 .Returns("2,0")
                 .Returns("lff")
                 .Returns("rff")

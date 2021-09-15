@@ -6,10 +6,16 @@ namespace MarsRover.Tests
 {
     public class FileRegisterShould
     {
+        private readonly FileRegister _fileRegister;
+
+        public FileRegisterShould()
+        {
+            _fileRegister = new FileRegister();
+        }
+
         [Fact]
         public void GetFiles_ReturnsValidFiles_GivenDirectoryAndSpecifier()
         {
-            var fileRegister = new FileRegister();
             var directory = "TestFiles";
             var specifier = "*.txt";
             var expectedFileRegister = new string[]
@@ -21,7 +27,7 @@ namespace MarsRover.Tests
                 "TestFiles/validFile4.txt"
             };
 
-            var result = fileRegister.GetFiles(directory, specifier);
+            var result = _fileRegister.GetFiles(directory, specifier);
 
             result.Should().BeEquivalentTo(expectedFileRegister);
         }
@@ -29,10 +35,9 @@ namespace MarsRover.Tests
         [Fact]
         public void DirectoryExists_ReturnsTrue_GivenValidDirectory()
         {
-            var fileRegister = new FileRegister();
             var directory = "TestFiles";
 
-            var result = fileRegister.DirectoryExists(directory);
+            var result = _fileRegister.DirectoryExists(directory);
 
             result.Should().BeTrue();
         }
@@ -40,10 +45,9 @@ namespace MarsRover.Tests
         [Fact]
         public void DirectoryExists_ReturnsFalse_GivenInvalidDirectory()
         {
-            var fileRegister = new FileRegister();
             var directory = "test";
 
-            var result = fileRegister.DirectoryExists(directory);
+            var result = _fileRegister.DirectoryExists(directory);
 
             result.Should().BeFalse();
         }

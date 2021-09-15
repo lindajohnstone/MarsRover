@@ -9,5 +9,10 @@ namespace MarsRover
         {
             return Directory.GetFiles(directory, specifier);
         }
+
+        public bool DirectoryExists(string directory)
+        {
+            return Directory.Exists(directory);
+        }
     }
 }

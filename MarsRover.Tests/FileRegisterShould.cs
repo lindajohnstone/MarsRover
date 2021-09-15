@@ -25,5 +25,16 @@ namespace MarsRover.Tests
 
             result.Should().BeEquivalentTo(expectedFileRegister);
         }
+
+        [Fact]
+        public void DirectoryExists_ReturnsTrue_GivenValidDirectory()
+        {
+            var fileRegister = new FileRegister();
+            var directory = "TestFiles";
+
+            var result = fileRegister.DirectoryExists(directory);
+
+            result.Should().BeTrue();
+        }
     }
 }

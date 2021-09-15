@@ -52,7 +52,7 @@ namespace MarsRover
         {
             var width = _generator.Map.Width;
             var height = _generator.Map.Height;
-            foreach (var command in commands) // TODO: should the type of the loop variable be explicit (Command)?
+            foreach (var command in commands) 
             {
                 if (command == Command.Forward || command == Command.Backward)
                 {
@@ -69,7 +69,7 @@ namespace MarsRover
 
         private void FollowCommand(int width, int height, Command command)
         {
-            _generator.Rover.ExecuteCommand(command, width, height); // ControllerShould.Run_ReturnsMapOutput_GivenRoverCommandsThatResultInNoObstacle throws a null error here
+            _generator.Rover.ExecuteCommand(command, width, height); 
             _output.WriteLine(OutputFormatter.FormatMap(_generator.Map, _generator.Rover));
             _output.WriteLine(Environment.NewLine);
         }

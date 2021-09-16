@@ -34,6 +34,11 @@ namespace MarsRover
             return true;
         }
 
+        internal static bool IsValidChoice(string input)
+        {
+            throw new NotImplementedException();
+        }
+
         public static bool IsValidDirection(string input)
         {
             if (input.Equals("N", StringComparison.InvariantCultureIgnoreCase)) return true;

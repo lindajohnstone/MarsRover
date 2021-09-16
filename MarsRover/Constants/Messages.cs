@@ -21,5 +21,9 @@ namespace MarsRover
         public const string Quit = "Or enter 'q' to quit.";
 
         public const string End = "Mars Rover has completed his mission.";
+
+        public const string RequestDirectoryInput = "Enter a valid Directory path where Map files are located.";
+
+        public const string Choice = "Enter \"1\" to add your own map or \"2\" to have the computer select one.";
     }
 }

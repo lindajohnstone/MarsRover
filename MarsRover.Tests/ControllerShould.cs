@@ -10,6 +10,7 @@ namespace MarsRover.Tests
         private Mock<IInput> _mockInput;
         private readonly StubOutput _output;
         private readonly FileMapInput _fileMapInput;
+        private readonly MapGenerator _mapGenerator;
         private readonly Generator _generator;
 
         public ControllerShould()
@@ -17,7 +18,8 @@ namespace MarsRover.Tests
             _mockInput = new Mock<IInput>();
             _output = new StubOutput();
             _fileMapInput = new FileMapInput();
-            _generator = new Generator(_mockInput.Object, _output, _fileMapInput);
+            _mapGenerator = new MapGenerator(_mockInput.Object, _output, _fileMapInput);
+            _generator = new Generator(_mockInput.Object, _output, _mapGenerator);
             _controller = new Controller(_mockInput.Object, _output, _generator);
         }
         [Fact]
@@ -89,7 +91,7 @@ namespace MarsRover.Tests
         }
 
         [Fact]
-        public void Run_ReturnRoverEndLocation_GivenRoverInitialLocationHasObstacle()
+        public void Run_ReturnLastMap_GivenRoverInitialLocationHasObstacle()
         {
             _mockInput.SetupSequence(i => i.ReadLine())
                 .Returns("TestFiles/validFile1.txt")
@@ -104,6 +106,33 @@ namespace MarsRover.Tests
             _controller.Run();
 
             _output.GetLastMapOutput().Should().BeEquivalentTo(expectedString);
+        }
+
+        [Fact]
+        public void Run_ReturnsLastMap_GivenAutoMapAndRoverCommands()
+        {
+            var fileMapInput = new FileMapInput();
+            var output = new StubOutput();
+            var mockInput = new Mock<IInput>();
+            mockInput.SetupSequence(i => i.ReadLine())
+                .Returns("TestFiles")
+                .Returns("TestFiles/validFile1.txt")
+                .Returns("N")
+                .Returns("2,0")
+                .Returns("lfrlb")
+                .Returns("q");
+            var expectedString = "🟫⬜️⏪⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
+            var fileRegister = new FileRegister();
+            var mockRandomGenerator = new Mock<IRandomGenerator>();
+            mockRandomGenerator.Setup(m => m.RandomString(It.IsAny<string[]>()))
+                .Returns("TestFiles/validFile1.txt");
+            var map = new AutoMapGenerator(mockInput.Object, fileMapInput, fileRegister, mockRandomGenerator.Object);
+            var generator = new Generator(mockInput.Object, output, map);
+            var controller = new Controller(mockInput.Object, output, generator);
+
+            controller.Run();
+
+            output.GetLastMapOutput().Should().BeEquivalentTo(expectedString);
         }
     }
 }

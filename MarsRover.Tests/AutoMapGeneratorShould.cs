@@ -15,12 +15,11 @@ namespace MarsRover.Tests
             var mockInput = new Mock<IInput>();
             mockInput.Setup(i => i.ReadLine())
                 .Returns("TestFiles");
-            var output = new StubOutput();
             var fileRegister = new FileRegister();
             var mockRandomGenerator = new Mock<IRandomGenerator>();
             mockRandomGenerator.Setup(m => m.RandomString(It.IsAny<string[]>()))
                 .Returns("TestFiles/validFile1.txt");
-            var map = new AutoMapGenerator(mockInput.Object, output, fileMapInput, fileRegister, mockRandomGenerator.Object);
+            var map = new AutoMapGenerator(mockInput.Object, fileMapInput, fileRegister, mockRandomGenerator.Object);
             var squares = new List<Square>
             {
                 new Square(SquareContent.Obstacle, 0, 0),
@@ -38,9 +37,9 @@ namespace MarsRover.Tests
             };
             var expectedMap = new Map(4, 3, squares);
 
-            map.Initialise();
+            var result = map.Initialise();
 
-            map.Map.Should().BeEquivalentTo(expectedMap);
+            result.Should().BeEquivalentTo(expectedMap);
         }
     }
 }

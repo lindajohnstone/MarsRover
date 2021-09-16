@@ -36,12 +36,12 @@ namespace MarsRover
             var directory = GetValidDirectory();
             //_output.WriteLine(directory);
             var specifier = "*.txt";
-            var filePath = GetValidFilePath(directory);
+            var filePath = GetValidFilePath(directory, specifier);
             var input = _mapInput.Read(filePath);
             var isValidMap = Validator.IsValidMap(input);
             while (!isValidMap)
             {
-                filePath = GetValidFilePath(directory);
+                filePath = GetValidFilePath(directory, specifier);
                 input = _mapInput.Read(filePath);
                 isValidMap = Validator.IsValidMap(input);
             }
@@ -63,7 +63,7 @@ namespace MarsRover
             return directory;
         }
 
-        private string GetValidFilePath(string directory)
+        private string GetValidFilePath(string directory, string specifier)
         {
             var files = _fileRegister.GetFiles(directory);
             //_output.WriteLine(String.Join(",", files));

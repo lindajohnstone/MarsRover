@@ -11,19 +11,14 @@ namespace MarsRover
         private readonly MapGenerator _mapGenerator;
         private readonly AutoMapGenerator _autoMapGenerator;
 
-        public Generator(IInput input, IOutput output, MapGenerator map)
+        public Generator(IInput input, IOutput output, MapGenerator map, AutoMapGenerator autoMap)
         {
             _input = input;
             _output = output;
             _mapGenerator = map;
-        }
-
-        public Generator(IInput input, IOutput output, AutoMapGenerator autoMap)
-        {
-            _input = input;
-            _output = output;
             _autoMapGenerator = autoMap;
         }
+
         public Map Map { get; private set; }
 
         public Rover Rover { get; set; }
@@ -31,18 +26,12 @@ namespace MarsRover
         public void Setup()
         {
             _output.WriteLine(Messages.Title);
-            _output.WriteLine(Messages.Choice);
-            var input = _input.ReadLine();
-            var isValidChoice = Validator.IsValidChoice(input);
+            // _output.WriteLine(Messages.Choice);
+            // var input = _input.ReadLine();
+            // var isValidChoice = Validator.IsValidChoice(input);
             Map = _mapGenerator.Initialise();
 
-            // Map = _autoMapGenerator.Initialise(); //causes iTerm to close
-            /*
-                Unhandled exception. System.NullReferenceException: Object reference not set to an instance of an object.
-                at MarsRover.Generator.Setup() in /Users/Linda.Johnstone/Documents/fma/MarsRover/MarsRover/Generator.cs:line 34
-                at MarsRover.Controller.Run() in /Users/Linda.Johnstone/Documents/fma/MarsRover/MarsRover/Controller.cs:line 23
-                at MarsRover.Program.Main(String[] args) in /Users/Linda.Johnstone/Documents/fma/MarsRover/MarsRover/Program.cs:line 16
-            */
+            //Map = _autoMapGenerator.Initialise(); 
             _output.WriteLine(OutputFormatter.FormatMap(Map));
             InitialiseRover();
             _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));

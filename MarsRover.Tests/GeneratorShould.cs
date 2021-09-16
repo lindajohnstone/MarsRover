@@ -18,7 +18,13 @@ namespace MarsRover.Tests
             var fileMapInput = new FileMapInput();
             var output = new StubOutput();
             var mapGenerator = new MapGenerator(mockInput.Object, output, fileMapInput);
-            var generator = new Generator(mockInput.Object, output, mapGenerator);
+            var generator = new Generator(mockInput.Object, 
+                                            output, 
+                                            mapGenerator, 
+                                            new AutoMapGenerator(mockInput.Object, 
+                                                                    fileMapInput, 
+                                                                    new FileRegister(), 
+                                                                    new RandomGenerator(new Random())));
             var expectedString = "🟫⬜️⏫⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
 
             generator.Setup();
@@ -44,7 +50,10 @@ namespace MarsRover.Tests
             mockRandomGenerator.Setup(m => m.RandomString(It.IsAny<string[]>()))
                 .Returns("TestFiles/validFile1.txt");
             var map = new AutoMapGenerator(mockInput.Object, fileMapInput, fileRegister, mockRandomGenerator.Object);
-            var generator = new Generator(mockInput.Object, output, map);
+            var generator = new Generator(mockInput.Object, 
+                                            output, 
+                                            new MapGenerator(mockInput.Object, output, fileMapInput), 
+                                            map);
             var expectedString = "🟫⬜️⏫⬜️\n⬜️⬜️⬜️⬜️\n⬜️⬜️⬜️⬜️";
 
             generator.Setup();

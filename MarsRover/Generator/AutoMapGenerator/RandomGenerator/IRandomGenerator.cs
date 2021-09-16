@@ -2,6 +2,6 @@ namespace MarsRover
 {
     public interface IRandomGenerator
     {
-        string RandomString(string[] values, int max);
+        string RandomString(string[] values);
     }
 }

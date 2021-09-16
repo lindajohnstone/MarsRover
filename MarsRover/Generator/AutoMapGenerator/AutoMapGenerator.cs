@@ -10,29 +10,20 @@ namespace MarsRover
         private readonly IInput _input;
         private readonly IOutput _output;
         private readonly FileRegister _fileRegister;
-        private readonly IRandomGenerator _random;
+        private readonly IRandomGenerator _randomGenerator;
 
-        public AutoMapGenerator(IInput input, IOutput output, IMapInput fileMapInput, FileRegister fileRegister, IRandomGenerator random)
+        public AutoMapGenerator(IInput input, IMapInput fileMapInput, FileRegister fileRegister, IRandomGenerator randomGenerator)
         {
             _mapInput = fileMapInput;
-            _output = output;
             _input = input;
+            _output = new ConsoleOutput();
             _fileRegister = fileRegister;
-            _random = random;
+            _randomGenerator = randomGenerator;
         }
 
-        public Map Map { get; private set; }
-        /*
-            user enters directory name
-            check if directory exists (think this is where 1 issue is)
-            keep asking for input until directory.exists
-            randomly pick a file from the directory
-            validate it has valid map data
-            if it is a valid map file, parse it
-            
-        */
-        public void Initialise()
+        public Map Initialise()
         {
+            _output.WriteLine(Messages.RequestDirectoryInput);
             var directory = GetValidDirectory();
             var specifier = "*.txt";
             var filePath = GetValidFilePath(directory, specifier);
@@ -44,7 +35,7 @@ namespace MarsRover
                 input = _mapInput.Read(filePath);
                 isValidMap = Validator.IsValidMap(input);
             }
-            Map = MapParser.ParseMap(input);
+            return MapParser.ParseMap(input);
         }
 
         private string GetValidDirectory()
@@ -63,12 +54,12 @@ namespace MarsRover
 
         private string GetValidFilePath(string directory, string specifier)
         {
-            var files = _fileRegister.GetFiles(directory, specifier);
-            var filePath = _random.RandomString(files, files.Length);
+            var files = _fileRegister.GetFiles(directory);
+            var filePath = _randomGenerator.RandomString(files);
             var fileExists = _mapInput.FileExists(filePath);
             while (!fileExists)
             {
-                filePath = _random.RandomString(files, files.Length);
+                filePath = _randomGenerator.RandomString(files);
                 fileExists = _mapInput.FileExists(filePath);
             }
             return filePath;

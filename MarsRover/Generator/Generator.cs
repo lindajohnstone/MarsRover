@@ -5,16 +5,18 @@ namespace MarsRover
     public class Generator
     {
         private readonly IInput _input;
-        
-        private readonly IMapInput _mapInput;
 
         private readonly IOutput _output;
 
-        public Generator(IInput input, IOutput output, IMapInput fileMapInput)
+        private readonly MapGenerator _mapGenerator;
+        private readonly AutoMapGenerator _autoMapGenerator;
+
+        public Generator(IInput input, IOutput output, MapGenerator map, AutoMapGenerator autoMap)
         {
             _input = input;
             _output = output;
-            _mapInput = fileMapInput;
+            _mapGenerator = map;
+            _autoMapGenerator = autoMap;
         }
 
         public Map Map { get; private set; }
@@ -24,40 +26,27 @@ namespace MarsRover
         public void Setup()
         {
             _output.WriteLine(Messages.Title);
-            InitialiseMap();
+            _output.WriteLine(Messages.Choice);
+            var choice = GetValidChoice();
+            if (choice == "1") Map = _mapGenerator.Initialise();
+            else Map = _autoMapGenerator.Initialise(); 
             _output.WriteLine(OutputFormatter.FormatMap(Map));
             InitialiseRover();
             _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
         }
 
-        private void InitialiseMap()
+        private string GetValidChoice()
         {
-            _output.WriteLine(Messages.RequestMapInput);
-            var filePath = GetValidFilePath();
-            var input = _mapInput.Read(filePath);
-            var isValidMap = Validator.IsValidMap(input);
-            while (!isValidMap)
+            var choice = _input.ReadLine();
+            var isValidChoice = Validator.IsValidChoice(choice);
+            while (!isValidChoice)
             {
                 _output.WriteLine(Messages.InvalidInput);
-                _output.WriteLine(Messages.RequestMapInput);
-                input = _input.ReadLine();
-                isValidMap = Validator.IsValidMap(input);
+                _output.WriteLine(Messages.Choice);
+                choice = _input.ReadLine();
+                isValidChoice = Validator.IsValidChoice(choice);
             }
-            Map = MapParser.ParseMap(input);
-        }
-
-        private string GetValidFilePath()
-        {
-            var filePath = _input.ReadLine();
-            var fileExists = _mapInput.FileExists(filePath);
-            while (!fileExists)
-            {
-                _output.WriteLine(Messages.InvalidInput);
-                _output.WriteLine(Messages.RequestMapInput);
-                filePath = _input.ReadLine();
-                fileExists = _mapInput.FileExists(filePath);
-            }
-            return filePath;
+            return choice;
         }
 
         private void InitialiseRover()

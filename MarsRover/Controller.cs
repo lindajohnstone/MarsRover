@@ -10,7 +10,7 @@ namespace MarsRover
         private readonly IOutput _output;
 
         private readonly Generator _generator;
-
+        
         public Controller(IInput input, IOutput output, Generator generator)
         {
             _input = input;

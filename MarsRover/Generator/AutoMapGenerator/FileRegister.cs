@@ -14,5 +14,10 @@ namespace MarsRover
         {
             return Directory.Exists(directory);
         }
+
+        public string[] GetFiles(string directory)
+        {
+            return Directory.GetFiles(directory);
+        }
     }
 }

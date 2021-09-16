@@ -22,19 +22,10 @@ namespace MarsRover
         }
 
         public Map Map { get; private set; }
-        /*
-            user enters directory name
-            check if directory exists (think this is where 1 issue is)
-            keep asking for input until directory.exists
-            randomly pick a file from the directory
-            validate it has valid map data
-            if it is a valid map file, parse it
-            
-        */
+        
         public void Initialise()
         {
             var directory = GetValidDirectory();
-            //_output.WriteLine(directory);
             var specifier = "*.txt";
             var filePath = GetValidFilePath(directory, specifier);
             var input = _mapInput.Read(filePath);
@@ -52,7 +43,6 @@ namespace MarsRover
         {
             var directory = _input.ReadLine();
             var directoryExists = _fileRegister.DirectoryExists(directory);
-            //_output.WriteLine("directory Exists");
             while (!directoryExists)
             {
                 _output.WriteLine(Messages.InvalidInput);

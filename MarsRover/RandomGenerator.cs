@@ -11,11 +11,6 @@ namespace MarsRover
             _random = random;
         }
 
-        public RandomGenerator(int seed)
-        {
-            _random = new Random(seed);
-        }
-
         public string RandomString(string[] values)
         {
             var index = _random.Next(0, values.Length - 1);

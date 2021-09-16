@@ -34,13 +34,14 @@ namespace MarsRover
         public void Initialise()
         {
             var directory = GetValidDirectory();
+            //_output.WriteLine(directory);
             var specifier = "*.txt";
-            var filePath = GetValidFilePath(directory, specifier);
+            var filePath = GetValidFilePath(directory);
             var input = _mapInput.Read(filePath);
             var isValidMap = Validator.IsValidMap(input);
             while (!isValidMap)
             {
-                filePath = GetValidFilePath(directory, specifier);
+                filePath = GetValidFilePath(directory);
                 input = _mapInput.Read(filePath);
                 isValidMap = Validator.IsValidMap(input);
             }
@@ -51,6 +52,7 @@ namespace MarsRover
         {
             var directory = _input.ReadLine();
             var directoryExists = _fileRegister.DirectoryExists(directory);
+            //_output.WriteLine("directory Exists");
             while (!directoryExists)
             {
                 _output.WriteLine(Messages.InvalidInput);
@@ -61,14 +63,15 @@ namespace MarsRover
             return directory;
         }
 
-        private string GetValidFilePath(string directory, string specifier)
+        private string GetValidFilePath(string directory)
         {
-            var files = _fileRegister.GetFiles(directory, specifier);
-            var filePath = _random.RandomString(files, files.Length);
+            var files = _fileRegister.GetFiles(directory);
+            //_output.WriteLine(String.Join(",", files));
+            var filePath = _random.RandomString(files);
             var fileExists = _mapInput.FileExists(filePath);
             while (!fileExists)
             {
-                filePath = _random.RandomString(files, files.Length);
+                filePath = _random.RandomString(files);
                 fileExists = _mapInput.FileExists(filePath);
             }
             return filePath;

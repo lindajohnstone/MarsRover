@@ -4,10 +4,21 @@ namespace MarsRover
 {
     public class RandomGenerator : IRandomGenerator
     {
-        public string RandomString(string[] values, int max)
+        Random _random;
+
+        public RandomGenerator(Random random)
         {
-            Random random = new Random();
-            var index = random.Next(0, values.Length - 1);
+            _random = random;
+        }
+
+        public RandomGenerator(int seed)
+        {
+            _random = new Random(seed);
+        }
+
+        public string RandomString(string[] values)
+        {
+            var index = _random.Next(0, values.Length - 1);
             return values[index];
         }
     }

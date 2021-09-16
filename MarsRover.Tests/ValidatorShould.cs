@@ -110,5 +110,27 @@ namespace MarsRover.Tests
 
             result.Should().BeFalse();
         }
+
+        [Theory]
+        [InlineData("1")]
+        [InlineData("2")]
+        public void IsValidChoice_ReturnsTrue_GivenValidInput(string input)
+        {
+            var result = Validator.IsValidChoice(input);
+
+            result.Should().BeTrue();
+        }
+
+        [Theory]
+        [InlineData("a")]
+        [InlineData("%")]
+        [InlineData("3")]
+        [InlineData("-1")]
+        public void IsValidChoice_ReturnsFalse_GivenInvalidInput(string input)
+        {
+            var result = Validator.IsValidChoice(input);
+
+            result.Should().BeFalse();
+        }
     }
 }

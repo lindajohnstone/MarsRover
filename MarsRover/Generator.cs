@@ -26,15 +26,27 @@ namespace MarsRover
         public void Setup()
         {
             _output.WriteLine(Messages.Title);
-            // _output.WriteLine(Messages.Choice);
-            // var input = _input.ReadLine();
-            // var isValidChoice = Validator.IsValidChoice(input);
-            Map = _mapGenerator.Initialise();
-
-            //Map = _autoMapGenerator.Initialise(); 
+            _output.WriteLine(Messages.Choice);
+            var choice = GetValidChoice();
+            if (choice == "1") Map = _mapGenerator.Initialise();
+            else Map = _autoMapGenerator.Initialise(); 
             _output.WriteLine(OutputFormatter.FormatMap(Map));
             InitialiseRover();
             _output.WriteLine(OutputFormatter.FormatMap(Map, Rover));
+        }
+
+        private string GetValidChoice()
+        {
+            var choice = _input.ReadLine();
+            var isValidChoice = Validator.IsValidChoice(choice);
+            while (!isValidChoice)
+            {
+                _output.WriteLine(Messages.InvalidInput);
+                _output.WriteLine(Messages.Choice);
+                choice = _input.ReadLine();
+                isValidChoice = Validator.IsValidChoice(choice);
+            }
+            return choice;
         }
 
         private void InitialiseRover()

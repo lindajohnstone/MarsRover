@@ -34,9 +34,9 @@ namespace MarsRover
             return true;
         }
 
-        internal static bool IsValidChoice(string input)
+        public static bool IsValidChoice(string input)
         {
-            throw new NotImplementedException();
+            return (input == "1" || input == "2");
         }
 
         public static bool IsValidDirection(string input)

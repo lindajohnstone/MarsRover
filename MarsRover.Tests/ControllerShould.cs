@@ -26,6 +26,7 @@ namespace MarsRover.Tests
         public void Run_ReturnsMapOutput_GivenRoverCommandsThatResultInNoObstacle()
         {
             _mockInput.SetupSequence(_ => _.ReadLine())
+                .Returns("1")
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("1.0")
@@ -43,6 +44,7 @@ namespace MarsRover.Tests
         public void Run_ReturnsRoverReport_GivenRoverCommandsThatResultInAnObstacle()
         {
             _mockInput.SetupSequence(i => i.ReadLine())
+                .Returns("1")
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("1.0")
@@ -60,6 +62,7 @@ namespace MarsRover.Tests
         public void Run_ReturnsRoverReport_GivenRoverCommandsThatResultInAnObstacleAnd2ConsecutiveCommandsSame()
         {
             _mockInput.SetupSequence(i => i.ReadLine())
+                .Returns("1")
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("1.0")
@@ -77,6 +80,7 @@ namespace MarsRover.Tests
         public void Run_ReturnsRoverEndLocation_GivenMapAnd2SetsOfRoverCommands()
         {
             _mockInput.SetupSequence(i => i.ReadLine())
+                .Returns("1")
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("2,0")
@@ -94,6 +98,7 @@ namespace MarsRover.Tests
         public void Run_ReturnLastMap_GivenRoverInitialLocationHasObstacle()
         {
             _mockInput.SetupSequence(i => i.ReadLine())
+                .Returns("1")
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
                 .Returns("0,0")
@@ -115,6 +120,7 @@ namespace MarsRover.Tests
             var output = new StubOutput();
             var mockInput = new Mock<IInput>();
             mockInput.SetupSequence(i => i.ReadLine())
+                .Returns("2")
                 .Returns("TestFiles")
                 .Returns("TestFiles/validFile1.txt")
                 .Returns("N")
